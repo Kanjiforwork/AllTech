@@ -1,9 +1,20 @@
+import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, Tag, User } from "lucide-react"
 
-export default function ReviewsSection() {
-  const reviews = [
+interface Review {
+  id: number
+  title: string
+  excerpt: string
+  image: string
+  author: string
+  date: string
+  tags: string[]
+}
+
+export default function ReviewsSection(): React.ReactNode {
+  const reviews: Review[] = [
     {
       id: 1,
       title: "MacBook Pro 16 (M3 Max) Review: The Ultimate Creator Laptop",

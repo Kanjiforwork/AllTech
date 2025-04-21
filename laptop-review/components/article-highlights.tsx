@@ -1,8 +1,18 @@
+import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function ArticleHighlights() {
-  const articles = [
+interface Article {
+  id: number
+  title: string
+  excerpt: string
+  image: string
+  category: string
+  date: string
+}
+
+export default function ArticleHighlights(): React.ReactNode {
+  const articles: Article[] = [
     {
       id: 1,
       title: "Top 5 Laptops for 2025",

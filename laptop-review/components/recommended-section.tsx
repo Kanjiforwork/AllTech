@@ -1,8 +1,25 @@
+import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function RecommendedSection() {
-  const categories = [
+// Define proper types for the data
+interface Laptop {
+  id: number
+  name: string
+  image: string
+  price: string
+}
+
+interface Category {
+  id: number
+  name: string
+  description: string
+  image: string
+  laptops: Laptop[]
+}
+
+export default function RecommendedSection(): React.ReactNode {
+  const categories: Category[] = [
     {
       id: 1,
       name: "For Students",

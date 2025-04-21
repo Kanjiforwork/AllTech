@@ -1,13 +1,31 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { ArrowLeft, Save, Trash, Upload } from "lucide-react"
 import Link from "next/link"
 
-export default function AdminDashboard() {
-  const [formData, setFormData] = useState({
+interface FormData {
+  title: string
+  brand: string
+  model: string
+  price: string
+  processor: string
+  ram: string
+  storage: string
+  display: string
+  gpu: string
+  battery: string
+  weight: string
+  description: string
+  pros: string[]
+  cons: string[]
+  rating: string
+  tags: string
+}
+
+export default function AdminDashboard(): React.ReactNode {
+  const [formData, setFormData] = useState<FormData>({
     title: "",
     brand: "",
     model: "",

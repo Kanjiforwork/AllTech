@@ -1,11 +1,19 @@
 "use client"
 
+import type React from "react"
 import { useState } from "react"
 import { Bell } from "lucide-react"
 
-export default function NotificationBell() {
+interface Notification {
+  id: number
+  message: string
+  time: string
+  read: boolean
+}
+
+export default function NotificationBell(): React.ReactNode {
   const [isOpen, setIsOpen] = useState(false)
-  const [notifications, setNotifications] = useState([
+  const [notifications, setNotifications] = useState<Notification[]>([
     {
       id: 1,
       message: "New review for MacBook Pro 16",

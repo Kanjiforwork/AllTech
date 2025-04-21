@@ -1,14 +1,25 @@
 "use client"
 
+import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
-export default function FeaturedLaptops() {
+interface Laptop {
+  id: number
+  name: string
+  image: string
+  description: string
+  price: string
+  rating: number
+  reviews: number
+}
+
+export default function FeaturedLaptops(): React.ReactNode {
   const [currentSlide, setCurrentSlide] = useState(0)
 
-  const featuredLaptops = [
+  const featuredLaptops: Laptop[] = [
     {
       id: 1,
       name: "MacBook Pro 16",
