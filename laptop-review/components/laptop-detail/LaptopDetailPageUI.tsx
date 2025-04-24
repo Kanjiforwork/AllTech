@@ -30,7 +30,7 @@ export default function LaptopDetailPage({ laptop, similarLaptops = [] }: Laptop
             </TabPanel.Tab>
             
             {laptop.benchmarks ? (
-              <TabPanel.Tab label="Benchmarks">
+              <TabPanel.Tab label="">
                 <Performance laptop={laptop} />
               </TabPanel.Tab>
             ) : null}
