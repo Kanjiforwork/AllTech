@@ -218,6 +218,7 @@ export default function LaptopForm() {
                   <option value="Samsung">Samsung</option>
                   <option value="Razer">Razer</option>
                   <option value="LG">LG</option>
+                  <option value="Xiaomi">Xiaomi</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
