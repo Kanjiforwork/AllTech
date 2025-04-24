@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { ShoppingCart } from "lucide-react";
+import AnalysisSection from "./AnalysisSection";
 
 type DetailedAnalysisProps = {
   laptop: any;
@@ -165,11 +166,67 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       </div>
 
       {/* 2. Battery */}
-      <div className="bg-white rounded-lg shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800">2. Battery</h3>
-          {laptop.benchmarks?.battery && getScoreBadge(laptop.benchmarks.battery)}
-        </div>
+          {/* Battery Section */}
+          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold">2. Battery</h3>
+              <div className="bg-blue-600 text-white px-3 py-1 rounded-full font-bold">8.7/10</div>
+            </div>
+
+            {/* <div className="mb-4">
+              <p className="mb-2">
+                <span className="font-medium">Battery Capacity:</span> 75Wh
+              </p>
+            </div> */}
+
+            {/* <h4 className="font-semibold mb-4">Battery Life</h4> */}
+            <div className="space-y-6 mb-6">
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span className="font-medium">Casual Use</span>
+                  <span className="font-medium">12.5 hours</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-4">
+                  <div
+                    className="h-4 rounded-full bg-green-500 flex items-center justify-end px-2"
+                    style={{ width: "83%" }}
+                  >
+                    <span className="text-xs text-white font-medium">12.5h</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span className="font-medium">Watching Online Video</span>
+                  <span className="font-medium">10.2 hours</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-4">
+                  <div
+                    className="h-4 rounded-full bg-blue-500 flex items-center justify-end px-2"
+                    style={{ width: "68%" }}
+                  >
+                    <span className="text-xs text-white font-medium">10.2h</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span className="font-medium">Extreme Use (Gaming/Rendering)</span>
+                  <span className="font-medium">3.8 hours</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-4">
+                  <div
+                    className="h-4 rounded-full bg-yellow-500 flex items-center justify-end px-2"
+                    style={{ width: "25%" }}
+                  >
+                    <span className="text-xs text-white font-medium">3.8h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         <p className="text-gray-700">
           The {laptop.detailedSpecs?.battery?.capacity}Wh battery delivers impressive runtime for a laptop with these specs. 
           In our testing, it lasted about 8 hours of general productivity work and web browsing at 150 nits brightness. 
@@ -179,14 +236,13 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       </div>
 
       {/* 3. Design & Build */}
-      <div className="bg-white rounded-lg shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800">3. Design & Build</h3>
-          {laptop.benchmarks?.build && getScoreBadge(laptop.benchmarks.build)}
-        </div>
-        
+      <AnalysisSection 
+        title="3. Design & Build" 
+        score={laptop.benchmarks?.build}
+        image="/images/laptop-design.jpg"
+      >
         <div className="mb-4">
-          <p className="mb-2">Dimensions: {laptop.detailedSpecs?.case?.dimensions} (14.0" x 9.9" x 0.69-0.72")</p>
+          <p className="mb-2">Dimensions: {laptop.detailedSpecs?.case?.dimensions}</p>
           <p>Weight: {laptop.detailedSpecs?.case?.weight}</p>
         </div>
         
@@ -195,15 +251,14 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
           It's reasonably portable for a {laptop.detailedSpecs?.display?.size || "16"}-inch device. 
           The minimalist {laptop.detailedSpecs?.case?.color || "Storm Grey"} finish resists fingerprints well.
         </p>
-      </div>
+      </AnalysisSection>
 
       {/* 4. Display */}
-      <div className="bg-white rounded-lg shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800">4. Display</h3>
-          {laptop.benchmarks?.display && getScoreBadge(laptop.benchmarks.display)}
-        </div>
-        
+      <AnalysisSection 
+        title="4. Display" 
+        score={laptop.benchmarks?.display}
+        image="/images/laptop-display.jpg"
+      >
         <div className="grid md:grid-cols-2 gap-6 mb-4">
           <div>
             <p className="mb-1">Size: {laptop.detailedSpecs?.display?.size}</p>
@@ -211,7 +266,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             <p className="mb-1">Brightness: {laptop.detailedSpecs?.display?.brightness}</p>
           </div>
           <div>
-            <p className="mb-1">Resolution: {laptop.detailedSpecs?.display?.resolution} {laptop.detailedSpecs?.display?.type} Anti-Glare</p>
+            <p className="mb-1">Resolution: {laptop.detailedSpecs?.display?.resolution}</p>
             <p className="mb-1">Refresh Rate: {laptop.detailedSpecs?.display?.refreshRate}</p>
             <p className="mb-1">Color Gamut: {laptop.detailedSpecs?.display?.colorGamut?.sRGB}% sRGB</p>
           </div>
@@ -222,87 +277,90 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
           offering sharp text and smooth motion. Brightness is sufficient for indoors, and sRGB coverage is excellent for general use, 
           though professionals might need wider gamuts.
         </p>
-      </div>
+      </AnalysisSection>
 
       {/* 5. Keyboard */}
-      <div className="bg-white rounded-lg shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800">5. Keyboard</h3>
-        </div>
+      <AnalysisSection 
+        title="5. Keyboard"
+        image="/images/laptop-keyboard.jpg"
+      >
         <p className="text-gray-700">
           Features a comfortable keyboard with good travel and tactile feedback, plus a numpad. 
           Backlighting is functional with {laptop.detailedSpecs?.input?.keyboard?.includes("RGB") ? "RGB lighting" : "two levels"}.
         </p>
-      </div>
+      </AnalysisSection>
 
       {/* 6. Trackpad */}
-      <div className="bg-white rounded-lg shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800">6. Trackpad</h3>
-          <div className="text-white text-xs px-2.5 py-1 rounded-full font-bold bg-blue-600">7.8/10</div>
-        </div>
+      <AnalysisSection 
+        title="6. Trackpad" 
+        score={7.8}
+        image="/images/laptop-trackpad.jpg"
+      >
         <p className="text-gray-700">
           Large and responsive Microsoft Precision trackpad supports gestures well. Clicking is satisfactory. 
           Slightly off-center placement due to numpad.
         </p>
-      </div>
+      </AnalysisSection>
 
       {/* 7. Speakers */}
-      <div className="bg-white rounded-lg shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800">7. Speakers</h3>
-          <div className="text-white text-xs px-2.5 py-1 rounded-full font-bold bg-blue-600">7.5/10</div>
-        </div>
+      <AnalysisSection 
+        title="7. Speakers" 
+        score={7.5}
+        image="/images/laptop-speakers.jpg"
+      >
         <p className="text-gray-700">
           Downward-firing speakers with {laptop.detailedSpecs?.sound?.dolbyAtmos ? "Dolby Atmos" : "good audio"} provide clear audio, 
           suitable for calls and casual media consumption. Bass is lacking.
         </p>
-      </div>
+      </AnalysisSection>
 
       {/* 8. Webcam */}
-      <div className="bg-white rounded-lg shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800">8. Webcam</h3>
-          <div className="text-white text-xs px-2.5 py-1 rounded-full font-bold bg-blue-600">7.0/10</div>
+      <AnalysisSection 
+        title="8. Webcam" 
+        score={7.0}
+        image="/images/laptop-webcam.jpg"
+      >
+        <div>
+          <p className="mb-3">Resolution: {laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p FHD + IR with Privacy Shutter" : laptop.detailedSpecs?.connectivity?.webcam}</p>
+          <p className="text-gray-700">
+            The {laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p" : "720p"} webcam offers better detail than 720p cameras in good light. 
+            Includes a privacy shutter and IR for Windows Hello.
+          </p>
         </div>
-        <p className="mb-3">Resolution: {laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p FHD + IR with Privacy Shutter" : laptop.detailedSpecs?.connectivity?.webcam}</p>
-        <p className="text-gray-700">
-          The {laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p" : "720p"} webcam offers better detail than 720p cameras in good light. 
-          Includes a privacy shutter and IR for Windows Hello.
-        </p>
-      </div>
+      </AnalysisSection>
 
       {/* 9. Ports */}
-      <div className="bg-white rounded-lg shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800">9. Ports</h3>
-          <div className="text-white text-xs px-2.5 py-1 rounded-full font-bold bg-blue-600">8.3/10</div>
-        </div>
-        
-        <div className="grid md:grid-cols-2 gap-6 mb-4">
-          <div>
-            <h4 className="font-medium mb-2">Left Side:</h4>
-            <ul className="list-disc list-inside space-y-1">
-              <li>1x USB-C 3.2 Gen 2 (DP 1.4, PD 3.0)</li>
-              <li>1x USB-A 3.2 Gen 1</li>
-              <li>HDMI 2.0</li>
-              <li>SD Card Reader</li>
-            </ul>
+      <AnalysisSection 
+        title="9. Ports" 
+        score={8.3}
+        image="/images/laptop-ports.jpg"
+      >
+        <div>
+          <div className="grid md:grid-cols-2 gap-6 mb-4">
+            <div>
+              <h4 className="font-medium mb-2">Left Side:</h4>
+              <ul className="list-disc list-inside space-y-1">
+                <li>1x USB-C 3.2 Gen 2 (DP 1.4, PD 3.0)</li>
+                <li>1x USB-A 3.2 Gen 1</li>
+                <li>HDMI 2.0</li>
+                <li>SD Card Reader</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Right Side:</h4>
+              <ul className="list-disc list-inside space-y-1">
+                <li>1x USB-A 3.2 Gen 1</li>
+                <li>1x USB-C 3.2 Gen 2 (PD 3.0, Data)</li>
+                <li>3.5mm Combo Audio Jack</li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h4 className="font-medium mb-2">Right Side:</h4>
-            <ul className="list-disc list-inside space-y-1">
-              <li>1x USB-A 3.2 Gen 1</li>
-              <li>1x USB-C 3.2 Gen 2 (PD 3.0, Data)</li>
-              <li>3.5mm Combo Audio Jack</li>
-            </ul>
-          </div>
+          
+          <p className="text-gray-700">
+            A comprehensive port selection covers most needs, including versatile USB-C ports and an SD reader. Well-distributed on both sides.
+          </p>
         </div>
-        
-        <p className="text-gray-700">
-          A comprehensive port selection covers most needs, including versatile USB-C ports and an SD reader. Well-distributed on both sides.
-        </p>
-      </div>
+      </AnalysisSection>
 
       {/* Best Prices & Deals */}
       <div>
