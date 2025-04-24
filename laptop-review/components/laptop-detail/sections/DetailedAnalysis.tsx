@@ -135,27 +135,23 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
               <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
                 <div className="bg-teal-500 h-2 rounded-full" style={{ width: "75%" }}></div>
               </div>
-            </div>
 
-                              {/* Added Cinebench scores */}
-                              <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm">Cinebench R23 (Single-Core)</span>
-                      <span className="text-sm">1,532</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="h-2.5 rounded-full bg-green-500" style={{ width: "100%" }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm">Cinebench R23 (Multi-Core)</span>
-                      <span className="text-sm">12,456</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="h-2.5 rounded-full bg-green-500" style={{ width: "100%" }}></div>
-                    </div>
-                  </div>
+              <div className="flex items-center justify-between mb-2 text-sm">
+                <span>Cinebench R23 (Single)</span>
+                <span className="font-bold">1,532</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
+                <div className="bg-teal-500 h-2 rounded-full" style={{ width: "85%" }}></div>
+              </div>
+
+              <div className="flex items-center justify-between mb-2 text-sm">
+                <span>Cinebench R23 (Multi)</span>
+                <span className="font-bold">12,456</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
+                <div className="bg-teal-500 h-2 rounded-full" style={{ width: "82%" }}></div>
+              </div>
+            </div>
 
             <div>
               <h5 className="text-sm font-medium mb-2">Unplugged (Battery)</h5>
@@ -174,29 +170,25 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
               <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
                 <div className="bg-yellow-500 h-2 rounded-full" style={{ width: "61%" }}></div>
               </div>
+
+              <div className="flex items-center justify-between mb-2 text-sm">
+                <span>Cinebench R23 (Single)</span>
+                <span className="font-bold">1,387</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
+                <div className="bg-yellow-500 h-2 rounded-full" style={{ width: "76%" }}></div>
+              </div>
+
+              <div className="flex items-center justify-between mb-2 text-sm">
+                <span>Cinebench R23 (Multi)</span>
+                <span className="font-bold">10,212</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
+                <div className="bg-yellow-500 h-2 rounded-full" style={{ width: "67%" }}></div>
+              </div>
             </div>
           </div>
         </div>
-
-                          {/* Added Cinebench scores */}
-                          <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm">Cinebench R23 (Single-Core)</span>
-                      <span className="text-sm">1,387</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="h-2.5 rounded-full bg-yellow-500" style={{ width: "90%" }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm">Cinebench R23 (Multi-Core)</span>
-                      <span className="text-sm">10,212</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="h-2.5 rounded-full bg-yellow-500" style={{ width: "82%" }}></div>
-                    </div>
-                  </div>
 
         <p className="text-gray-700">
           The {laptop.detailedSpecs?.cpu?.name} handles multitasking and demanding tasks well. 
