@@ -1,11 +1,10 @@
-import { useMemo } from "react"
 import ComparisonBarChart, { type ComparisonItem } from "./ComparisonBarChart"
 
 export interface BatteryComparisonItem {
   id: string
   name: string
   subtitle?: string
-  batteryCapacity: number // Wh
+  batteryCapacity: number
   batteryLife: {
     hours: number
     minutes: number
@@ -18,43 +17,37 @@ interface BatteryComparisonChartProps {
   enableSorting?: boolean
 }
 
-// Constants to avoid magic numbers
-const MAX_BATTERY_LIFE_MINUTES = 720 // 12 hours
-const MAX_BATTERY_CAPACITY = 100 // Wh
-
-// Map single item to ComparisonItem
-function mapToComparisonItem(item: BatteryComparisonItem): ComparisonItem {
-  const totalMinutes = item.batteryLife.hours * 60 + item.batteryLife.minutes
-
-  return {
-    id: item.id,
-    name: item.name,
-    subtitle: item.subtitle,
-    metrics: {
-      batteryLife: {
-        value: totalMinutes,
-        unit: " phút",
-        displayValue: `${totalMinutes} phút`,
-        percentage: Math.min((totalMinutes / MAX_BATTERY_LIFE_MINUTES) * 100, 100),
-        color: "#ff4d94",
-      },
-      batteryCapacity: {
-        value: item.batteryCapacity,
-        unit: " Wh",
-        displayValue: `${item.batteryCapacity} Wh`,
-        percentage: Math.min((item.batteryCapacity / MAX_BATTERY_CAPACITY) * 100, 100),
-        color: "#8b5cf6",
-      },
-    },
-  }
-}
-
 export default function BatteryComparisonChart({
   title = "So sánh thời gian dùng pin",
   items,
   enableSorting = true,
 }: BatteryComparisonChartProps) {
-  const transformedItems = useMemo(() => items.map(mapToComparisonItem), [items])
+  // Transform the data for the generic comparison chart
+  const transformedItems: ComparisonItem[] = items.map((item) => {
+    const totalMinutes = item.batteryLife.hours * 60 + item.batteryLife.minutes
+
+    return {
+      id: item.id,
+      name: item.name,
+      subtitle: item.subtitle,
+      metrics: {
+        batteryLife: {
+          value: totalMinutes,
+          displayValue: `${item.batteryLife.hours}g ${item.batteryLife.minutes}p`,
+          // Assuming the max battery life is 12 hours (720 minutes)
+          percentage: Math.min((totalMinutes / 720) * 100, 100),
+          color: "#f43f5e", // Changed to a more suitable color for white background
+        },
+        batteryCapacity: {
+          value: item.batteryCapacity,
+          unit: " Wh",
+          // Assuming the max battery capacity is 100 Wh
+          percentage: Math.min((item.batteryCapacity / 100) * 100, 100),
+          color: "#8b5cf6", // Kept purple but slightly adjusted
+        },
+      },
+    }
+  })
 
   return (
     <ComparisonBarChart
@@ -63,17 +56,16 @@ export default function BatteryComparisonChart({
       metrics={[
         {
           id: "batteryLife",
-          label: "Thời gian sử dụng thực tế",
-          color: "#ff4d94",
-          unit: " phút",
-          maxValue: MAX_BATTERY_LIFE_MINUTES,
+          label: "Thời gian test ứng dụng văn phòng",
+          color: "#f43f5e",
+          maxValue: 720, // 12 hours in minutes
         },
         {
           id: "batteryCapacity",
           label: "Dung lượng pin (Wh)",
           color: "#8b5cf6",
           unit: " Wh",
-          maxValue: MAX_BATTERY_CAPACITY,
+          maxValue: 100,
         },
       ]}
       sortOptions={{
@@ -81,6 +73,7 @@ export default function BatteryComparisonChart({
         defaultMetric: "batteryLife",
         defaultOrder: "desc",
       }}
+      theme="light" // Added light theme
     />
   )
 }

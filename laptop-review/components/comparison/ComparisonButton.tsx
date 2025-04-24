@@ -1,208 +1,234 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { Search, X, ArrowRight, ChevronDown } from "lucide-react";
-import { searchLaptops } from "@/mock_data/data";
+import { useState, useEffect, useRef } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import { Search, X, ArrowRight } from "lucide-react"
+import { searchLaptops } from "@/mock_data/data"
 
-type ComparisonButtonProps = {
-  currentLaptopId: string;
-};
+interface Laptop {
+  id: string
+  name: string
+  image: string
+  specs: {
+    cpu: string
+    gpu: string
+  }
+}
 
-export default function ComparisonButton({ currentLaptopId }: ComparisonButtonProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [selectedLaptops, setSelectedLaptops] = useState<string[]>([currentLaptopId]);
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
+interface FloatingComparisonButtonProps {
+  currentLaptopId: string
+}
 
-  // Sticky positioning based on scroll
+export default function FloatingComparisonButton({ currentLaptopId }: FloatingComparisonButtonProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchResults, setSearchResults] = useState<Laptop[]>([])
+  const [selectedLaptops, setSelectedLaptops] = useState<Laptop[]>([])
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
+
+  // Add current laptop to selected laptops on mount
   useEffect(() => {
-    const handleScroll = () => {
-      if (buttonRef.current) {
-        const scrollY = window.scrollY;
-        const viewportHeight = window.innerHeight;
-        
-        // Stay in viewport
-        buttonRef.current.style.top = `${Math.min(
-          Math.max(100, scrollY - 100),
-          scrollY + viewportHeight - 150
-        )}px`;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initialize position
-    
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // Handle click outside to close
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node) && 
-          buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  // Search function
-  useEffect(() => {
-    if (searchTerm.length > 1) {
-      const results = searchLaptops(searchTerm);
-      // Filter out already selected laptops and limit to 5 results
-      const filteredResults = results
-        .filter(laptop => !selectedLaptops.includes(laptop.id))
-        .slice(0, 5);
-      setSearchResults(filteredResults);
-    } else {
-      setSearchResults([]);
+    const currentLaptop = searchLaptops("").find((laptop) => laptop.id === currentLaptopId)
+    if (currentLaptop) {
+      setSelectedLaptops([currentLaptop])
     }
-  }, [searchTerm, selectedLaptops]);
+  }, [currentLaptopId])
 
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-    setSearchTerm("");
-    setSearchResults([]);
-  };
-
-  const selectLaptop = (laptopId: string) => {
-    if (selectedLaptops.length < 3 && !selectedLaptops.includes(laptopId)) {
-      setSelectedLaptops([...selectedLaptops, laptopId]);
-      setSearchTerm("");
-      setSearchResults([]);
+  // Handle search
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setSearchResults([])
+      return
     }
-  };
 
+    const results = searchLaptops(searchQuery).filter(
+      (laptop) => !selectedLaptops.some((selected) => selected.id === laptop.id),
+    )
+    setSearchResults(results)
+  }, [searchQuery, selectedLaptops])
+
+  // Handle click outside dropdown
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isDropdownOpen])
+
+  // Handle click outside search panel
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        // Don't close if clicking on the floating button
+        const target = event.target as HTMLElement
+        if (target.closest("[data-floating-button]")) {
+          return
+        }
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isOpen])
+
+  // Add laptop to comparison
+  const addLaptop = (laptop: Laptop) => {
+    if (selectedLaptops.length < 4 && !selectedLaptops.some((selected) => selected.id === laptop.id)) {
+      setSelectedLaptops([...selectedLaptops, laptop])
+      setSearchQuery("")
+      setSearchResults([])
+    }
+  }
+
+  // Remove laptop from comparison
   const removeLaptop = (laptopId: string) => {
-    // Don't allow removing current laptop
     if (laptopId !== currentLaptopId) {
-      setSelectedLaptops(selectedLaptops.filter(id => id !== laptopId));
+      setSelectedLaptops(selectedLaptops.filter((laptop) => laptop.id !== laptopId))
     }
-  };
+  }
 
-  const compareSelected = () => {
-    if (selectedLaptops.length > 1) {
-      // Create URL for comparison page
-      const compareUrl = `/compare/${selectedLaptops.join("-vs-")}`;
-      router.push(compareUrl);
+  // Navigate to comparison page
+  const goToComparison = () => {
+    if (selectedLaptops.length >= 2) {
+      const laptopIds = selectedLaptops.map((laptop) => laptop.id).join("-vs-")
+      router.push(`/compare/${laptopIds}`)
     }
-  };
+  }
 
   return (
     <>
-      {/* Floating compare button */}
-      <div 
-        ref={buttonRef}
-        className={`fixed right-8 z-50 transition-all duration-300 ${isOpen ? 'scale-0' : 'scale-100'}`}
-        style={{ top: '100px' }}
+      {/* Floating button */}
+      <button
+        data-floating-button
+        onClick={() => setIsOpen(true)}
+        className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg"
+        aria-label="Compare laptops"
       >
-        <button
-          onClick={toggleOpen}
-          className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-200"
-          aria-label="Compare laptops"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
+        <Search className="w-6 h-6" />
+      </button>
 
-      {/* Compare modal */}
+      {/* Search panel */}
       {isOpen && (
-        <div 
-          ref={modalRef}
-          className="fixed right-8 z-50 bg-white rounded-lg shadow-xl p-4 w-80 transition-all duration-300"
-          style={{ top: '100px' }}
+        <div
+          ref={searchRef}
+          className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 bg-white rounded-lg shadow-xl p-4 w-80 md:w-96"
         >
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-lg">Compare Laptops</h3>
-            <button onClick={toggleOpen} className="text-gray-500 hover:text-gray-700">
+            <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-700">
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="mb-4">
-            <p className="text-sm text-gray-600 mb-2">Select up to 3 laptops to compare:</p>
-            
-            {/* Selected laptops */}
-            <div className="space-y-2 mb-4">
-              {selectedLaptops.map((id, index) => {
-                const laptop = searchLaptops("").find(l => l.id === id);
-                return laptop ? (
-                  <div key={id} className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                    <span className="text-sm font-medium truncate flex-1">{laptop.name}</span>
-                    {id !== currentLaptopId && (
-                      <button 
-                        onClick={() => removeLaptop(id)} 
-                        className="text-gray-500 hover:text-red-600"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                ) : null;
-              })}
-            </div>
-
-            {/* Search input */}
-            {selectedLaptops.length < 3 && (
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <Search className="w-4 h-4 text-gray-500" />
-                </div>
-                <input
-                  type="text"
-                  className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Search laptops..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-            )}
-
-            {/* Search results */}
-            {searchResults.length > 0 && (
-              <div className="mt-2 max-h-60 overflow-y-auto border rounded-md">
-                {searchResults.map(laptop => (
-                  <div
-                    key={laptop.id}
-                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => selectLaptop(laptop.id)}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {selectedLaptops.map((laptop) => (
+              <div key={laptop.id} className="flex items-center bg-gray-100 rounded-full pl-2 pr-1 py-1">
+                <span className="text-sm font-medium mr-1">{laptop.name}</span>
+                {laptop.id !== currentLaptopId && (
+                  <button
+                    onClick={() => removeLaptop(laptop.id)}
+                    className="w-5 h-5 rounded-full bg-gray-300 hover:bg-gray-400 flex items-center justify-center"
                   >
-                    <p className="text-sm font-medium">{laptop.name}</p>
-                    <p className="text-xs text-gray-500">{laptop.specs.cpu}, {laptop.specs.ram}</p>
-                  </div>
-                ))}
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
               </div>
-            )}
+            ))}
           </div>
 
+          {selectedLaptops.length < 4 && (
+            <div className="relative mb-4" ref={dropdownRef}>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search for laptops to compare..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value)
+                    setIsDropdownOpen(true)
+                  }}
+                  onClick={() => setIsDropdownOpen(true)}
+                  className="w-full border border-gray-300 rounded-md pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                {searchQuery && (
+                  <button
+                    onClick={() => {
+                      setSearchQuery("")
+                      setSearchResults([])
+                    }}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+
+              {isDropdownOpen && searchResults.length > 0 && (
+                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+                  {searchResults.map((laptop) => (
+                    <div
+                      key={laptop.id}
+                      onClick={() => {
+                        addLaptop(laptop)
+                        setIsDropdownOpen(false)
+                      }}
+                      className="flex items-center p-3 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <div className="w-10 h-10 relative mr-3 flex-shrink-0">
+                        <Image
+                          src={laptop.image || "/placeholder.svg"}
+                          alt={laptop.name}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <div>
+                        <div className="font-medium">{laptop.name}</div>
+                        <div className="text-xs text-gray-500">
+                          {laptop.specs.cpu} • {laptop.specs.gpu}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           <button
-            onClick={compareSelected}
+            onClick={goToComparison}
             disabled={selectedLaptops.length < 2}
-            className={`w-full py-2 px-4 rounded-md flex items-center justify-center gap-2 ${
-              selectedLaptops.length < 2
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+            className={`w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded ${
+              selectedLaptops.length < 2 ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            Compare <ArrowRight className="w-4 h-4" />
+            <span>Compare {selectedLaptops.length} Laptops</span>
+            <ArrowRight className="ml-2 w-4 h-4" />
           </button>
         </div>
       )}
     </>
-  );
+  )
 }

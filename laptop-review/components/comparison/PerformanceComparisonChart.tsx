@@ -34,13 +34,13 @@ export default function PerformanceComparisonChart({
           value: item.cpuScore,
           unit: " điểm",
           percentage: Math.min((item.cpuScore / maxCpuScore) * 100, 100),
-          color: "#22c55e",
+          color: "#0ea5e9", // Changed to a more suitable blue for white background
         },
         gpuScore: {
           value: item.gpuScore,
           unit: " điểm",
           percentage: Math.min((item.gpuScore / maxGpuScore) * 100, 100),
-          color: "#3b82f6",
+          color: "#10b981", // Changed to a more suitable green for white background
         },
       },
     }
@@ -54,14 +54,14 @@ export default function PerformanceComparisonChart({
         {
           id: "cpuScore",
           label: "Điểm CPU (Geekbench Multi-core)",
-          color: "#22c55e",
+          color: "#0ea5e9",
           unit: " điểm",
           maxValue: maxCpuScore,
         },
         {
           id: "gpuScore",
           label: "Điểm GPU (3DMark)",
-          color: "#3b82f6",
+          color: "#10b981",
           unit: " điểm",
           maxValue: maxGpuScore,
         },
@@ -71,6 +71,7 @@ export default function PerformanceComparisonChart({
         defaultMetric: "cpuScore",
         defaultOrder: "desc",
       }}
+      theme="light" // Added light theme
     />
   )
 }
