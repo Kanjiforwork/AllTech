@@ -13,6 +13,9 @@ import ImportanceAdjuster from "@/components/comparison/ImportanceAdjuster"
 import KeyDifferences from "@/components/comparison/KeyDifferences"
 import ComparisonTable from "@/components/comparison/ComparisonTable"
 import { getKeyDifferences } from "@/utils/compareUtils"
+import BatteryComparisonChart from "@/components/comparison/BatteryComparisonChart"
+import PerformanceComparisonChart from "@/components/comparison/PerformanceComparisonChart"
+
 
 interface ComparisonWeights {
   performance: number
@@ -140,11 +143,43 @@ export default function ComparisonPage() {
         {/* Overview Section */}
         <ComparisonOverview laptops={laptops} />
 
+        {/* Key Differences */}
+        <KeyDifferences laptops={laptops} keyDifferences={keyDifferences} />
+
+                {/* Battery Comparison Chart */}
+                <div className="mb-8">
+          <BatteryComparisonChart 
+            items={laptops.map(laptop => ({
+              id: laptop.id,
+              name: laptop.name,
+              subtitle: laptop.detailedSpecs.cpu.name,
+              batteryCapacity: Number.parseInt(laptop.detailedSpecs.battery.capacity),
+              batteryLife: {
+                hours: Math.floor(laptop.benchmarks.battery),
+                minutes: Math.round((laptop.benchmarks.battery % 1) * 60)
+              }
+            }))}
+          />
+        </div>
+
+        {/* Performance Comparison Chart */}
+        <div className="mb-8">
+          <PerformanceComparisonChart 
+            items={laptops.map(laptop => ({
+              id: laptop.id,
+              name: laptop.name,
+              subtitle: laptop.detailedSpecs.cpu.name,
+              cpuScore: laptop.detailedSpecs.cpu.benchmarks.geekbench6Multi,
+              gpuScore: laptop.detailedSpecs.gpu.benchmarks.wildlifeExtreme
+            }))}
+          />
+        </div>
+
+
         {/* Adjust Importance section */}
         <ImportanceAdjuster laptops={laptops} weights={weights} setWeights={setWeights} />
 
-        {/* Key Differences */}
-        <KeyDifferences laptops={laptops} keyDifferences={keyDifferences} />
+        
 
         {/* Value for Money */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
