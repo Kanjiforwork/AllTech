@@ -81,6 +81,9 @@ export default function LaptopForm() {
     },
   })
 
+  const brands = ["Select Brand", "Apple", "Dell", "HP", "Lenovo", "ASUS", "Acer", "MSI", "Microsoft", "Samsung", "Razer", "LG", "Xiaomi", "Others"];
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -206,20 +209,12 @@ export default function LaptopForm() {
                   className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
                   required
                 >
-                  <option value="">Select Brand</option>
-                  <option value="Apple">Apple</option>
-                  <option value="Dell">Dell</option>
-                  <option value="HP">HP</option>
-                  <option value="Lenovo">Lenovo</option>
-                  <option value="ASUS">ASUS</option>
-                  <option value="Acer">Acer</option>
-                  <option value="MSI">MSI</option>
-                  <option value="Microsoft">Microsoft</option>
-                  <option value="Samsung">Samsung</option>
-                  <option value="Razer">Razer</option>
-                  <option value="LG">LG</option>
-                  <option value="Xiaomi">Xiaomi</option>
-                  <option value="Other">Other</option>
+                  {brands.map((item)=>{
+                    return (
+                      <option value={item}>{item}</option>
+                    )
+                  })}
+                  
                 </select>
               </div>
             </div>
