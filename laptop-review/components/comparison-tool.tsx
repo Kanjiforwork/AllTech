@@ -1,32 +1,14 @@
 "use client"
 
-import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import { X } from "lucide-react"
 
-interface Laptop {
-  id: number
-  name: string
-  image: string
-  processor: string
-  ram: string
-  storage: string
-  display: string
-  gpu: string
-  battery: string
-  weight: string
-  price: string
-  [key: string]: string | number // Index signature for dynamic access
-}
 
-interface SpecDefinition {
-  name: string
-  key: keyof Laptop
-}
+//use for a different page later
 
-export default function ComparisonTool(): React.ReactNode {
-  const [selectedLaptops, setSelectedLaptops] = useState<Laptop[]>([
+export default function ComparisonTool() {
+  const [selectedLaptops, setSelectedLaptops] = useState([
     {
       id: 1,
       name: "MacBook Pro 16",
@@ -59,7 +41,7 @@ export default function ComparisonTool(): React.ReactNode {
     setSelectedLaptops(selectedLaptops.filter((laptop) => laptop.id !== id))
   }
 
-  const specs: SpecDefinition[] = [
+  const specs = [
     { name: "Processor", key: "processor" },
     { name: "RAM", key: "ram" },
     { name: "Storage", key: "storage" },
@@ -68,7 +50,7 @@ export default function ComparisonTool(): React.ReactNode {
     { name: "Battery", key: "battery" },
     { name: "Weight", key: "weight" },
     { name: "Price", key: "price" },
-  ]
+  ] as const
 
   return (
     <div className="overflow-hidden bg-white border rounded-lg shadow-sm">
