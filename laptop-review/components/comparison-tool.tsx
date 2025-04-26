@@ -4,6 +4,9 @@ import { useState } from "react"
 import Image from "next/image"
 import { X } from "lucide-react"
 
+
+//use for a different page later
+
 export default function ComparisonTool() {
   const [selectedLaptops, setSelectedLaptops] = useState([
     {

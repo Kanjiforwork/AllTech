@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -29,11 +32,44 @@ export default function ArticleHighlights() {
     },
   ]
 
+  const articlesRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const articleElements = articlesRef.current?.querySelectorAll('.article-card')
+            articleElements?.forEach((element, index) => {
+              setTimeout(() => {
+                element.classList.add('animate-fade-up')
+              }, index * 150)
+            })
+            observer.disconnect()
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    if (articlesRef.current) {
+      observer.observe(articlesRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
   return (
-    <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-3" ref={articlesRef}>
       {articles.map((article) => (
-        <Link key={article.id} href={`/articles/${article.id}`} className="group">
-          <div className="overflow-hidden transition-all duration-200 bg-white border rounded-lg shadow-sm group-hover:shadow-md">
+        <Link 
+          key={article.id} 
+          href={`/articles/${article.id}`} 
+          className="group article-card opacity-0"
+        >
+          <div className="overflow-hidden transition-all duration-200 bg-white border rounded-lg shadow-sm group-hover:shadow-md hover-lift">
             <div className="relative h-48 overflow-hidden">
               <Image
                 src={article.image || "/placeholder.svg"}

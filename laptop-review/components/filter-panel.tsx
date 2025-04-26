@@ -62,7 +62,7 @@ export default function FilterPanel() {
 
         {expanded.ram && (
           <div className="space-y-2 mt-2">
-            {["8GB", "16GB", "32GB", "64GB"].map((ram) => (
+            {["8GB", "16GB", "32GB", "64GB", "Expandable", "Soldered"].map((ram) => (
               <div key={ram} className="flex items-center">
                 <input
                   type="checkbox"
