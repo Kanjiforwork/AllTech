@@ -144,9 +144,7 @@ export default function Home() {
                     <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md"></div>
 
 
-                    <Link href={`/laptops/${i + 1}`}>
-                    <h3 className="mb-2 text-lg font-medium">Laptop Model {i + 1}</h3>
-                    </Link>
+
 
                     <div className="flex items-center mb-2">
                       {Array.from({ length: 5 }).map((_, j) => (
