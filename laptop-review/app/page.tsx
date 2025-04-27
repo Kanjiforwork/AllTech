@@ -56,6 +56,8 @@ export default function Home() {
     }
   }, [])
 
+  const [dataSort, setDataSort] = useState(laptopData)
+
   return (
     <div className="min-h-screen bg-gray-50">
 
