@@ -113,6 +113,8 @@ export default function Home() {
               <Heart className="w-5 h-5 mr-1" />
               <span>Yêu thích</span>
             </Link>
+
+            <NotificationBell/>
            {/* Hiển thị avatar nếu đã đăng nhập */}
            {user ? (
               <div className="relative">
