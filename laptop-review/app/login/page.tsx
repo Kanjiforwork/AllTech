@@ -114,7 +114,7 @@ export default function LoginPage() {
             alt="Google Icon"
             className="w-5 h-5 mr-2"
           />
-          Sign in with Google
+          Signs in with Google
         </button>
         <p className="mt-4 text-sm text-center">
           <button
