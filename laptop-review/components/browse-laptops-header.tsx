@@ -2,12 +2,16 @@
 
 import { useState, useRef, useEffect } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
+import { Laptop } from "@/data/laptops"
 
-export default function BrowseLaptopsHeader() {
+
+
+export default function BrowseLaptopsHeader({laptopData, handle}) {
     const [priceDropdownOpen, setPriceDropdownOpen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const headerRef = useRef<HTMLDivElement>(null)
     const [isVisible, setIsVisible] = useState(false)
+    
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -43,6 +47,8 @@ export default function BrowseLaptopsHeader() {
         }
     }, [])
 
+ 
+    
     return (
         <div
             ref={headerRef}
@@ -52,20 +58,37 @@ export default function BrowseLaptopsHeader() {
             <h2 className="text-3xl font-bold mb-5 sm:mb-0">Browse Laptops</h2>
 
             <div className="flex flex-wrap gap-4">
-                <button className="px-6 py-3 bg-white border border-gray-200 rounded-md text-base font-medium hover:bg-gray-50 shadow-sm transition-all">
+                <button className="px-6 py-3 bg-white border border-gray-200 rounded-md text-base font-medium hover:bg-gray-50 shadow-sm transition-all" 
+                >
                     Huge Sale
                 </button>
 
                 <button className="px-6 py-3 bg-white border border-gray-200 rounded-md text-base font-medium hover:bg-gray-50 shadow-sm transition-all">
                     Most Views
                 </button>
-                <button className="px-6 py-3 bg-white border border-gray-200 rounded-md text-base font-medium hover:bg-gray-50 shadow-sm transition-all flex items-center">
+                <button className="px-6 py-3 bg-white border border-gray-200 rounded-md text-base font-medium hover:bg-gray-50 shadow-sm transition-all flex items-center"
+                 onClick={()=> {
+                    const cloneLaptopData = laptopData.slice()
+                    const newList = cloneLaptopData.sort((a,b)=>  b.salePrice - a.salePrice)
+                     handle(newList)
+              
+                   
+                }}
+                 
+                 >
                     Price: High to Low
                     <ChevronDown className="w-4 h-4 ml-2" />
                 </button>
 
                 {/* Nút Low to High với mũi tên lên */}
-                <button className="px-6 py-3 bg-white border border-gray-200 rounded-md text-base font-medium hover:bg-gray-50 shadow-sm transition-all flex items-center">
+                <button className="px-6 py-3 bg-white border border-gray-200 rounded-md text-base font-medium hover:bg-gray-50 shadow-sm transition-all flex items-center"
+                    onClick={()=> {
+                        const cloneLaptopData = laptopData.slice()
+                        const newList = cloneLaptopData.sort((a,b)=> a.salePrice - b.salePrice)                   
+                         handle(newList)
+  
+                    }}
+                >
                     Price: Low to High
                     <ChevronUp className="w-4 h-4 ml-2" />
                 </button>
@@ -74,3 +97,4 @@ export default function BrowseLaptopsHeader() {
 
     )
 }
+

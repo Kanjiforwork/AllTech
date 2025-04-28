@@ -68,6 +68,12 @@ export default function Home() {
     alert("Logged out successfully!");
   };
 
+  const [dataSort, setDataSort] = useState(laptopData)
+  function handleSort (newListData){
+    console.log(dataSort)
+    setDataSort(newListData)
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
 
@@ -168,13 +174,14 @@ export default function Home() {
             <FilterPanel />
           </div>
           <div className="lg:col-span-3 relative z-0">
-            <BrowseLaptopsHeader />
+            <BrowseLaptopsHeader laptopData={laptopData} handle = {(newList)=>handleSort(newList)}/>
             {/* Laptop Grid with animation */}
+          
             <div 
               ref={laptopGridRef} 
               className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 relative z-0"
             >
-              {laptopData.map((laptop, index) => (
+              {dataSort.map((laptop, index) => (
                 <div 
                   key={laptop.id} 
                   className={`overflow-hidden bg-white border rounded-lg shadow-sm transition-all duration-500 ease-in-out ${
