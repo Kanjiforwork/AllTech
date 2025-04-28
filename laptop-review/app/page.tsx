@@ -23,9 +23,14 @@ export default function Home() {
   const [visibleCards, setVisibleCards] = useState<boolean[]>(Array(laptopData.length).fill(false))
   // Ref for the laptop grid container
   const laptopGridRef = useRef<HTMLDivElement>(null)
-
+  const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -54,7 +59,14 @@ export default function Home() {
     return () => {
       observer.disconnect() // Clean up on unmount
     }
+    
   }, [])
+  const handleLogout = () => {
+    // Xóa thông tin người dùng khỏi localStorage và cập nhật trạng thái
+    localStorage.removeItem("user");
+    setUser(null);
+    alert("Logged out successfully!");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -95,14 +107,43 @@ export default function Home() {
               <Heart className="w-5 h-5 mr-1" />
               <span>Yêu thích</span>
             </Link>
-
-            <NotificationBell />
-            <Link
-              href="/login"
-              className="px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800"
-            >
-              Login / Register
-            </Link>
+           {/* Hiển thị avatar nếu đã đăng nhập */}
+           {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setMenuOpen((prev) => !prev)}
+                  className="flex items-center focus:outline-none"
+                >
+                  <img
+                    src={user.avatar || "/user-circle.svg"}
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
+                </button>
+                {menuOpen && (
+                  <div className="absolute right-0 w-48 mt-2 bg-white border rounded-lg shadow-lg">
+                    <div className="px-4 py-2 text-sm text-gray-700">
+                      <p>{user.username}</p>
+                      <p className="text-xs text-gray-500">{user.email}</p>
+                    </div>
+                    <hr />
+                    <button
+                      onClick={handleLogout}
+                      className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-gray-100"
+                    >
+                      Log out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800"
+              >
+                Login / Register
+              </Link>
+            )}
           </div>
         </div>
       </header>
