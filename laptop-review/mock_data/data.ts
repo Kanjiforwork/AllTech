@@ -1,4 +1,5 @@
-// Mock data for laptops
+// Mock datas for laptops
+// Maybe more mock datas for users
 export const laptops = [
     {
       id: "lenovo-ideapad-5-pro-16",
