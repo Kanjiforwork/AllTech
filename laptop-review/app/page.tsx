@@ -7,7 +7,7 @@ import { SearchIcon, Heart } from "lucide-react"
 import { laptopData } from "@/data/laptops";
 
 
-import FeaturedLaptops from "@/components/featured-laptops"
+import LatestNews from "@/components/latest-news"
 import ArticleHighlights from "@/components/article-highlights"
 import FilterPanel from "@/components/filter-panel"
 //import ComparisonTool from "@/components/comparison-tool"
@@ -161,7 +161,7 @@ export default function Home() {
         {/* Featured Section */}
         <section className="mb-12">
           <h2 className="mb-6 text-2xl font-bold"></h2>
-          <FeaturedLaptops />
+          <LatestNews />
         </section>
 
         {/* Recommended Section */}
