@@ -1,4 +1,5 @@
-// Mock data for laptops
+// Mock datas for laptops
+// Maybe more mock datas for users
 export const laptops = [
 
   // MacBook Pro 14 inch (M3 Pro)

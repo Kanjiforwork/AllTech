@@ -1,13 +1,22 @@
 "use client"
 
+import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Heart } from "lucide-react"
 
-export default function FavoritesSection() {
+interface Laptop {
+  id: number
+  name: string
+  image: string
+  description: string
+  price: string
+}
+
+export default function FavoritesSection(): React.ReactNode {
   // In a real app, this would be fetched from Firebase Firestore
-  const [favorites, setFavorites] = useState([
+  const [favorites, setFavorites] = useState<Laptop[]>([
     {
       id: 1,
       name: "MacBook Pro 16",

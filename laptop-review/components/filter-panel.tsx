@@ -1,17 +1,26 @@
 "use client"
 
+import type React from "react"
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 
-export default function FilterPanel() {
-  const [expanded, setExpanded] = useState({
+interface ExpandedState {
+  brand: boolean
+  ram: boolean
+  gpu: boolean
+  storage: boolean
+  [key: string]: boolean // Index signature for dynamic access
+}
+
+export default function FilterPanel(): React.ReactNode {
+  const [expanded, setExpanded] = useState<ExpandedState>({
     brand: true,
     ram: true,
     gpu: true,
     storage: true,
   })
 
-  const toggleSection = (section: keyof typeof expanded) => {
+  const toggleSection = (section: keyof ExpandedState) => {
     setExpanded((prev) => ({
       ...prev,
       [section]: !prev[section],
@@ -62,7 +71,7 @@ export default function FilterPanel() {
 
         {expanded.ram && (
           <div className="space-y-2 mt-2">
-            {["8GB", "16GB", "32GB", "64GB"].map((ram) => (
+            {["8GB", "16GB", "32GB", "64GB", "Expandable", "Soldered"].map((ram) => (
               <div key={ram} className="flex items-center">
                 <input
                   type="checkbox"
