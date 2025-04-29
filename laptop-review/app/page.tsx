@@ -10,6 +10,7 @@ import RecommendedSection from "@/components/recommended-section"
 import FavoritesSection from "@/components/favorites-section"
 import ReviewsSection from "@/components/reviews-section"
 import NotificationBell from "@/components/notification-bell"
+import FloatingComparisonButton from "@/components/comparison/ComparisonButton"
 
 export default function Home() {
   return (
@@ -70,7 +71,8 @@ export default function Home() {
                   <div className="p-4">
                     <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md"></div>
 
-                    <Link href={`/laptops/${i + 1}`}>
+                    <Link href={`/laptops/acer-nitro-5`}>
+                   
                     <h3 className="mb-2 text-lg font-medium">Laptop Model {i + 1}</h3>
                     </Link>
 
