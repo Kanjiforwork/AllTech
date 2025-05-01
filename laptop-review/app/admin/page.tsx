@@ -5,6 +5,9 @@ import { useState } from "react"
 import { Save, ArrowLeft, Upload, Star, StarHalf } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import Rating from "./Rating"
+
+
 
 type RatingCategory = {
   name: string
@@ -171,6 +174,9 @@ export default function LaptopForm() {
         </div>
       </header>
 
+      
+
+     
       <form onSubmit={handleSubmit} className="p-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Basic Information */}
@@ -560,7 +566,10 @@ export default function LaptopForm() {
         </div>
 
         {/* Ratings */}
-        <div className="mt-8">
+
+        <Rating formData={formData}  handleRatingChange={handleRatingChange} renderRatingStars={renderRatingStars}></Rating>
+    
+        {/* <div className="mt-8">
           <div className="pb-4 mb-6 border-b">
             <h3 className="text-lg font-medium">Ratings & Reviews</h3>
             <p className="text-sm text-gray-500">Rate each category from 1 to 10 and provide a brief description</p>
@@ -598,7 +607,7 @@ export default function LaptopForm() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className="mt-8 flex justify-end">
           <button
