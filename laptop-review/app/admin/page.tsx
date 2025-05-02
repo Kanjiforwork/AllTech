@@ -7,6 +7,8 @@ import Link from "next/link"
 import Image from "next/image"
 import Rating from "./Rating"
 
+import Feature from "./Feature"
+
 
 
 type RatingCategory = {
@@ -532,6 +534,19 @@ export default function LaptopForm() {
                 placeholder="e.g. Up to 10 hours"
               />
             </div>
+
+            {/* <Feature
+             identity={"watchingTime"} 
+             classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
+             clasNameForInput={"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"}
+             type="text"
+                id="watchingTime"
+                value={formData.watchingTime}
+                onChange={handleChange}  
+                placeholder="e.g. Up to 10 hours"
+             >
+              Watching Online Videos
+            </Feature> */}
 
             <div>
               <label htmlFor="casualUseTime" className="block mb-1 text-sm font-medium text-gray-700">
