@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth,googleProvider } from "@/firebase"; // Đường dẫn tương đối
+import { auth, googleProvider } from "@/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
@@ -11,22 +11,19 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hydrated, setHydrated] = useState(false);
-  const router = useRouter(); // Khởi tạo useRouter
+  const router = useRouter();
 
   useEffect(() => {
-    // Đánh dấu rằng component đã được hydrate
     setHydrated(true);
   }, []);
 
   if (!hydrated) {
-    // Tránh render trước khi hydration hoàn tất
     return null;
   }
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Create a new user with Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       localStorage.setItem("user", JSON.stringify({ email: user.email, username: name }));
@@ -40,17 +37,14 @@ export default function RegisterPage() {
 
   const handleGoogleSignUp = async () => {
     try {
-      // Đăng nhập bằng Google
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-  
-      // Lưu thông tin người dùng vào localStorage
+
       localStorage.setItem("user", JSON.stringify({ email: user.email, username: user.displayName }));
-  
+
       console.log("User signed in with Google:", user);
       alert("Google Sign-Up successful!");
-  
-      // Điều hướng đến trang chính (page.tsx)
+
       router.push("/");
     } catch (error: any) {
       console.error("Error signing in with Google:", error.message);
@@ -61,6 +55,14 @@ export default function RegisterPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        {/* Logo Section */}
+        <div className="flex justify-center mb-6">
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="w-16 h-16"
+          />
+        </div>
         <h1 className="mb-6 text-2xl font-bold text-center">Register</h1>
         <form onSubmit={handleRegister}>
           <div className="mb-4">
