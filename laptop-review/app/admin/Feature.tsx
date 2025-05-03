@@ -6,6 +6,7 @@ export default function Feature({identity, classNameForLabel, clasNameForInput, 
               </label>
               <input
               name={identity}
+              id={identity}
               className={clasNameForInput}
                {...rest}
               />
