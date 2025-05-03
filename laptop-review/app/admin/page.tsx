@@ -8,6 +8,7 @@ import Image from "next/image"
 import Rating from "./Rating"
 import BatertyLife from "./BateryLife"
 import Feature from "./Feature"
+import AdditionalFeautures from "./AdditionalFeatures"
 
 
 
@@ -176,9 +177,9 @@ export default function LaptopForm() {
         </div>
       </header>
 
-      
 
-     
+
+
       <form onSubmit={handleSubmit} className="p-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Basic Information */}
@@ -216,12 +217,12 @@ export default function LaptopForm() {
                   className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
                   required
                 >
-                  {brands.map((item)=>{
+                  {brands.map((item) => {
                     return (
                       <option value={item}>{item}</option>
                     )
                   })}
-                  
+
                 </select>
               </div>
             </div>
@@ -446,84 +447,20 @@ export default function LaptopForm() {
           </div>
         </div>
 
-        {/* Additional Features */}
+
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <div className="space-y-6">
-            <div className="pb-4 mb-6 border-b">
-              <h3 className="text-lg font-medium">Additional Features</h3>
-            </div>
-
-            <div>
-              <label htmlFor="webcam" className="block mb-1 text-sm font-medium text-gray-700">
-                Webcam
-              </label>
-              <input
-                type="text"
-                id="webcam"
-                name="webcam"
-                value={formData.webcam}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="e.g. 720p HD webcam with privacy shutter"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="wifiBluetooth" className="block mb-1 text-sm font-medium text-gray-700">
-                WiFi / Bluetooth
-              </label>
-              <input
-                type="text"
-                id="wifiBluetooth"
-                name="wifiBluetooth"
-                value={formData.wifiBluetooth}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="e.g. WiFi 6E (802.11ax), Bluetooth 5.2"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="keyboard" className="block mb-1 text-sm font-medium text-gray-700">
-                Keyboard
-              </label>
-              <input
-                type="text"
-                id="keyboard"
-                name="keyboard"
-                value={formData.keyboard}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="e.g. Backlit keyboard with numpad"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="speakersMicrophone" className="block mb-1 text-sm font-medium text-gray-700">
-                Speakers / Microphone
-              </label>
-              <input
-                type="text"
-                id="speakersMicrophone"
-                name="speakersMicrophone"
-                value={formData.speakersMicrophone}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="e.g. Stereo speakers, dual-array microphones"
-              />
-            </div>
-          </div>
-
+          {/* Additional Features */}
+          <AdditionalFeautures formData={formData} handleChange={handleChange}></AdditionalFeautures>
           {/* Battery Life */}
-        <BatertyLife formData={formData} handleChange={handleChange}></BatertyLife>
-          
+          <BatertyLife formData={formData} handleChange={handleChange}></BatertyLife>
+
         </div>
 
         {/* Ratings */}
 
-        <Rating formData={formData}  handleRatingChange={handleRatingChange} renderRatingStars={renderRatingStars}></Rating>
+        <Rating formData={formData} handleRatingChange={handleRatingChange} renderRatingStars={renderRatingStars}></Rating>
 
-       
+
 
         <div className="mt-8 flex justify-end">
           <button

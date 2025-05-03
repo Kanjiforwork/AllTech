@@ -17,6 +17,8 @@ export default function BatertyLife({formData, handleChange}){
              >
               Watching Online Videos
             </Feature>
+
+            
             <Feature
              identity={"casualUseTime"} 
              classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
