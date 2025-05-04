@@ -1,15 +1,15 @@
-export default function Feature({identity, classNameForLabel, clasNameForInput, children, ...rest}){
+export default function Feature({identity, classNameForLabel, clasNameForInput, children, as : Componet = "input",   ...rest}){
     return(
         <div>
               <label htmlFor={identity} className={classNameForLabel}>
                 {children}
               </label>
-              <input
+              <Componet
               name={identity}
               id={identity}
               className={clasNameForInput}
                {...rest}
-              />
+              ></Componet>
         </div>
     )
 }
