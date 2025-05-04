@@ -9,6 +9,7 @@ import Rating from "./Rating"
 import BatertyLife from "./BateryLife"
 import Feature from "./Feature"
 import AdditionalFeautures from "./AdditionalFeatures"
+import BasicInformation from "./BasicInfomation"
 
 
 
@@ -183,135 +184,14 @@ export default function LaptopForm() {
       <form onSubmit={handleSubmit} className="p-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Basic Information */}
-          <div className="space-y-6">
-            <div className="pb-4 mb-6 border-b">
-              <h3 className="text-lg font-medium">Basic Information</h3>
-            </div>
+          <BasicInformation
+          formData={formData}
+          handleChange={handleChange}
+          handleImageChange={handleImageChange}
+          brands={brands}
+          ></BasicInformation>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-700">
-                  Laptop Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. MacBook Pro 16"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="brand" className="block mb-1 text-sm font-medium text-gray-700">
-                  Brand *
-                </label>
-                <select
-                  id="brand"
-                  name="brand"
-                  value={formData.brand}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  required
-                >
-                  {brands.map((item) => {
-                    return (
-                      <option value={item}>{item}</option>
-                    )
-                  })}
-
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="operatingSystem" className="block mb-1 text-sm font-medium text-gray-700">
-                Operating System
-              </label>
-              <input
-                type="text"
-                id="operatingSystem"
-                name="operatingSystem"
-                value={formData.operatingSystem}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="e.g. Windows 11 Home"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="weight" className="block mb-1 text-sm font-medium text-gray-700">
-                  Weight
-                </label>
-                <input
-                  type="text"
-                  id="weight"
-                  name="weight"
-                  value={formData.weight}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. 2.1 kg"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="dimensions" className="block mb-1 text-sm font-medium text-gray-700">
-                  Dimensions
-                </label>
-                <input
-                  type="text"
-                  id="dimensions"
-                  name="dimensions"
-                  value={formData.dimensions}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. 355.7 x 248.1 x 16.8 mm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Laptop Images</label>
-              <div className="p-4 border-2 border-dashed rounded-md border-gray-300">
-                <div className="flex flex-col items-center justify-center py-4">
-                  <Upload className="w-8 h-8 mb-2 text-gray-400" />
-                  <p className="mb-1 text-sm font-medium text-gray-700">Drag and drop images here</p>
-                  <p className="mb-4 text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                  <label
-                    htmlFor="laptop-image"
-                    className="px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 cursor-pointer"
-                  >
-                    Browse Files
-                    <input
-                      id="laptop-image"
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={handleImageChange}
-                    />
-                  </label>
-                </div>
-
-                {imagePreview && (
-                  <div className="mt-4">
-                    <p className="mb-2 text-sm font-medium text-gray-700">Preview:</p>
-                    <div className="relative h-40 w-full overflow-hidden rounded-md">
-                      <Image
-                        src={imagePreview || "/placeholder.svg"}
-                        alt="Laptop preview"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          
 
           {/* Hardware Specifications */}
           <div className="space-y-6">
