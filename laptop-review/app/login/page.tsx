@@ -1,5 +1,5 @@
 "use client";
-import { sendPasswordResetEmail } from "firebase/auth"; // Import thêm hàm này
+import { sendPasswordResetEmail } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
@@ -66,11 +66,17 @@ export default function LoginPage() {
     }
   };
 
-
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
-        <h1 className="mb-6 text-2xl font-bold text-center">Login</h1>
+    <div className="flex items-center justify-center min-h-screen white">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <div className="flex justify-center mb-6">
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="w-16 h-16"
+          />
+        </div>
+        <h1 className="mb-6 text-3xl font-bold text-center text-gray-800">Login</h1>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
@@ -82,7 +88,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
             />
           </div>
           <div className="mb-4">
@@ -95,19 +101,19 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
             />
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 mb-4 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800"
+            className="w-full px-4 py-2 mb-4 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition duration-300"
           >
             Login
           </button>
         </form>
         <button
           onClick={handleGoogleLogin}
-          className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-lg hover:bg-gray-100"
+          className="flex items-center justify-center w-full px-4 py-2 mb-4 text-sm font-medium text-gray-700 bg-white border rounded-lg hover:bg-gray-100 transition duration-300"
         >
           <img
             src="/google-icon.svg"
@@ -116,17 +122,17 @@ export default function LoginPage() {
           />
           Sign in with Google
         </button>
-        <p className="mt-4 text-sm text-center">
+        <p className="text-sm text-center">
           <button
             onClick={handleForgotPassword}
-            className="text-blue-500 hover:underline"
+            className="text-black hover:underline"
           >
             Forgot your password?
           </button>
         </p>
         <p className="mt-4 text-sm text-center">
           Don't have an account?{" "}
-          <a href="/register" className="text-blue-500 hover:underline">
+          <a href="/register" className="text-black hover:underline">
             Register here
           </a>
         </p>

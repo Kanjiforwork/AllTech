@@ -14,7 +14,6 @@ import RecommendedSection from "@/components/recommended-section"
 //import FavoritesSection from "@/components/favorites-section"
 //import ReviewsSection from "@/components/reviews-section"
 import NotificationBell from "@/components/notification-bell"
-import FloatingComparisonButton from "@/components/comparison/ComparisonButton"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
 
 export default function Home() {
@@ -103,7 +102,7 @@ export default function Home() {
             <SearchIcon className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
           </div>
 
-          {/* Các nút bên phải */}
+          {/* ComparisonButton removed as it's not relevant on home page */}
           <div className="flex items-center ml-auto space-x-8">
             <Link href="/#compare" className="flex items-center text-sm font-bold hover:text-gray-700">
               So sánh
@@ -154,6 +153,8 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      
 
       {/* phần này đã đổi thành News */}
       <main className="container px-4 py-8 mx-auto">
