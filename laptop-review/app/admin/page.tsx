@@ -10,6 +10,7 @@ import BatertyLife from "./BateryLife"
 import Feature from "./Feature"
 import AdditionalFeautures from "./AdditionalFeatures"
 import BasicInformation from "./BasicInfomation"
+import HardwareSpecifications from "./HardwareSpecifications"
 
 
 
@@ -183,161 +184,13 @@ export default function LaptopForm() {
 
       <form onSubmit={handleSubmit} className="p-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {/* Basic Information */}
-          <BasicInformation
-          formData={formData}
-          handleChange={handleChange}
-          handleImageChange={handleImageChange}
-          brands={brands}
-          ></BasicInformation>
-
-          
-
-          {/* Hardware Specifications */}
-          <div className="space-y-6">
-            <div className="pb-4 mb-6 border-b">
-              <h3 className="text-lg font-medium">Hardware Specifications</h3>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="cpu" className="block mb-1 text-sm font-medium text-gray-700">
-                  CPU / Processor
-                </label>
-                <input
-                  type="text"
-                  id="cpu"
-                  name="cpu"
-                  value={formData.cpu}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. Intel Core i7-12700H"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="gpu" className="block mb-1 text-sm font-medium text-gray-700">
-                  GPU
-                </label>
-                <input
-                  type="text"
-                  id="gpu"
-                  name="gpu"
-                  value={formData.gpu}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. NVIDIA GeForce RTX 3060"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="ram" className="block mb-1 text-sm font-medium text-gray-700">
-                  RAM
-                </label>
-                <input
-                  type="text"
-                  id="ram"
-                  name="ram"
-                  value={formData.ram}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. 16GB DDR4 3200MHz"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="hardDrive" className="block mb-1 text-sm font-medium text-gray-700">
-                  Hard Drive / Storage
-                </label>
-                <input
-                  type="text"
-                  id="hardDrive"
-                  name="hardDrive"
-                  value={formData.hardDrive}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. 512GB NVMe SSD"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="graphicsCard" className="block mb-1 text-sm font-medium text-gray-700">
-                Graphics Card
-              </label>
-              <input
-                type="text"
-                id="graphicsCard"
-                name="graphicsCard"
-                value={formData.graphicsCard}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="e.g. NVIDIA GeForce RTX 3060 6GB GDDR6"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="screen" className="block mb-1 text-sm font-medium text-gray-700">
-                Screen / Display
-              </label>
-              <input
-                type="text"
-                id="screen"
-                name="screen"
-                value={formData.screen}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="e.g. 15.6-inch FHD (1920 x 1080) 144Hz IPS"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="battery" className="block mb-1 text-sm font-medium text-gray-700">
-                  Battery
-                </label>
-                <input
-                  type="text"
-                  id="battery"
-                  name="battery"
-                  value={formData.battery}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. 80Wh, 4-cell Li-ion"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="ports" className="block mb-1 text-sm font-medium text-gray-700">
-                  Ports
-                </label>
-                <input
-                  type="text"
-                  id="ports"
-                  name="ports"
-                  value={formData.ports}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  placeholder="e.g. 2x USB-C, 2x USB-A, HDMI, SD card"
-                />
-              </div>
-            </div>
-          </div>
+          <BasicInformation formData={formData} handleChange={handleChange} handleImageChange={handleImageChange} brands={brands}></BasicInformation>
+          <HardwareSpecifications formData={formData} handleChange={handleChange}></HardwareSpecifications>
         </div>
-
-
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-          {/* Additional Features */}
           <AdditionalFeautures formData={formData} handleChange={handleChange}></AdditionalFeautures>
-          {/* Battery Life */}
           <BatertyLife formData={formData} handleChange={handleChange}></BatertyLife>
-
         </div>
-
-        {/* Ratings */}
-
         <Rating formData={formData} handleRatingChange={handleRatingChange} renderRatingStars={renderRatingStars}></Rating>
 
 
