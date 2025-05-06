@@ -66,7 +66,12 @@ export default function Home() {
     localStorage.removeItem("user");
     setUser(null);
     alert("Logged out successfully!");
-  };
+  };  <div className="flex items-center space-x-8 mr-4">
+    <Link href="/" className="flex items-center space-x-2">
+      <Image src="/LapInsight_Logo.png" alt="LapInsight Logo" width={40} height={40} className="rounded" />
+      <span className="text-xl font-bold">LapInsight</span>
+    </Link>
+  </div>
 
   const [dataSort, setDataSort] = useState(laptopData)
   function handleSort (newListData){
@@ -82,81 +87,77 @@ export default function Home() {
 
         <div className="container flex items-center h-16 px-4 mx-auto">
           {/* Logo và Danh mục */}
-          <div className="flex items-center space-x-8 mr-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image src="/placeholder.svg" alt="TechReview Logo" width={40} height={40} className="rounded" />
-              <span className="text-xl font-bold">TechReview</span>
-            </Link>
+            <div className="flex items-center justify-between w-full">
+            {/* Logo */}
+            <div className="flex items-center space-x-8">
+              <Link href="/" className="flex items-center space-x-2">
+              <Image src="/LapInsight_Logo.png" alt="LapInsight Logo" width={40} height={40} className="rounded" />
+              <span className="text-xl font-bold">LapInsight</span>
+              </Link>
+            </div>
 
-            <Link href="/#categories" className="flex items-center text-sm font-bold hover:text-gray-700">
-              Danh mục
-            </Link>
-          </div>
-
-
-          {/* thanh tìm kiếm */}
-          <div className="relative hidden md:block flex-1 max-w-md mx-4">
-            <input
+            {/* Search bar */}
+            <div className="relative flex-1 max-w-lg">
+              <input
               type="text"
               placeholder="Search laptops..."
               className="w-full h-10 pl-10 pr-4 text-sm bg-gray-100 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-            />
-            <SearchIcon className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
-          </div>
+              />
+              <SearchIcon className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+            </div>
 
-          <ComparisonButton/>
-
-          {/* Các nút bên phải */}
-          <div className="flex items-center ml-auto space-x-8">
-            <Link href="/#compare" className="flex items-center text-sm font-bold hover:text-gray-700">
+            {/* Right-side buttons */}
+            <div className="flex items-center space-x-8">
+              <ComparisonButton />
+              <Link href="/#compare" className="flex items-center text-sm font-bold hover:text-gray-700">
               So sánh
-            </Link>
-            <Link href="/#favorites" className="flex items-center text-sm font-bold hover:text-gray-700">
+              </Link>
+              <Link href="/favorite" className="flex items-center text-sm font-bold hover:text-gray-700">
               <Heart className="w-5 h-5 mr-1" />
               <span>Yêu thích</span>
-            </Link>
-
-            <NotificationBell/>
-           {/* Hiển thị avatar nếu đã đăng nhập */}
-           {user ? (
+              </Link>
+              <NotificationBell />
+              {user ? (
               <div className="relative">
                 <button
-                  onClick={() => setMenuOpen((prev) => !prev)}
-                  className="flex items-center focus:outline-none"
+                onClick={() => setMenuOpen((prev) => !prev)}
+                className="flex items-center focus:outline-none"
                 >
-                  <img
-                    src={user.avatar || "/user-circle.svg"}
-                    alt="User Avatar"
-                    className="w-8 h-8 rounded-full"
-                  />
+                <img
+                  src={user.avatar || "/user-circle.svg"}
+                  alt="User Avatar"
+                  className="w-8 h-8 rounded-full"
+                />
                 </button>
                 {menuOpen && (
-                  <div className="absolute right-0 w-48 mt-2 bg-white border rounded-lg shadow-lg">
-                    <div className="px-4 py-2 text-sm text-gray-700">
-                      <p>{user.username}</p>
-                      <p className="text-xs text-gray-500">{user.email}</p>
-                    </div>
-                    <hr />
-                    <button
-                      onClick={handleLogout}
-                      className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-gray-100"
-                    >
-                      Log out
-                    </button>
+                <div className="absolute right-0 w-48 mt-2 bg-white border rounded-lg shadow-lg">
+                  <div className="px-4 py-2 text-sm text-gray-700">
+                  <p>{user.username}</p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
                   </div>
+                  <hr />
+                  <button
+                  onClick={handleLogout}
+                  className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-gray-100"
+                  >
+                  Log out
+                  </button>
+                </div>
                 )}
               </div>
-            ) : (
+              ) : (
               <Link
                 href="/login"
                 className="px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800"
               >
                 Login / Register
               </Link>
-            )}
-          </div>
-        </div>
+              )}
+            </div>
+       </div>
+       </div>
       </header>
+
 
       
 
@@ -307,85 +308,12 @@ export default function Home() {
         </section> */}
       </main>
 
-      <footer className="py-8 text-white bg-gray-900">
-        <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            <div>
-              <h3 className="mb-4 text-lg font-bold">TechReview</h3>
-              <p className="text-sm text-gray-400">
-                Your trusted source for laptop reviews and comparisons since 2023.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Categories</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Gaming Laptops
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Ultrabooks
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Budget Laptops
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Business Laptops
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Company</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Subscribe</h4>
-              <p className="mb-4 text-sm text-gray-400">Stay updated with the latest reviews and news.</p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="w-full px-3 py-2 text-sm text-black bg-white rounded-l-md focus:outline-none"
-                />
-                <button className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-r-md hover:bg-gray-600">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="pt-8 mt-8 text-sm text-center text-gray-400 border-t border-gray-800">
-            &copy; {new Date().getFullYear()} TechReview. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <footer className="bg-gray-900 text-white py-5">
+  <div className="text-sm text-gray-400 text-center">
+    &copy; {new Date().getFullYear()} LapInsight. Made by 4Sheep.
+  </div>
+</footer>
+
     </div>
   )
 }
