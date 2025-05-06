@@ -1,33 +1,34 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { SearchIcon, Heart } from "lucide-react"
-import { laptopData } from "@/data/laptops";
+import { laptopData } from "@/data/laptops"
 
-import LatestNews from "@/components/latest-news"
-import ArticleHighlights from "@/components/article-highlights"
 import FilterPanel from "@/components/filter-panel"
-//import ComparisonTool from "@/components/comparison-tool"
-import RecommendedSection from "@/components/recommended-section"
-//import FavoritesSection from "@/components/favorites-section"
-//import ReviewsSection from "@/components/reviews-section"
-import NotificationBell from "@/components/notification-bell"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
+import NotificationBell from "@/components/notification-bell"
+import ComparisonStickyBar from "@/components/comparison/comparison-sticky-bar"
+import LaptopCardSelectable from "@/components/comparison/laptop-card-selectable"
+import QuickViewModal from "@/components/comparison/quick-view-modal"
 
-export default function Home() {
+export default function CompareSelectPage() {
   // State to track which laptop cards are visible
   const [visibleCards, setVisibleCards] = useState<boolean[]>(Array(laptopData.length).fill(false))
   // Ref for the laptop grid container
   const laptopGridRef = useRef<HTMLDivElement>(null)
-  const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [selectedLaptops, setSelectedLaptops] = useState<number[]>([])
+  const [dataSort, setDataSort] = useState(laptopData)
+  const [quickViewLaptop, setQuickViewLaptop] = useState<number | null>(null)
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
+
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("user")
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      setUser(JSON.parse(storedUser))
     }
     const observer = new IntersectionObserver(
       (entries) => {
@@ -59,30 +60,59 @@ export default function Home() {
     }
     
   }, [])
-  const handleLogout = () => {
-    // Xóa thông tin người dùng khỏi localStorage và cập nhật trạng thái
-    localStorage.removeItem("user");
-    setUser(null);
-    alert("Logged out successfully!");
-  };
 
-  const [dataSort, setDataSort] = useState(laptopData)
-  
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    setUser(null)
+    alert("Logged out successfully!")
+  }
+
   function handleSort(newListData: typeof laptopData) {
-    console.log(dataSort)
     setDataSort(newListData)
   }
+
+  const toggleLaptopSelection = (laptopId: number) => {
+    if (selectedLaptops.includes(laptopId)) {
+      // Remove from selection
+      setSelectedLaptops(selectedLaptops.filter(id => id !== laptopId))
+    } else {
+      // Add to selection if less than 2 laptops selected
+      if (selectedLaptops.length < 2) {
+        setSelectedLaptops([...selectedLaptops, laptopId])
+      } else {
+        // Show "maximum selected" message
+        alert("Đã chọn tối đa 2 sản phẩm để so sánh. Vui lòng bỏ chọn một sản phẩm trước khi chọn sản phẩm mới.")
+      }
+    }
+  }
+
+  const clearSelection = () => {
+    setSelectedLaptops([])
+  }
+
+  const handleQuickView = (laptopId: number) => {
+    setQuickViewLaptop(laptopId)
+    setIsQuickViewOpen(true)
+  }
+
+  const closeQuickView = () => {
+    setIsQuickViewOpen(false)
+  }
+
+  // Get the current laptop for quick view
+  const currentQuickViewLaptop = quickViewLaptop !== null 
+    ? laptopData.find(laptop => laptop.id === quickViewLaptop) || null
+    : null
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
-
         <div className="container flex items-center h-16 px-4 mx-auto">
           {/* Logo và Danh mục */}
           <div className="flex items-center space-x-8 mr-4">
             <Link href="/" className="flex items-center space-x-2">
-              <Image src="/placeholder.svg" alt="TechReview Logo" width={40} height={40} className="rounded" />
+              <img src="/placeholder.svg" alt="TechReview Logo" width={40} height={40} className="rounded" />
               <span className="text-xl font-bold">TechReview</span>
             </Link>
 
@@ -90,7 +120,6 @@ export default function Home() {
               Danh mục
             </Link>
           </div>
-
 
           {/* thanh tìm kiếm */}
           <div className="relative hidden md:block flex-1 max-w-md mx-4">
@@ -102,9 +131,9 @@ export default function Home() {
             <SearchIcon className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
           </div>
 
-          {/* ComparisonButton removed as it's not relevant on home page */}
+          {/* Các nút bên phải */}
           <div className="flex items-center ml-auto space-x-8">
-            <Link href="/compare-select" className="flex items-center text-sm font-bold hover:text-gray-700">
+            <Link href="/compare-select" className="flex items-center text-sm font-bold text-blue-600">
               So sánh
             </Link>
             <Link href="/#favorites" className="flex items-center text-sm font-bold hover:text-gray-700">
@@ -154,101 +183,45 @@ export default function Home() {
         </div>
       </header>
 
-      
-
-      {/* phần này đã đổi thành News */}
       <main className="container px-4 py-8 mx-auto">
-        {/* Featured Section */}
-        <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold"></h2>
-          <LatestNews />
-        </section>
-
-        {/* Recommended Section */}
-        <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Recommended For You</h2>
-          <RecommendedSection />
-        </section>
+        {/* Page Header */}
+        <div className="mb-10 text-center">
+          <h1 className="mb-2 text-3xl font-bold">Chọn Laptop để So sánh</h1>
+          <p className="text-gray-600">Chọn tối đa 2 sản phẩm để so sánh chi tiết</p>
+        </div>
 
         {/* Filter and Results */}
         <div className="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <FilterPanel />
           </div>
-          <div className="lg:col-span-3 relative z-0">
-            <BrowseLaptopsHeader laptopData={laptopData} handle={(newList: typeof laptopData) => handleSort(newList)}/>
+          <div className="lg:col-span-3">
+            <div className="flex items-center justify-between mb-6">
+              <BrowseLaptopsHeader 
+                laptopData={laptopData} 
+                handle={(newList: typeof laptopData) => handleSort(newList)}
+              />
+              
+              <div className="px-4 py-2 ml-4 text-sm font-medium bg-gray-100 rounded-lg">
+                Đã chọn: {selectedLaptops.length}/2 sản phẩm
+              </div>
+            </div>
+            
             {/* Laptop Grid with animation */}
-          
             <div 
               ref={laptopGridRef} 
-              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 relative z-0"
+              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
             >
               {dataSort.map((laptop, index) => (
-                <div 
-                  key={laptop.id} 
-                  className={`overflow-hidden bg-white border rounded-lg shadow-sm transition-all duration-500 ease-in-out ${
-                    visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                  } hover:shadow-md hover:-translate-y-1`}
-                >
-                  <div className="p-4">
-                    <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md"></div>
-
-                    <div className="flex items-center mb-2">
-                      {Array.from({ length: 5 }).map((_, j) => (
-                        <svg key={j} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
-                      ))}
-                      <span className="ml-2 text-sm text-gray-600">{laptop.rating} ({laptop.reviews} reviews)</span>
-                    </div>
-                    <p className="mb-2 text-sm text-gray-600">{laptop.specs}</p>
-
-                    {/* Phần hiển thị giá */}
-                    <div className="mt-2">
-                      {/* Các tag */}
-                      <div className="flex gap-2 mb-2">
-                        {laptop.onSale && (
-                          <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                            On Sale
-                          </span>
-                        )}
-                        {laptop.greatDeal && (
-                          <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
-                            Great Deal
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Giá */}
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold">${laptop.salePrice}</span>
-                        {laptop.originalPrice && (
-                          <span className="text-sm text-gray-500 line-through">${laptop.originalPrice}</span>
-                        )}
-                        {laptop.saveAmount && (
-                          <span className="text-sm font-medium text-green-600">Save ${laptop.saveAmount}</span>
-                        )}
-                      </div>
-
-                      {/* Nút mua và so sánh */}
-                      <div className="grid grid-cols-2 gap-2 mt-2">
-                        <button className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                          Compare
-                        </button>
-                        <button className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>
-                          Buy Now
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <LaptopCardSelectable
+                  key={laptop.id}
+                  laptop={laptop}
+                  isSelected={selectedLaptops.includes(laptop.id)}
+                  onToggleSelect={toggleLaptopSelection}
+                  isSelectionDisabled={selectedLaptops.length >= 2}
+                  onQuickView={handleQuickView}
+                  isVisible={visibleCards[index]}
+                />
               ))}
             </div>
 
@@ -263,42 +236,25 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* Comparison Tool */}
-        {/* <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Compare Laptops</h2>
-          <ComparisonTool />
-        </section> */}
-
-
-
-        {/* Favorites Section */}
-        {/* <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Your Favorites</h2>
-          <FavoritesSection />
-        </section> */}
-
-
-        {/* Article Highlights */}
-        <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Latest Articles</h2>
-          <ArticleHighlights />
-        </section>
-        <div className="flex justify-center mt-10 mb-6">
-          <button className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1">
-            View All Articles
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Reviews Section */}
-        {/* <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Latest Reviews</h2>
-          <ReviewsSection />
-        </section> */}
       </main>
+
+      {/* Sticky bottom bar for selected laptops */}
+      <ComparisonStickyBar
+        selectedIds={selectedLaptops}
+        laptopData={laptopData}
+        onRemove={toggleLaptopSelection}
+        onClearAll={clearSelection}
+      />
+
+      {/* Quick View Modal */}
+      <QuickViewModal
+        laptop={currentQuickViewLaptop}
+        isOpen={isQuickViewOpen}
+        onClose={closeQuickView}
+        onAddToCompare={toggleLaptopSelection}
+        isInCompareList={quickViewLaptop !== null ? selectedLaptops.includes(quickViewLaptop) : false}
+        isCompareDisabled={selectedLaptops.length >= 2}
+      />
 
       <footer className="py-8 text-white bg-gray-900">
         <div className="container px-4 mx-auto">
@@ -381,4 +337,4 @@ export default function Home() {
       </footer>
     </div>
   )
-}
+} 
