@@ -50,8 +50,8 @@ export default function InitialLoadingScreen({ onLoadingComplete }: InitialLoadi
         <div className="relative w-24 h-24 mb-6">
           <div className="absolute inset-0 flex items-center justify-center">
             <Image 
-              src="/placeholder.svg" 
-              alt="TechReview Logo" 
+              src="/LapInsight_Logo.png" 
+              alt="LapInsight Logo" 
               width={80}
               height={80}
               className="z-10" 
@@ -82,7 +82,7 @@ export default function InitialLoadingScreen({ onLoadingComplete }: InitialLoadi
           </svg>
         </div>
         
-        <h1 className="mb-2 text-2xl font-bold">TechReview</h1>
+        <h1 className="mb-2 text-2xl font-bold">LapInsight</h1>
         <p className="text-sm text-gray-500 mb-4">Loading your tech experience...</p>
         
         <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
