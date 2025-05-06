@@ -238,7 +238,7 @@ export default function Home() {
                       </div>
 
                       {/* Nút mua và so sánh */}
-                      <div className="grid grid-cols-2 gap-2 mt-2">
+                      <div className="grid grid-cols-3 gap-2 mt-2">
                         <button className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -252,6 +252,27 @@ export default function Home() {
                           </svg>
                           Buy Now
                         </button>
+                        <button 
+    onClick={(e) => {
+      e.stopPropagation();
+      // Add your favorite toggle logic here
+    }} 
+    className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors"
+  >
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      className="w-4 h-4" 
+      fill="none" 
+      viewBox="0 0 24 24" 
+      stroke="currentColor"
+    ><path 
+        strokeLinecap="round" 
+        strokeLinejoin="round" 
+        strokeWidth={2} 
+        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
+      />
+    </svg> Yêu thích
+  </button>
                       </div>
                     </div>
                   </div>
