@@ -8,7 +8,7 @@ interface QuickViewModalProps {
   laptop: Laptop | null
   isOpen: boolean
   onClose: () => void
-  onAddToCompare: (id: number) => void
+  onAddToCompare: (id: number | string) => void
   isInCompareList: boolean
   isCompareDisabled: boolean
 }

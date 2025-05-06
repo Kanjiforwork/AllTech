@@ -7,9 +7,9 @@ import { Eye } from 'lucide-react'
 interface LaptopCardSelectableProps {
   laptop: Laptop
   isSelected: boolean
-  onToggleSelect: (id: number) => void
+  onToggleSelect: (id: number | string) => void
   isSelectionDisabled: boolean
-  onQuickView?: (id: number) => void
+  onQuickView?: (id: number | string) => void
   isVisible?: boolean
 }
 

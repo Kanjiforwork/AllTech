@@ -75,7 +75,7 @@ export const laptopData = [
   
   
   export type Laptop = {
-    id: number;
+    id: number | string;
     name: string;
     specs: string;
     rating: number;

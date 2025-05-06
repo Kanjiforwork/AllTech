@@ -6,9 +6,9 @@ import Link from 'next/link'
 import { Laptop } from '@/data/laptops'
 
 interface ComparisonStickyBarProps {
-  selectedIds: number[]
+  selectedIds: (number | string)[]
   laptopData: Laptop[]
-  onRemove: (id: number) => void
+  onRemove: (id: number | string) => void
   onClearAll: () => void
   maxSelections?: number
 }
