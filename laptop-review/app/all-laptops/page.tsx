@@ -27,40 +27,11 @@ export default function AllLaptopsPage() {
   // Total number of pages for pagination
   const totalPages = Math.ceil(filteredLaptops.length / itemsPerPage)
   
-  // Animation for laptop cards using Intersection Observer
+  // Animation for laptop cards and load user data
   useEffect(() => {
     const storedUser = localStorage.getItem("user")
     if (storedUser) {
       setUser(JSON.parse(storedUser))
-    }
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          // Start staggered fade in of laptop cards when they enter viewport
-          laptops.forEach((_, index) => {
-            setTimeout(() => {
-              setVisibleCards(prev => {
-                const newState = [...prev]
-                newState[index] = true
-                return newState
-              })
-            }, 50 * index) // 50ms delay between each card (faster for more laptops)
-          })
-          
-          // Disconnect observer after triggering animations
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 } // Trigger when 10% of the element is visible
-    )
-
-    if (laptopGridRef.current) {
-      observer.observe(laptopGridRef.current)
-    }
-
-    return () => {
-      observer.disconnect() // Clean up on unmount
     }
   }, [])
   
@@ -94,6 +65,22 @@ export default function AllLaptopsPage() {
     const indexOfLastItem = currentPage * itemsPerPage
     const indexOfFirstItem = indexOfLastItem - itemsPerPage
     setDisplayedLaptops(sorted.slice(indexOfFirstItem, indexOfLastItem))
+    
+    // Reset visibleCards whenever we change displayed laptops
+    setVisibleCards(Array(sorted.slice(indexOfFirstItem, indexOfLastItem).length).fill(false))
+    
+    // Use a small timeout to trigger the animation
+    setTimeout(() => {
+      sorted.slice(indexOfFirstItem, indexOfLastItem).forEach((_, index) => {
+        setTimeout(() => {
+          setVisibleCards(prev => {
+            const newState = [...prev]
+            newState[index] = true
+            return newState
+          })
+        }, 50 * index)
+      })
+    }, 100)
     
   }, [filteredLaptops, currentPage, itemsPerPage, sortOption])
   
