@@ -44,5 +44,5 @@ service cloud.firestore {
 
 
 ### ADD API FIREBASE:
-Thêm 1 file .env.example để add API key trong firebase nhằm mục đích bảo mật API để không bị kẻ xấu tấn công. 
+Vì tôi đã giấu API nên giờ tôi sẽ chỉ mọi người cách để chạy được API. Giống ở trên hãy kêu tôi(Hào) add vào Project Firebase để lấy được API để có thể xài được các chức năng trong bài 
 
