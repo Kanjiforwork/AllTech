@@ -1,47 +1,30 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { articleService } from "../services/firebaseServices"
 
-interface Article {
-  id: number
-  title: string
-  excerpt: string
-  image: string
-  category: string
-  date: string
-}
+export default function ArticleHighlights() {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const articlesRef = useRef(null);
 
-export default function ArticleHighlights(): React.ReactNode {
-  const articles: Article[] = [
-    {
-      id: 1,
-      title: "Top 5 Laptops for 2025",
-      excerpt: "Our experts have tested dozens of laptops to bring you the absolute best options for this year.",
-      image: "/placeholder.svg",
-      category: "Guides",
-      date: "April 15, 2025",
-    },
-    {
-      id: 2,
-      title: "Gaming vs. Ultrabook: Which One Is Right For You?",
-      excerpt: "Confused between power and portability? We break down the key differences to help you decide.",
-      image: "/placeholder.svg",
-      category: "Comparisons",
-      date: "April 10, 2025",
-    },
-    {
-      id: 3,
-      title: "The Future of Laptop Technology: What to Expect",
-      excerpt: "From foldable screens to AI processors, here's what the next generation of laptops might look like.",
-      image: "/placeholder.svg",
-      category: "Technology",
-      date: "April 5, 2025",
-    },
-  ]
+  // Fetch articles from Firestore
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const fetchedArticles = await articleService.getLatest(3);
+        setArticles(fetchedArticles);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        setLoading(false);
+      }
+    };
 
-  const articlesRef = useRef<HTMLDivElement>(null)
+    fetchArticles();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -68,7 +51,25 @@ export default function ArticleHighlights(): React.ReactNode {
     return () => {
       observer.disconnect()
     }
-  }, [])
+  }, [articles]); // Re-run when articles are loaded
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="h-64 bg-gray-100 rounded-lg animate-pulse"></div>
+        ))}
+      </div>
+    );
+  }
+
+  if (articles.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64 bg-gray-100 rounded-xl">
+        <p className="text-gray-500">No articles available at the moment.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-3" ref={articlesRef}>
