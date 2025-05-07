@@ -1,11 +1,10 @@
-
 export const laptops = [
 
   // MacBook Pro 14 inch (M3 Pro)
 {
   id: "macbook-pro-14-m3-pro",
   name: "MacBook Pro 14-inch (M3 Pro)",
-  image: "/public/images/7",
+  image: "/placeholder.svg?height=600&width=600",
   price: "$1,999.00",
   originalPrice: "$1,999.00",
   specs: {
@@ -161,7 +160,7 @@ export const laptops = [
 {
   id: "macbook-air-13-m3",
   name: "MacBook Air 13-inch (M3)",
-  image: "/public/images/8",
+  image: "/placeholder.svg?height=600&width=600",
   price: "$1,099.00",
   originalPrice: "$1,199.00",
   specs: {
@@ -317,7 +316,7 @@ export const laptops = [
 {
   id: "macbook-pro-16-m3-max",
   name: "MacBook Pro 16-inch (M3 Max)",
-  image: "/public/images/9",
+  image: "/placeholder.svg?height=600&width=600",
   price: "$3,499.00",
   originalPrice: "$3,499.00",
   specs: {
@@ -473,7 +472,7 @@ export const laptops = [
 {
   id: "macbook-air-15-m2",
   name: "MacBook Air 15-inch (M2)",
-  image: "/public/images/10",
+  image: "/placeholder.svg?height=600&width=600",
   price: "$1,299.00",
   originalPrice: "$1,399.00",
   specs: {
@@ -629,7 +628,7 @@ export const laptops = [
   {
     id: "microsoft-surface-laptop-studio",
     name: "Microsoft Surface Laptop Studio",
-    image: "/public/images/6",
+    image: "/placeholder.svg?height=600&width=600",
     price: "$1,599.99",
     originalPrice: "$1,799.99",
     specs: {
@@ -784,7 +783,7 @@ export const laptops = [
   {
     id: "acer-swift-5",
     name: "Acer Swift 5",
-    image: "/public/images/5",
+    image: "/placeholder.svg?height=600&width=600",
     price: "$999.99",
     originalPrice: "$1,199.99",
     specs: {
@@ -938,7 +937,7 @@ export const laptops = [
     {
       id: "lenovo-ideapad-5-pro-16",
       name: "Lenovo IdeaPad 5 Pro 16",
-      image: "/public/images/1",
+      image: "/placeholder.svg?height=600&width=600",
       price: "$899.99",
       originalPrice: "$1,099.99",
       specs: {
@@ -1544,7 +1543,7 @@ export const laptops = [
     {
       id: "acer-nitro-5",
       name: "Acer Nitro 5",
-      image: "/public/images/1.jpg",
+      image: "/placeholder.svg?height=600&width=600",
       price: "$899.99",
       originalPrice: "$999.99",
       specs: {

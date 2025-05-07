@@ -188,7 +188,17 @@ export default function Home() {
                   } hover:shadow-md hover:-translate-y-1`}
                 >
                   <div className="p-4">
-                    <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md"></div>
+                    <Link href={laptop.detailLink}>
+                      <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md relative">
+                        <Image 
+                          src={laptop.image || "/placeholder.svg?height=600&width=600"} 
+                          alt={laptop.name || "Laptop image"}
+                          fill
+                          style={{objectFit: 'contain'}}
+                          className="p-2"
+                        />
+                      </div>
+                    </Link>
 
                     <div className="flex items-center mb-2">
                       {Array.from({ length: 5 }).map((_, j) => (
@@ -198,6 +208,10 @@ export default function Home() {
                       ))}
                       <span className="ml-2 text-sm text-gray-600">{laptop.rating} ({laptop.reviews} reviews)</span>
                     </div>
+                    
+                    <Link href={laptop.detailLink}>
+                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600">{laptop.name}</h3>
+                    </Link>
                     <p className="mb-2 text-sm text-gray-600">{laptop.specs}</p>
 
                     {/* Phần hiển thị giá */}
@@ -229,19 +243,18 @@ export default function Home() {
 
                       {/* Nút mua và so sánh */}
                       <div className="grid grid-cols-2 gap-2 mt-2">
-                        <button className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
+                        <Link href={`/compare-select?id=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                           Compare
-                        </button>
-                        <button className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
+                        </Link>
+                        <Link href={laptop.detailLink} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
                           Buy Now
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
