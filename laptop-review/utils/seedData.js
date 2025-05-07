@@ -1,5 +1,5 @@
 
-import { db } from '../firebase.js';
+import { db } from '../lib/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 // News data
