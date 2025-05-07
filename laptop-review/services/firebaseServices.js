@@ -1,5 +1,5 @@
 
-import { db } from '../firebase';
+import { db } from '../firebase.js';
 import { 
   collection, 
   getDocs, 
@@ -9,75 +9,22 @@ import {
   query, 
   orderBy, 
   limit, 
-  Timestamp,
-  DocumentData,
-  QueryDocumentSnapshot
+  Timestamp 
 } from 'firebase/firestore';
-
-// Define interfaces for our data models
-interface NewsItem {
-  id?: string;
-  title: string;
-  image: string;
-  excerpt: string;
-  content?: string;
-  author: string;
-  date: string;
-  readTime: string;
-  createdAt?: any; // Firestore timestamp
-}
-
-interface Article {
-  id?: string;
-  title: string;
-  excerpt: string;
-  content?: string;
-  image: string;
-  category: string;
-  date: string;
-  createdAt?: any; // Firestore timestamp
-}
-
-// Helper function to convert Firestore document to typed object
-const convertNewsDoc = (doc: QueryDocumentSnapshot<DocumentData>): NewsItem => {
-  const data = doc.data();
-  return {
-    id: doc.id,
-    title: data.title || '',
-    image: data.image || '',
-    excerpt: data.excerpt || '',
-    content: data.content || '',
-    author: data.author || '',
-    date: data.date || '',
-    readTime: data.readTime || '',
-    createdAt: data.createdAt
-  };
-};
-
-const convertArticleDoc = (doc: QueryDocumentSnapshot<DocumentData>): Article => {
-  const data = doc.data();
-  return {
-    id: doc.id,
-    title: data.title || '',
-    excerpt: data.excerpt || '',
-    content: data.content || '',
-    image: data.image || '',
-    category: data.category || '',
-    date: data.date || '',
-    createdAt: data.createdAt
-  };
-};
 
 // News Services
 export const newsService = {
   // Get all news items
-  getAll: async (): Promise<NewsItem[]> => {
+  getAll: async () => {
     try {
       const newsCollectionRef = collection(db, "news");
       const q = query(newsCollectionRef, orderBy("createdAt", "desc"));
       const querySnapshot = await getDocs(q);
       
-      return querySnapshot.docs.map(convertNewsDoc);
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
     } catch (error) {
       console.error("Error getting news: ", error);
       throw error;
@@ -85,7 +32,7 @@ export const newsService = {
   },
   
   // Get a specific news item by ID
-  getById: async (id: string): Promise<NewsItem | null> => {
+  getById: async (id) => {
     try {
       const newsDocRef = doc(db, "news", id);
       const docSnapshot = await getDoc(newsDocRef);
@@ -93,7 +40,7 @@ export const newsService = {
       if (docSnapshot.exists()) {
         return {
           id: docSnapshot.id,
-          ...docSnapshot.data() as Omit<NewsItem, 'id'>
+          ...docSnapshot.data()
         };
       } else {
         return null;
@@ -105,7 +52,7 @@ export const newsService = {
   },
   
   // Get latest news items with a limit
-  getLatest: async (itemCount: number = 3): Promise<NewsItem[]> => {
+  getLatest: async (itemCount = 3) => {
     try {
       const newsCollectionRef = collection(db, "news");
       const q = query(
@@ -115,7 +62,10 @@ export const newsService = {
       );
       const querySnapshot = await getDocs(q);
       
-      return querySnapshot.docs.map(convertNewsDoc);
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
     } catch (error) {
       console.error("Error getting latest news: ", error);
       throw error;
@@ -123,7 +73,7 @@ export const newsService = {
   },
   
   // Add a new news item
-  add: async (newsItem: Omit<NewsItem, 'id'>): Promise<string> => {
+  add: async (newsItem) => {
     try {
       const newsCollectionRef = collection(db, "news");
       const docRef = await addDoc(newsCollectionRef, {
@@ -141,13 +91,16 @@ export const newsService = {
 // Articles Services
 export const articleService = {
   // Get all articles
-  getAll: async (): Promise<Article[]> => {
+  getAll: async () => {
     try {
       const articlesCollectionRef = collection(db, "articles");
       const q = query(articlesCollectionRef, orderBy("createdAt", "desc"));
       const querySnapshot = await getDocs(q);
       
-      return querySnapshot.docs.map(convertArticleDoc);
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
     } catch (error) {
       console.error("Error getting articles: ", error);
       throw error;
@@ -155,7 +108,7 @@ export const articleService = {
   },
   
   // Get a specific article by ID
-  getById: async (id: string): Promise<Article | null> => {
+  getById: async (id) => {
     try {
       const articleDocRef = doc(db, "articles", id);
       const docSnapshot = await getDoc(articleDocRef);
@@ -163,7 +116,7 @@ export const articleService = {
       if (docSnapshot.exists()) {
         return {
           id: docSnapshot.id,
-          ...docSnapshot.data() as Omit<Article, 'id'>
+          ...docSnapshot.data()
         };
       } else {
         return null;
@@ -175,7 +128,7 @@ export const articleService = {
   },
   
   // Get latest articles with a limit
-  getLatest: async (itemCount: number = 3): Promise<Article[]> => {
+  getLatest: async (itemCount = 3) => {
     try {
       const articlesCollectionRef = collection(db, "articles");
       const q = query(
@@ -185,7 +138,10 @@ export const articleService = {
       );
       const querySnapshot = await getDocs(q);
       
-      return querySnapshot.docs.map(convertArticleDoc);
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
     } catch (error) {
       console.error("Error getting latest articles: ", error);
       throw error;
@@ -193,7 +149,7 @@ export const articleService = {
   },
   
   // Add a new article
-  add: async (article: Omit<Article, 'id'>): Promise<string> => {
+  add: async (article) => {
     try {
       const articlesCollectionRef = collection(db, "articles");
       const docRef = await addDoc(articlesCollectionRef, {
