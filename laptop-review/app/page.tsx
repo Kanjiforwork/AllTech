@@ -6,7 +6,6 @@ import Link from "next/link"
 import { SearchIcon, Heart } from "lucide-react"
 import { laptopData } from "@/data/laptops";
 
-import ComparisonButton from "@/components/comparison/ComparisonButton"
 import LatestNews from "@/components/latest-news"
 import ArticleHighlights from "@/components/article-highlights"
 import FilterPanel from "@/components/filter-panel"
@@ -16,7 +15,6 @@ import RecommendedSection from "@/components/recommended-section"
 //import ReviewsSection from "@/components/reviews-section"
 import NotificationBell from "@/components/notification-bell"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
-
 
 export default function Home() {
   // State to track which laptop cards are visible
@@ -66,22 +64,17 @@ export default function Home() {
     localStorage.removeItem("user");
     setUser(null);
     alert("Logged out successfully!");
-  };  <div className="flex items-center space-x-8 mr-4">
-    <Link href="/" className="flex items-center space-x-2">
-      <Image src="/LapInsight_Logo.png" alt="LapInsight Logo" width={40} height={40} className="rounded" />
-      <span className="text-xl font-bold">LapInsight</span>
-    </Link>
-  </div>
+  };
 
   const [dataSort, setDataSort] = useState(laptopData)
-  function handleSort (newListData){
+  
+  function handleSort(newListData: typeof laptopData) {
     console.log(dataSort)
     setDataSort(newListData)
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
 
@@ -108,13 +101,12 @@ export default function Home() {
 
             {/* Right-side buttons */}
             <div className="flex items-center space-x-8">
-              <ComparisonButton />
-              <Link href="/#compare" className="flex items-center text-sm font-bold hover:text-gray-700">
-              So sánh
+              <Link href="/compare-select" className="flex items-center text-sm font-bold hover:text-gray-700">
+                So sánh
               </Link>
               <Link href="/favorite" className="flex items-center text-sm font-bold hover:text-gray-700">
-              <Heart className="w-5 h-5 mr-1" />
-              <span>Yêu thích</span>
+                <Heart className="w-5 h-5 mr-1" />
+                <span>Yêu thích</span>
               </Link>
               <NotificationBell />
               {user ? (
@@ -124,7 +116,7 @@ export default function Home() {
                 className="flex items-center focus:outline-none"
                 >
                 <img
-                  src={user.avatar || "/user-circle.svg"}
+                  src={user?.avatar || "/user-circle.svg"}
                   alt="User Avatar"
                   className="w-8 h-8 rounded-full"
                 />
@@ -132,8 +124,8 @@ export default function Home() {
                 {menuOpen && (
                 <div className="absolute right-0 w-48 mt-2 bg-white border rounded-lg shadow-lg">
                   <div className="px-4 py-2 text-sm text-gray-700">
-                  <p>{user.username}</p>
-                  <p className="text-xs text-gray-500">{user.email}</p>
+                  <p>{user?.username}</p>
+                  <p className="text-xs text-gray-500">{user?.email}</p>
                   </div>
                   <hr />
                   <button
@@ -181,7 +173,7 @@ export default function Home() {
             <FilterPanel />
           </div>
           <div className="lg:col-span-3 relative z-0">
-            <BrowseLaptopsHeader laptopData={laptopData} handle = {(newList)=>handleSort(newList)}/>
+            <BrowseLaptopsHeader laptopData={laptopData} handle={(newList: typeof laptopData) => handleSort(newList)}/>
             {/* Laptop Grid with animation */}
           
             <div 
@@ -196,10 +188,17 @@ export default function Home() {
                   } hover:shadow-md hover:-translate-y-1`}
                 >
                   <div className="p-4">
-                    <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md"></div>
-
-
-
+                    <Link href={laptop.detailLink}>
+                      <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md relative">
+                        <Image 
+                          src={laptop.image || "/placeholder.svg?height=600&width=600"} 
+                          alt={laptop.name || "Laptop image"}
+                          fill
+                          style={{objectFit: 'contain'}}
+                          className="p-2"
+                        />
+                      </div>
+                    </Link>
 
                     <div className="flex items-center mb-2">
                       {Array.from({ length: 5 }).map((_, j) => (
@@ -209,6 +208,10 @@ export default function Home() {
                       ))}
                       <span className="ml-2 text-sm text-gray-600">{laptop.rating} ({laptop.reviews} reviews)</span>
                     </div>
+                    
+                    <Link href={laptop.detailLink}>
+                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600">{laptop.name}</h3>
+                    </Link>
                     <p className="mb-2 text-sm text-gray-600">{laptop.specs}</p>
 
                     {/* Phần hiển thị giá */}
@@ -240,19 +243,18 @@ export default function Home() {
 
                       {/* Nút mua và so sánh */}
                       <div className="grid grid-cols-2 gap-2 mt-2">
-                        <button className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
+                        <Link href={`/compare-select?id=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                           Compare
-                        </button>
-                        <button className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
+                        </Link>
+                        <Link href={laptop.detailLink} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
                           Buy Now
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -262,12 +264,15 @@ export default function Home() {
 
             {/* Nút Load More */}
             <div className="flex justify-center mt-10 mb-6">
-              <button className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1">
+              <Link
+                href="/all-laptops"
+                className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1"
+              >
                 Load More
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
