@@ -1,4 +1,4 @@
-CÁCH HOẠT ĐỘNG:
+### CÁCH HOẠT ĐỘNG:
 
 
 Tích hợp API:
@@ -13,7 +13,7 @@ Sau khi nhận dữ liệu từ API, các component của bạn sẽ xử lý v�
 
 
 
-CÁCH SEED DATABASE (NẾU CHƯA CÓ QUYỀN TRUY CẬP VÀO FIRESTORE HIỆN TẠI)
+### CÁCH SEED DATABASE (NẾU CHƯA CÓ QUYỀN TRUY CẬP VÀO FIRESTORE HIỆN TẠI)
 
 Cách 1: Kêu Hào add vào project Firebase
 
