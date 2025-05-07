@@ -101,6 +101,7 @@ export default function Home() {
 
             {/* Right-side buttons */}
             <div className="flex items-center space-x-8">
+            <Link href="/news" className="flex items-center text-sm font-bold hover:text-gray-700">News</Link>
               <Link href="/compare-select" className="flex items-center text-sm font-bold hover:text-gray-700">
                 So sánh
               </Link>
@@ -108,6 +109,7 @@ export default function Home() {
                 <Heart className="w-5 h-5 mr-1" />
                 <span>Yêu thích</span>
               </Link>
+              
               <NotificationBell />
               {user ? (
               <div className="relative">

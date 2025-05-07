@@ -54,6 +54,9 @@ export default function NewsHeader({
           <Link href="/news/trends" className="hover:text-white transition-colors">
             Trends
           </Link>
+          <Link href="/" className="hover:text-white transition-colors">
+            Homepage
+          </Link>
         </div>
       </div>
     </div>
