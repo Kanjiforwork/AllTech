@@ -71,7 +71,7 @@ We evaluated 18 criteria including keyboard travel distance, PWM flicker rates, 
 - Both technologies eliminated the PWM-induced headaches common in budget LCD panels
 
 Dr. Emily Chen, lead researcher, notes: "The 2024 generation of self-healing OLED panels solved burn-in concerns - we saw zero image retention cases." Surprisingly, display curvature mattered more than technology - 1800R curved screens reduced neck strain by 40% during long tasks. Our recommendation: Pair any modern panel with ambient light sensors and take 20-second screen breaks hourly.`,
-    image: "articles/articles2.jpg",
+    image: "articles/article2.jpg",
     category: "Comparisons",
     date: "November 5, 2024",
     createdAt: new Date()
