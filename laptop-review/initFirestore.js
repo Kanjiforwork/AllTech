@@ -10,7 +10,7 @@ async function initializeFirestore() {
     const result = await seedAllData();
     
     if (result) {
-      console.log('Successfully seeded Firestore database with mock data!');
+      console.log('Successfully seeded Firestore database with data!');
     } else {
       console.error('Failed to seed Firestore database.');
     }
