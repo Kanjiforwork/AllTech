@@ -46,7 +46,7 @@ CEO Nirav Patel told us: "We're challenging the throwaway culture in tech." Earl
 const articles = [
   {
     title: "Best Productivity Laptops 2024: Ultimate Guide",
-    excerpt: "From executive boards to college dorms - we test the top workhorses",
+    excerpt: "From executive boards to college dorms - we test all the top workhorses.",
     content: `After testing 32 machines across price ranges, our team identified clear winners in three categories:
 
 1. **Premium Powerhouse**: Dell XPS 15 (2024) combines Intel's new 14-core Ultra 9 processor with a stunning 4K OLED touchscreen. Its carbon fiber keyboard deck remains cool during marathon coding sessions.
@@ -63,7 +63,7 @@ We evaluated 18 criteria including keyboard travel distance, PWM flicker rates, 
   },
   {
     title: "OLED vs Mini-LED Displays: Eye Strain Analysis",
-    excerpt: "Medical study reveals surprising results about long-term use of Display on our eyes.",
+    excerpt: "Medical study reveals surprising results about long-term use of displays on our eyes.",
     content: `A 12-month Stanford University study tracked 500 participants using various display technologies. Key findings:
 
 - **OLED users** reported 22% less eye strain during night sessions due to perfect black levels reducing pupil dilation stress
@@ -78,7 +78,7 @@ Dr. Emily Chen, lead researcher, notes: "The 2024 generation of self-healing OLE
   },
   {
     title: "The Rise of ARM Architecture in Windows Laptops",
-    excerpt: "How Qualcomm and Microsoft are challenging the x86 dominance in Windows Laptops",
+    excerpt: "How Qualcomm and Microsoft are challenging the x86 dominance in Windows Laptops.",
     content: `The Snapdragon X Elite's Geekbench 6 multi-core score of 15,230 - beating Intel's Core i9-13900H - marks a turning point. Microsoft's Windows 12 includes a redesigned ARM compiler showing 90% x64 emulation efficiency, finally making Photoshop and AutoCAD viable.
 
 Key advantages driving adoption:
