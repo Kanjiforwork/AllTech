@@ -3,8 +3,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "@/firebase";
-
+import { auth, db, googleProvider, User, createUserAccount, signInUser, signInWithGoogle } from "@/lib/firebase";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,11 +21,21 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      localStorage.setItem("user", JSON.stringify({ email: user.email, username: email.split("@")[0] }));
-
+      // Use the OOP function from firebase.js
+      const user = await signInUser(email, password);
+      
+      // Check if user is null before storing in localStorage
+      if (!user) {
+        throw new Error("Authentication failed");
+      }
+  
+      // Store user info consistently with the register page
+      localStorage.setItem("user", JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || email.split("@")[0]
+      }));
+  
       console.log("User logged in:", user);
       alert("Login successful!");
       router.push("/");
@@ -38,10 +47,17 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-
-      localStorage.setItem("user", JSON.stringify({ email: user.email, username: user.displayName }));
+      // Use the OOP function from firebase.js
+      const user = await signInWithGoogle();
+      if (!user) {
+        throw new Error("Authentication failed");
+      }
+      // Store user info consistently with the register page
+      localStorage.setItem("user", JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      }));
 
       console.log("User signed in with Google:", user);
       alert("Google Login successful!");

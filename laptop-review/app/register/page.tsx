@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, googleProvider } from "@/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
-
+import { auth, db, googleProvider, User, createUserAccount, signInUser, signInWithGoogle } from "@/lib/firebase";
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,11 +23,24 @@ export default function RegisterPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      localStorage.setItem("user", JSON.stringify({ email: user.email, username: name }));
+      // Use the OOP approach from your firebase.js
+      const user = await createUserAccount(email, password);
+      
+      // Update the user's displayName
+      user.displayName = name;
+      await user.saveToFirestore();
+      
+      // Store minimal user info in localStorage if needed for UI
+      localStorage.setItem("user", JSON.stringify({ 
+        uid: user.uid,
+        email: user.email, 
+        displayName: user.displayName 
+      }));
+      
       console.log("User registered:", user);
       alert("Registration successful!");
+      
+      router.push("/");
     } catch (error: any) {
       console.error("Error registering user:", error.message);
       alert(error.message);
@@ -37,18 +49,28 @@ export default function RegisterPage() {
 
   const handleGoogleSignUp = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-
-      localStorage.setItem("user", JSON.stringify({ email: user.email, username: user.displayName }));
-
+      // Use the OOP approach from your firebase.js
+      const user = await signInWithGoogle();
+      
+      // Add null check before storing user info
+      if (!user) {
+        throw new Error("Authentication failed");
+      }
+      
+      // Store minimal user info in localStorage if needed for UI
+      localStorage.setItem("user", JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      }));
+  
       console.log("User signed in with Google:", user);
       alert("Google Sign-Up successful!");
-
+  
       router.push("/");
     } catch (error: any) {
       console.error("Error signing in with Google:", error.message);
-      alert("Google Sign-Up failed!");
+      alert(error.message || "Google Sign-Up failed!");
     }
   };
 
