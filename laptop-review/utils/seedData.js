@@ -6,7 +6,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 const newsItems = [
   {
     title: "Apple Unveils M3-Powered MacBook Pro with Revolutionary Cooling System",
-    image: "/placeholder.svg",
+    image: "/news/news1.jpg",
     excerpt: "New thermal architecture promises sustained performance for professional workloads",
     content: `At today's Apple Event, the company revealed its next-generation MacBook Pro featuring the M3 chip and an innovative dual-fan vapor chamber cooling system. Unlike previous models that throttled under sustained loads, this new design maintains peak performance during 4K video renders and machine learning tasks. Early benchmarks show a 40% improvement in sustained multicore performance compared to M2 models.
 
@@ -18,7 +18,7 @@ The system uses machine learning to dynamically adjust fan curves based on appli
   },
   {
     title: "Windows 12 Launch Sparks New Era of AI-Powered Laptops",
-    image: "/placeholder.svg",
+    image: "/news/news3.jpg",
     excerpt: "Major OEMs debut neural processing units in consumer laptops",
     content: `Microsoft's Windows 12 launch has triggered a wave of new laptops featuring dedicated NPUs (Neural Processing Units). Dell's XPS 14 leads the charge with its integrated Intel AI Boost chip capable of 45 TOPS (Tera Operations Per Second), enabling real-time language translation and advanced background noise cancellation during video calls.
 
@@ -30,7 +30,7 @@ HP's latest Spectre x360 demonstrates practical AI applications - its new Studio
   },
   {
     title: "Framework Laptop 16 Redefines Modular Computing",
-    image: "/placeholder.svg",
+    image: "/news/news2.jpg",
     excerpt: "User-upgradable GPU module and port ecosystem gain industry attention",
     content: `Framework's latest innovation features a revolutionary expansion bay system allowing users to swap between an NVIDIA RTX 4060 Mobile GPU module and additional storage/IO configurations. The magnesium-alloy chassis maintains a slim 18mm profile while supporting up to 64GB DDR5 RAM and 8TB PCIe 5.0 storage.
 
@@ -56,7 +56,7 @@ const articles = [
 3. **Budget Champion**: Acer's Swift 3 (2024 edition) delivers shockingly good performance with its Core i5-1335U and military-grade durability for under $800.
 
 We evaluated 18 criteria including keyboard travel distance, PWM flicker rates, and real-world multi-monitor performance. Pro tip: Look for laptops with hardware kill switches for webcams/mics in this era of sophisticated phishing attacks.`,
-    image: "/placeholder.svg",
+    image: "articles/article1.jpg",
     category: "Guides",
     date: "November 10, 2024",
     createdAt: new Date()
@@ -71,14 +71,14 @@ We evaluated 18 criteria including keyboard travel distance, PWM flicker rates, 
 - Both technologies eliminated the PWM-induced headaches common in budget LCD panels
 
 Dr. Emily Chen, lead researcher, notes: "The 2024 generation of self-healing OLED panels solved burn-in concerns - we saw zero image retention cases." Surprisingly, display curvature mattered more than technology - 1800R curved screens reduced neck strain by 40% during long tasks. Our recommendation: Pair any modern panel with ambient light sensors and take 20-second screen breaks hourly.`,
-    image: "/placeholder.svg",
+    image: "articles/articles2.jpg",
     category: "Comparisons",
     date: "November 5, 2024",
     createdAt: new Date()
   },
   {
     title: "The Rise of ARM Architecture in Windows Laptops",
-    excerpt: "How Qualcomm and Microsoft are challenging x86 dominance",
+    excerpt: "How Qualcomm and Microsoft are challenging the x86 dominance in Windows Laptops",
     content: `The Snapdragon X Elite's Geekbench 6 multi-core score of 15,230 - beating Intel's Core i9-13900H - marks a turning point. Microsoft's Windows 12 includes a redesigned ARM compiler showing 90% x64 emulation efficiency, finally making Photoshop and AutoCAD viable.
 
 Key advantages driving adoption:
@@ -87,7 +87,7 @@ Key advantages driving adoption:
 - **5G Integration**: Built-in modems eliminate dongle needs
 
 But challenges remain - legacy enterprise software and niche drivers still require x86. "We're working with 150+ ISVs on native ports," says Qualcomm's CTO. Industry analysts predict ARM could capture 35% of the Windows market by 2026, especially in enterprise and education sectors.`,
-    image: "/placeholder.svg",
+    image: "articles/article3.png",
     category: "Technology",
     date: "November 1, 2024",
     createdAt: new Date()
