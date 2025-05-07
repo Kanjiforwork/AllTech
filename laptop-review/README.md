@@ -46,4 +46,15 @@ service cloud.firestore {
 
 ### ADD API FIREBASE:
 Vì tôi đã giấu API nên giờ tôi sẽ chỉ mọi người cách để chạy được API. Giống ở trên hãy kêu tôi(Hào) add vào Project Firebase để lấy được API để có thể xài được các chức năng trong bài 
+Sau khi được tôi add vào Project. Mọi người hãy tạo cho mình 1 file .env ở trong máy để có thể mà pass cái API vào. Từ đó mới có thể mà xài được những cái như favorite hoặc là mấy cái article một cách mượt mà.
+
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+};
+đây là mẫu, mọi người chỉ cần thay cái API của project vào là được.
 
