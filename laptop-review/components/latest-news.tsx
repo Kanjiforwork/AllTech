@@ -6,15 +6,28 @@ import Link from "next/link"
 import { Calendar, User, Clock } from "lucide-react"
 import { newsService } from "../services/firebaseServices"
 
+// Define the NewsItem interface
+interface NewsItem {
+  id?: string;
+  title: string;
+  image: string;
+  excerpt: string;
+  content?: string;
+  author: string;
+  date: string;
+  readTime: string;
+  createdAt?: any; // Firestore timestamp
+}
+
 export default function LatestNews() {
-  const [newsItems, setNewsItems] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
-  const [startX, setStartX] = useState(0)
-  const [translateX, setTranslateX] = useState(0)
-  const [isAnimated, setIsAnimated] = useState(false)
-  const sliderRef = useRef(null)
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
+  const [isAnimated, setIsAnimated] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   // Fetch news items from Firestore
   useEffect(() => {
@@ -33,55 +46,55 @@ export default function LatestNews() {
   }, []);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === newsItems.length - 1 ? 0 : prev + 1))
-  }
+    setCurrentSlide((prev) => (prev === newsItems.length - 1 ? 0 : prev + 1));
+  };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? newsItems.length - 1 : prev - 1))
-  }
+    setCurrentSlide((prev) => (prev === 0 ? newsItems.length - 1 : prev - 1));
+  };
 
   // Handle drag events
-  const handleMouseDown = (e) => {
-    setIsDragging(true)
-    setStartX(e.clientX)
-  }
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setStartX(e.clientX);
+  };
 
-  const handleMouseMove = (e) => {
-    if (!isDragging) return
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
     
-    const deltaX = e.clientX - startX
-    const containerWidth = sliderRef.current?.offsetWidth || 0
-    const threshold = containerWidth * 0.2 
+    const deltaX = e.clientX - startX;
+    const containerWidth = sliderRef.current?.offsetWidth || 0;
+    const threshold = containerWidth * 0.2;
     
-    const maxTranslate = containerWidth * 0.25
-    const clampedDelta = Math.max(Math.min(deltaX, maxTranslate), -maxTranslate)
+    const maxTranslate = containerWidth * 0.25;
+    const clampedDelta = Math.max(Math.min(deltaX, maxTranslate), -maxTranslate);
     
-    setTranslateX(clampedDelta)
-  }
+    setTranslateX(clampedDelta);
+  };
 
-  const handleMouseUp = (e) => {
-    if (!isDragging) return
+  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
     
-    const deltaX = e.clientX - startX
-    const containerWidth = sliderRef.current?.offsetWidth || 0
-    const threshold = containerWidth * 0.2 
+    const deltaX = e.clientX - startX;
+    const containerWidth = sliderRef.current?.offsetWidth || 0;
+    const threshold = containerWidth * 0.2;
     
     if (deltaX > threshold) {
-      prevSlide()
+      prevSlide();
     } else if (deltaX < -threshold) {
-      nextSlide()
+      nextSlide();
     }
     
-    setIsDragging(false)
-    setTranslateX(0)
-  }
+    setIsDragging(false);
+    setTranslateX(0);
+  };
 
   const handleMouseLeave = () => {
     if (isDragging) {
-      setIsDragging(false)
-      setTranslateX(0)
+      setIsDragging(false);
+      setTranslateX(0);
     }
-  }
+  };
 
   // Auto-rotating slides
   useEffect(() => {
@@ -95,26 +108,26 @@ export default function LatestNews() {
   }, [currentSlide, newsItems.length]);
 
   useEffect(() => {
-    const preventDefault = (e) => {
+    const preventDefault = (e: Event) => {
       if (isDragging) {
-        e.preventDefault()
+        e.preventDefault();
       }
-    }
+    };
     
-    document.addEventListener('dragstart', preventDefault)
+    document.addEventListener('dragstart', preventDefault);
     return () => {
-      document.removeEventListener('dragstart', preventDefault)
-    }
-  }, [isDragging])
+      document.removeEventListener('dragstart', preventDefault);
+    };
+  }, [isDragging]);
 
   // Add entrance animation
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsAnimated(true)
-    }, 300)
+      setIsAnimated(true);
+    }, 300);
     
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   if (loading) {
     return (
@@ -202,5 +215,5 @@ export default function LatestNews() {
         ))}
       </div>
     </div>
-  )
+  );
 }

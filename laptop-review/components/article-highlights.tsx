@@ -5,10 +5,22 @@ import Image from "next/image"
 import Link from "next/link"
 import { articleService } from "../services/firebaseServices"
 
+// Define the Article interface
+interface Article {
+  id?: string;
+  title: string;
+  excerpt: string;
+  content?: string;
+  image: string;
+  category: string;
+  date: string;
+  createdAt?: any; // Firestore timestamp
+}
+
 export default function ArticleHighlights() {
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
-  const articlesRef = useRef(null);
+  const articlesRef = useRef<HTMLDivElement>(null);
 
   // Fetch articles from Firestore
   useEffect(() => {
@@ -30,9 +42,9 @@ export default function ArticleHighlights() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const articleElements = articlesRef.current?.querySelectorAll('.article-card')
-            articleElements?.forEach((element, index) => {
+          if (entry.isIntersecting && articlesRef.current) {
+            const articleElements = articlesRef.current.querySelectorAll('.article-card')
+            articleElements.forEach((element, index) => {
               setTimeout(() => {
                 element.classList.add('animate-fade-up')
               }, index * 150)
