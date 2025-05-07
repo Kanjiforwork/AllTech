@@ -41,3 +41,8 @@ service cloud.firestore {
 ```
 
 - Sau đó mở terminal và chạy lệnh: "node initFirestore.js"
+
+
+### CÁCH HOẠT ĐỘNG:
+Thêm 1 file .env.example để add API key trong firebase
+
