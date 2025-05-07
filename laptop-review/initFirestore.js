@@ -1,6 +1,6 @@
 // initFirestore.js
 // You can run this script once to initialize your Firestore database with mock data
-import { seedAllData } from './utils/seedData';
+import { seedAllData } from './utils/seedData.ts';
 
 // This function initializes your Firestore database with mock data
 async function initializeFirestore() {
