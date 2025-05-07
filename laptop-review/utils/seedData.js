@@ -1,4 +1,4 @@
-// utils/seedData.js
+
 import { db } from '../firebase.js';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
@@ -45,7 +45,7 @@ CEO Nirav Patel told us: "We're challenging the throwaway culture in tech." Earl
 // Articles data
 const articles = [
   {
-    title: "Best Productivity Laptops 2024: Ultimate Buyer's Guide",
+    title: "Best Productivity Laptops 2024: Ultimate Guide",
     excerpt: "From executive boards to college dorms - we test the top workhorses",
     content: `After testing 32 machines across price ranges, our team identified clear winners in three categories:
 
@@ -63,7 +63,7 @@ We evaluated 18 criteria including keyboard travel distance, PWM flicker rates, 
   },
   {
     title: "OLED vs Mini-LED Displays: Eye Strain Analysis",
-    excerpt: "Medical study reveals surprising results about long-term use",
+    excerpt: "Medical study reveals surprising results about long-term use of Display on our eyes.",
     content: `A 12-month Stanford University study tracked 500 participants using various display technologies. Key findings:
 
 - **OLED users** reported 22% less eye strain during night sessions due to perfect black levels reducing pupil dilation stress
