@@ -23,6 +23,7 @@ Cách 2: chạy lệnh để seed Database. Từng bước như sau:
 - Add vào collection 2 Documents trống là "news" và "articles" (lúc đầu tạo Firebase có thể bắt buộc mặc định phải tạo 1 document rỗng. Cái này không ảnh hưởng gì hết, code vẫn chạy bình thường)
 - Cập nhật phần Rules trong Firestore để file initFirestore.js có thể ghi dữ liệu vào database:
 
+```
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -37,5 +38,6 @@ service cloud.firestore {
   }
 }
 
+```
 
 - Sau đó mở terminal và chạy lệnh: "node initFirestore.js"
