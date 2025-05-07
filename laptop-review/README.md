@@ -2,13 +2,13 @@
 
 
 Tích hợp API:
-Firebase/Firestore SDK cung cấp một giao diện API để tương tác với cơ sở dữ liệu Firestore. Khi các component gọi các hàm như newsService.getLatest() hoặc articleService.getById(), chúng đang thực hiện các lệnh gọi API đến máy chủ của Firebase.
+Firebase/Firestore SDK cung cấp sẵn một giao diện API để tương tác với cơ sở dữ liệu Firestore. Khi các component gọi các hàm như newsService.getLatest() hoặc articleService.getById(), chúng đang thực hiện các lệnh gọi API đến máy chủ của Firebase.
 
 Truy vấn dữ liệu thời gian thực:
-Khi các component được tải, yêu cầu API bất đồng bộ sẽ được gửi đến Firestore để lấy dữ liệu mới nhất về tin tức và bài viết. Quá trình này diễn ra thông qua Firebase SDK – công cụ đã xử lý mọi giao tiếp API ở phía sau.
+Khi các component được tải, yêu cầu API bất đồng bộ sẽ được gửi đến Firestore để lấy dữ liệu mới nhất về tin tức và bài viết. Quá trình này diễn ra thông qua Firebase SDK – công cụ chịu trách nhiệm xử lý các giao tiếp API.
 
 Xử lý dữ liệu phía client:
-Sau khi nhận dữ liệu từ API, các component của bạn sẽ xử lý và hiển thị dữ liệu đó theo yêu cầu của giao diện người dùng (UI).
+Sau khi nhận dữ liệu từ API, các component sẽ xử lý và hiển thị dữ liệu đó theo yêu cầu của giao diện người dùng (UI).
 
 
 
@@ -21,7 +21,7 @@ Cách 2: chạy lệnh để seed Database. Từng bước như sau:
 
 - Set up 1 Firebase projects mới
 - Add vào collection 2 Documents trống là "news" và "articles" (lúc đầu tạo Firebase có thể bắt buộc mặc định phải tạo 1 document rỗng. Cái này không ảnh hưởng gì hết, code vẫn chạy bình thường)
-- Cập nhật các thông tin cần thiết (API, authDomain,...) ở file trong theo đường dẫn lib/firebase.ts
+- Cập nhật các thông tin cần thiết (API, authDomain,...) ở trong file firebase.ts (theo đường dẫn lib/firebase.ts)
 - Cập nhật phần Rules trong Firestore để file initFirestore.js có thể ghi dữ liệu vào database:
 
 ```
