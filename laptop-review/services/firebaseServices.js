@@ -1,4 +1,3 @@
-
 import { db } from '../lib/firebase';
 import { 
   collection, 
@@ -159,6 +158,89 @@ export const articleService = {
       return docRef.id;
     } catch (error) {
       console.error("Error adding article: ", error);
+      throw error;
+    }
+  }
+};
+
+// Laptop Services
+export const laptopService = {
+  // Get all laptops
+  getAll: async () => {
+    try {
+      const laptopsCollectionRef = collection(db, "laptops");
+      const querySnapshot = await getDocs(laptopsCollectionRef);
+      
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+    } catch (error) {
+      console.error("Error getting laptops: ", error);
+      throw error;
+    }
+  },
+  
+  // Get a specific laptop by ID
+  getById: async (id) => {
+    try {
+      const laptopDocRef = doc(db, "laptops", id);
+      const docSnapshot = await getDoc(laptopDocRef);
+      
+      if (docSnapshot.exists()) {
+        return {
+          id: docSnapshot.id,
+          ...docSnapshot.data()
+        };
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error getting laptop: ", error);
+      throw error;
+    }
+  },
+  
+  // Search laptops by name or specs
+  search: async (query) => {
+    try {
+      const laptopsCollectionRef = collection(db, "laptops");
+      const querySnapshot = await getDocs(laptopsCollectionRef);
+      
+      // Perform client-side filtering
+      // Note: For a production app, consider using Firebase extensions like Algolia
+      const results = querySnapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        .filter(laptop => {
+          const searchTerms = query.toLowerCase().split(' ');
+          return searchTerms.some(term => 
+            laptop.name.toLowerCase().includes(term) ||
+            laptop.specs.cpu.toLowerCase().includes(term) ||
+            laptop.specs.gpu.toLowerCase().includes(term)
+          );
+        });
+      
+      return results;
+    } catch (error) {
+      console.error("Error searching laptops: ", error);
+      throw error;
+    }
+  },
+  
+  // Add a new laptop
+  add: async (laptop) => {
+    try {
+      const laptopsCollectionRef = collection(db, "laptops");
+      const docRef = await addDoc(laptopsCollectionRef, {
+        ...laptop,
+        createdAt: Timestamp.fromDate(new Date())
+      });
+      return docRef.id;
+    } catch (error) {
+      console.error("Error adding laptop: ", error);
       throw error;
     }
   }
