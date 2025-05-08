@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { SearchIcon, Heart } from "lucide-react"
 import { laptopData } from "@/data/laptops";
-
+import { User } from "@/lib/firebase" 
 import LatestNews from "@/components/latest-news"
 import ArticleHighlights from "@/components/article-highlights"
 import FilterPanel from "@/components/filter-panel"
@@ -23,11 +23,34 @@ export default function Home() {
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [favorites, setFavorites] = useState<string[]>([]);
+  
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const userData = JSON.parse(storedUser);
+      setUser(userData);
+      
+      // Fetch current user from Firestore
+      const fetchUser = async () => {
+        try {
+          if (userData.uid) {
+            const userObj = await User.getFromFirestore(userData.uid);
+            if (userObj) {
+              setCurrentUser(userObj);
+              // Get favorite items
+              const favItems = userObj.getFavorites();
+              setFavorites(favItems);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      
+      fetchUser();
     }
     const observer = new IntersectionObserver(
       (entries) => {
@@ -59,6 +82,29 @@ export default function Home() {
     }
     
   }, [])
+  const toggleFavorite = async (e: React.MouseEvent, laptopId: string) => {
+    e.preventDefault(); // Prevent navigation
+    e.stopPropagation(); // Stop event bubbling
+    
+    if (!currentUser) {
+      alert("Please login to add favorites");
+      return;
+    }
+    const laptopIdString = laptopId.toString();
+    try {
+      if (favorites.includes(laptopId)) {
+        // Remove from favorites
+        await currentUser.removeFavoriteItem(laptopId);
+        setFavorites(prev => prev.filter(id => id !== laptopId));
+      } else {
+        // Add to favorites
+        await currentUser.addFavoriteItem(laptopId);
+        setFavorites(prev => [...prev, laptopId]);
+      }
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+    }
+  };
   const handleLogout = () => {
     // Xóa thông tin người dùng khỏi localStorage và cập nhật trạng thái
     localStorage.removeItem("user");
@@ -189,6 +235,15 @@ export default function Home() {
                     visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                   } hover:shadow-md hover:-translate-y-1`}
                 >
+                  {/* Add the favorite button */}
+                  <button
+                    onClick={(e) => toggleFavorite(e, laptop.id.toString())}
+                    className="absolute z-10 p-1.5 text-gray-500 bg-white rounded-full shadow-sm top-2 right-2 hover:text-red-500 transition-colors"
+                  >
+                    <Heart 
+                      className={`w-5 h-5 ${favorites.includes(laptop.id.toString()) ? 'fill-red-500 text-red-500' : 'fill-none'}`} 
+                    />
+                  </button>
                   <div className="p-4">
                     <Link href={laptop.detailLink}>
                       <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md relative">
