@@ -316,3 +316,31 @@ body {
 .prose blockquote {
   @apply pl-4 border-l-4 border-gray-300 italic my-6;
 }
+
+/* Additional navigation arrow animations */
+.nav-arrow {
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.nav-arrow:hover {
+  transform: scale(1.05);
+}
+
+/* Ensure arrows are initially hidden and fade in smoothly */
+@media (hover: hover) {
+  .slider-container:hover .nav-arrow {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  
+  .nav-arrow {
+    opacity: 0;
+  }
+}
+
+/* For mobile/touch devices, always show arrows with reduced opacity */
+@media (hover: none) {
+  .nav-arrow {
+    opacity: 0.5;
+  }
+}

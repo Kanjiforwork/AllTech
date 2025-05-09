@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
-import { Calendar, User, Clock } from "lucide-react"
+import { Calendar, User, Clock, ChevronLeft, ChevronRight } from "lucide-react"
 import { newsService } from "../services/firebaseServices"
 import NewsModal from "./news-modal"
 
@@ -29,6 +29,7 @@ export default function LatestNews() {
   const [isAnimated, setIsAnimated] = useState(false);
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showControls, setShowControls] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const slideStartTime = useRef<number | null>(null);
 
@@ -124,6 +125,11 @@ export default function LatestNews() {
       setIsDragging(false);
       setTranslateX(0);
     }
+    setShowControls(false);
+  };
+  
+  const handleMouseEnter = () => {
+    setShowControls(true);
   };
 
   // Auto-rotating slides
@@ -179,14 +185,43 @@ export default function LatestNews() {
     <>
       <div 
         className={`relative transition-opacity duration-700 ${isAnimated ? 'opacity-100' : 'opacity-0'}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
+        {/* Left arrow navigation */}
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            prevSlide();
+          }}
+          className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white transition-opacity duration-300 ${
+            showControls ? 'opacity-80' : 'opacity-0'
+          }`}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        {/* Right arrow navigation */}
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            nextSlide();
+          }}
+          className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white transition-opacity duration-300 ${
+            showControls ? 'opacity-80' : 'opacity-0'
+          }`}
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
         <div 
           className="overflow-hidden rounded-xl"
           ref={sliderRef}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
         >
           <div
             className="flex transition-transform duration-500 ease-in-out"
