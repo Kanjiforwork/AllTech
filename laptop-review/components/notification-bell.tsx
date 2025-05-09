@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState , useEffect} from "react"
 import { BellIcon } from "lucide-react"
-import { getFirestore, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore"
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, getDocs } from "firebase/firestore"
 import { initializeApp } from "firebase/app"
 import {firebaseConfig} from "../lib/firebase"
 
@@ -13,26 +13,26 @@ const db = getFirestore(app);
 
 export default function NotificationBell() {
   const [showNotifications, setShowNotifications] = useState(false)
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      title: "New Review: Dell XPS 15",
-      time: "2 hours ago",
-      read: false,
-    },
-    {
-      id: 2,
-      title: "Price Drop Alert: MacBook Air M3",
-      time: "Yesterday",
-      read: false,
-    },
-    {
-      id: 3,
-      title: "New Comment on Your Review",
-      time: "3 days ago",
-      read: true,
-    },
-  ])
+  const [notifications, setNotifications] = useState([])
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const queryNoti = await getDocs(collection(db, "notification"))
+      let dbNoti = []
+      queryNoti.forEach((noti) => {
+        const objNoti = {
+          id: noti.id,
+          title: noti.data().title,  // Use .data() to access document fields
+          time: noti.data().time,
+          read: noti.data().read,
+        }
+        dbNoti = [...dbNoti, objNoti]
+      })
+      setNotifications(dbNoti)
+    }
+  
+    fetchNotifications()
+  }, [])
 
   const unreadCount = notifications.filter((notification) => !notification.read).length
 
