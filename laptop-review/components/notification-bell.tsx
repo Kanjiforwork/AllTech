@@ -2,6 +2,14 @@
 
 import { useState } from "react"
 import { BellIcon } from "lucide-react"
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore"
+import { initializeApp } from "firebase/app"
+import {firebaseConfig} from "../lib/firebase"
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
 
 export default function NotificationBell() {
   const [showNotifications, setShowNotifications] = useState(false)
@@ -59,9 +67,9 @@ export default function NotificationBell() {
       </button>
 
       {showNotifications && (
-        <div 
+        <div
           className="absolute right-0 z-20 w-80 mt-2 overflow-hidden bg-white rounded-lg shadow-lg animate-fade-in"
-          style={{animationDuration: '0.2s'}}
+          style={{ animationDuration: '0.2s' }}
         >
           <div className="flex items-center justify-between p-4 border-b">
             <h3 className="font-semibold">Notifications</h3>
@@ -81,10 +89,9 @@ export default function NotificationBell() {
               notifications.map((notification, index) => (
                 <div
                   key={notification.id}
-                  className={`p-4 border-b transition-colors hover:bg-gray-50 ${
-                    !notification.read ? "bg-gray-50" : ""
-                  } animate-fade-up`}
-                  style={{animationDelay: `${index * 0.05}s`}}
+                  className={`p-4 border-b transition-colors hover:bg-gray-50 ${!notification.read ? "bg-gray-50" : ""
+                    } animate-fade-up`}
+                  style={{ animationDelay: `${index * 0.05}s` }}
                   onClick={() => markAsRead(notification.id)}
                 >
                   <div className="flex items-start">
