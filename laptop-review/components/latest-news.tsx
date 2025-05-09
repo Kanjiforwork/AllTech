@@ -63,7 +63,16 @@ export default function LatestNews() {
 
   const closeNewsModal = () => {
     setIsModalOpen(false);
-    setSelectedNews(null);
+    // Keep a small delay before clearing the selected news
+    // to avoid flickering during modal close animation
+    setTimeout(() => {
+      setSelectedNews(null);
+    }, 300);
+  };
+
+  const handleSelectRelatedNews = (newsItem: NewsItem) => {
+    setSelectedNews(newsItem);
+    // No need to open modal as it's already open
   };
 
   const nextSlide = () => {
@@ -292,7 +301,9 @@ export default function LatestNews() {
       <NewsModal 
         isOpen={isModalOpen} 
         onClose={closeNewsModal} 
-        newsItem={selectedNews} 
+        newsItem={selectedNews}
+        relatedNews={newsItems} 
+        onSelectRelatedNews={handleSelectRelatedNews}
       />
     </>
   );

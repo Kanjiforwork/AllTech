@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { X, Calendar, User, Clock, Share2, Bookmark, ThumbsUp } from "lucide-react";
 
@@ -19,11 +19,32 @@ interface NewsModalProps {
   isOpen: boolean;
   onClose: () => void;
   newsItem: NewsItem | null;
+  relatedNews: NewsItem[];
+  onSelectRelatedNews: (newsItem: NewsItem) => void;
 }
 
-export default function NewsModal({ isOpen, onClose, newsItem }: NewsModalProps) {
+export default function NewsModal({ 
+  isOpen, 
+  onClose, 
+  newsItem, 
+  relatedNews,
+  onSelectRelatedNews
+}: NewsModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [likes, setLikes] = useState<{ [key: string]: number }>({});
+  const [hasLiked, setHasLiked] = useState<{ [key: string]: boolean }>({});
+
+  // Generate random likes count between 12 and 230
+  useEffect(() => {
+    if (newsItem?.id && !likes[newsItem.id]) {
+      const randomLikes = Math.floor(Math.random() * (230 - 12 + 1)) + 12;
+      setLikes(prev => ({
+        ...prev,
+        [newsItem.id as string]: randomLikes
+      }));
+    }
+  }, [newsItem, likes]);
 
   // Handle click outside modal to close
   useEffect(() => {
@@ -72,63 +93,158 @@ export default function NewsModal({ isOpen, onClose, newsItem }: NewsModalProps)
     };
   }, [isOpen]);
 
-  // Format HTML content with proper styling
-  useEffect(() => {
-    if (isOpen && contentRef.current && newsItem?.content) {
-      // Format paragraphs for better readability
-      const paragraphs = contentRef.current.querySelectorAll('p');
-      paragraphs.forEach(p => {
-        p.classList.add('mb-5', 'text-gray-700', 'leading-relaxed');
-      });
-      
-      // Style headings
-      const headings = contentRef.current.querySelectorAll('h1, h2, h3, h4');
-      headings.forEach(heading => {
-        heading.classList.add('font-bold', 'mb-4', 'mt-6', 'text-gray-900');
-      });
-      
-      // Style lists
-      const lists = contentRef.current.querySelectorAll('ul, ol');
-      lists.forEach(list => {
-        list.classList.add('ml-5', 'mb-5');
-        const items = list.querySelectorAll('li');
-        items.forEach(item => {
-          item.classList.add('mb-2');
-        });
-      });
+  const handleLike = () => {
+    if (!newsItem?.id) return;
+    
+    const newsId = newsItem.id;
+    
+    if (hasLiked[newsId]) {
+      // Unlike
+      setLikes(prev => ({
+        ...prev,
+        [newsId]: prev[newsId] - 1
+      }));
+      setHasLiked(prev => ({
+        ...prev,
+        [newsId]: false
+      }));
+    } else {
+      // Like
+      setLikes(prev => ({
+        ...prev,
+        [newsId]: prev[newsId] + 1
+      }));
+      setHasLiked(prev => ({
+        ...prev,
+        [newsId]: true
+      }));
     }
-  }, [isOpen, newsItem]);
+  };
 
   if (!isOpen || !newsItem) return null;
 
+  // Filter out the current news item from related news
+  const filteredRelatedNews = relatedNews.filter(item => item.id !== newsItem.id).slice(0, 2);
+
   const formatContent = (content: string) => {
-    // Add formatting for numbered lists (1. Item)
-    let formattedContent = content.replace(/(\d+\.\s)([^\n]+)/g, '<li>$2</li>');
-    
-    // Add formatting for bullet points (- Item or * Item)
-    formattedContent = formattedContent.replace(/[-*]\s([^\n]+)/g, '<li>$1</li>');
-    
-    // Wrap groups of <li> elements in <ul> or <ol>
-    formattedContent = formattedContent.replace(/(<li>.*?<\/li>)+/g, (match) => {
-      if (match.includes('1.')) {
-        return `<ol class="list-decimal ml-5 mb-5">${match}</ol>`;
+    // First, split content into lines to handle block elements
+    const lines = content.split('\n');
+    let formattedLines = [];
+    let inList = false;
+    let listItems = [];
+    let listType = '';
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+      
+      // Skip empty lines
+      if (!line) {
+        if (inList && listItems.length > 0) {
+          // End the current list if we were building one
+          const listHtml = listType === 'ol' 
+            ? `<ol class="list-decimal pl-5 my-4 space-y-2">${listItems.join('')}</ol>`
+            : `<ul class="list-disc pl-5 my-4 space-y-2">${listItems.join('')}</ul>`;
+          formattedLines.push(listHtml);
+          listItems = [];
+          inList = false;
+        }
+        continue;
       }
-      return `<ul class="list-disc ml-5 mb-5">${match}</ul>`;
-    });
+
+      // Handle blockquotes
+      if (line.startsWith('"') && (line.includes("said") || line.length > 40) && line.endsWith('"')) {
+        // Full line is a quote
+        formattedLines.push(`<blockquote class="border-l-4 border-blue-500 pl-4 py-3 my-4 bg-gray-50 text-gray-700 italic rounded">${line}</blockquote>`);
+        continue;
+      }
+
+      // Handle numbered lists (1. Item)
+      const numberedListMatch = line.match(/^(\d+)\.\s+(.+)$/);
+      if (numberedListMatch) {
+        if (!inList || listType !== 'ol') {
+          // End previous list if we were in one
+          if (inList && listItems.length > 0) {
+            const listHtml = listType === 'ol' 
+              ? `<ol class="list-decimal pl-5 my-4 space-y-2">${listItems.join('')}</ol>`
+              : `<ul class="list-disc pl-5 my-4 space-y-2">${listItems.join('')}</ul>`;
+            formattedLines.push(listHtml);
+            listItems = [];
+          }
+          inList = true;
+          listType = 'ol';
+        }
+        listItems.push(`<li class="mb-1">${numberedListMatch[2]}</li>`);
+        continue;
+      }
+
+      // Handle bulleted lists (- Item or * Item)
+      const bulletListMatch = line.match(/^[-*]\s+(.+)$/);
+      if (bulletListMatch) {
+        if (!inList || listType !== 'ul') {
+          // End previous list if we were in one
+          if (inList && listItems.length > 0) {
+            const listHtml = listType === 'ol' 
+              ? `<ol class="list-decimal pl-5 my-4 space-y-2">${listItems.join('')}</ol>`
+              : `<ul class="list-disc pl-5 my-4 space-y-2">${listItems.join('')}</ul>`;
+            formattedLines.push(listHtml);
+            listItems = [];
+          }
+          inList = true;
+          listType = 'ul';
+        }
+        listItems.push(`<li class="mb-1">${bulletListMatch[1]}</li>`);
+        continue;
+      }
+
+      // End list if we're not on a list item anymore
+      if (inList && listItems.length > 0) {
+        const listHtml = listType === 'ol' 
+          ? `<ol class="list-decimal pl-5 my-4 space-y-2">${listItems.join('')}</ol>`
+          : `<ul class="list-disc pl-5 my-4 space-y-2">${listItems.join('')}</ul>`;
+        formattedLines.push(listHtml);
+        listItems = [];
+        inList = false;
+      }
+
+      // Format inline content
+      
+      // Format quotes within text (keep short quotes inline)
+      line = line.replace(/"([^"]+)"/g, (match, quote) => {
+        // For short quotes or quotes not at the beginning of a line, keep them inline
+        if (quote.length < 40 && !line.startsWith('"')) {
+          return `<span class="text-gray-700">"${quote}"</span>`;
+        }
+        return match; // Leave longer quotes for blockquote handling
+      });
+      
+      // Handle bold text
+      line = line.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold">$1</strong>');
+      
+      // Handle headings
+      if (line.startsWith('#')) {
+        const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+        if (headingMatch) {
+          const level = headingMatch[1].length;
+          const text = headingMatch[2];
+          const headingClass = level === 1 ? 'text-2xl' : level === 2 ? 'text-xl' : 'text-lg';
+          formattedLines.push(`<h${level} class="${headingClass} font-bold my-4">${text}</h${level}>`);
+          continue;
+        }
+      }
+
+      // Add as paragraph
+      formattedLines.push(`<p class="mb-4 leading-relaxed">${line}</p>`);
+    }
     
-    // Add formatting for bold text
-    formattedContent = formattedContent.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    // Close any remaining list
+    if (inList && listItems.length > 0) {
+      const listHtml = listType === 'ol' 
+        ? `<ol class="list-decimal pl-5 my-4 space-y-2">${listItems.join('')}</ol>`
+        : `<ul class="list-disc pl-5 my-4 space-y-2">${listItems.join('')}</ul>`;
+      formattedLines.push(listHtml);
+    }
     
-    // Add formatting for headings
-    formattedContent = formattedContent.replace(/^(#{1,6})\s+(.+)$/gm, (_, hashes, text) => {
-      const level = hashes.length;
-      return `<h${level} class="text-${level === 1 ? '2xl' : level === 2 ? 'xl' : 'lg'} font-bold my-4">${text}</h${level}>`;
-    });
-    
-    // Wrap paragraphs
-    formattedContent = formattedContent.replace(/(?<!(^|>))(^|<\/[^>]+>)([^<]+)(?!(<|$))/g, '$2<p class="mb-5">$3</p>');
-    
-    return formattedContent;
+    return formattedLines.join('');
   };
 
   return (
@@ -191,9 +307,12 @@ export default function NewsModal({ isOpen, onClose, newsItem }: NewsModalProps)
             </button>
           </div>
           <div className="flex items-center space-x-2">
-            <button className="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
-              <ThumbsUp className="w-5 h-5 mr-1" />
-              <span className="text-sm font-medium">42</span>
+            <button 
+              className={`flex items-center transition-colors ${hasLiked[newsItem.id || ''] ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'}`}
+              onClick={handleLike}
+            >
+              <ThumbsUp className={`w-5 h-5 mr-1 ${hasLiked[newsItem.id || ''] ? 'fill-blue-600' : ''}`} />
+              <span className="text-sm font-medium">{likes[newsItem.id || ''] || 0}</span>
             </button>
           </div>
         </div>
@@ -212,46 +331,40 @@ export default function NewsModal({ isOpen, onClose, newsItem }: NewsModalProps)
             }}
           />
           
-          {/* Related content */}
-          <div className="mt-12 pt-6 border-t border-gray-200">
-            <h3 className="text-xl font-bold mb-4">Related Articles</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="rounded-lg overflow-hidden border border-gray-200 flex">
-                <div className="relative w-24 h-20">
-                  <Image
-                    src="/news/news2.jpg"
-                    alt="Related news"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-3">
-                  <h4 className="font-medium text-sm line-clamp-2">Framework Laptop 16 Redefines Modular Computing</h4>
-                  <p className="text-xs text-gray-500 mt-1">7 min read</p>
-                </div>
-              </div>
-              <div className="rounded-lg overflow-hidden border border-gray-200 flex">
-                <div className="relative w-24 h-20">
-                  <Image
-                    src="/news/news3.jpg"
-                    alt="Related news"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-3">
-                  <h4 className="font-medium text-sm line-clamp-2">Windows 12 Launch Sparks New Era of AI-Powered Laptops</h4>
-                  <p className="text-xs text-gray-500 mt-1">8 min read</p>
-                </div>
+          {/* Latest News */}
+          {filteredRelatedNews.length > 0 && (
+            <div className="mt-12 pt-6 border-t border-gray-200">
+              <h3 className="text-xl font-bold mb-4">Latest News</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredRelatedNews.map((item) => (
+                  <div 
+                    key={item.id} 
+                    className="rounded-lg overflow-hidden border border-gray-200 flex cursor-pointer hover:border-blue-400 transition-colors"
+                    onClick={() => onSelectRelatedNews(item)}
+                  >
+                    <div className="relative w-24 h-20">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-3">
+                      <h4 className="font-medium text-sm line-clamp-2">{item.title}</h4>
+                      <p className="text-xs text-gray-500 mt-1">{item.readTime}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          )}
         </div>
         
         {/* Footer */}
         <div className="bg-gray-50 px-8 py-6 rounded-b-lg">
           <div className="flex items-center space-x-4">
-            <div className="relative w-12 h-12 rounded-full overflow-hidden">
+            <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-300">
               <Image
                 src="/authors/author-placeholder.jpg"
                 alt={newsItem.author}
