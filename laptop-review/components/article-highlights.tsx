@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { articleService } from "../services/firebaseServices"
-import NewsModal from "./news-modal"  // We'll reuse the same modal component
+import NewsModal from "./news-modal"
 
 // Define the Article interface
 interface Article {
@@ -18,27 +18,55 @@ interface Article {
   createdAt?: any; // Firestore timestamp
 }
 
+// Define the NewsItem interface to match what the modal expects
+interface NewsItem {
+  id?: string;
+  title: string;
+  image: string;
+  excerpt: string;
+  content?: string;
+  author: string;
+  date: string;
+  readTime: string;
+  createdAt?: any;
+  category?: string; // Optional for NewsItem
+}
+
 export default function ArticleHighlights() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<NewsItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const articlesRef = useRef<HTMLDivElement>(null);
+
+  // Convert Article to NewsItem for the modal
+  const articleToNewsItem = (article: Article): NewsItem => {
+    return {
+      id: article.id,
+      title: article.title,
+      image: article.image,
+      excerpt: article.excerpt,
+      content: article.content,
+      author: "LapInsight Team", // Default author for articles
+      date: article.date,
+      readTime: `${Math.floor(Math.random() * 5) + 3} min read`, // Generate random read time
+      createdAt: article.createdAt,
+      category: article.category
+    };
+  };
 
   // Fetch articles from Firestore
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         const fetchedArticles = await articleService.getLatest(3);
-        // Adapt the articles to match the NewsItem interface expected by the modal
-        const adaptedArticles = fetchedArticles.map(article => ({
-          ...article,
-          // Add readTime if it doesn't exist
-          readTime: article.readTime || `${Math.floor(Math.random() * 5) + 3} min read`,
-          // Add author if it doesn't exist
-          author: article.author || 'LapInsight Team'
-        }));
-        setArticles(adaptedArticles);
+        setArticles(fetchedArticles);
+        
+        // Convert articles to newsItems for the modal
+        const adaptedArticles = fetchedArticles.map(articleToNewsItem);
+        setNewsItems(adaptedArticles);
+        
         setLoading(false);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -51,7 +79,7 @@ export default function ArticleHighlights() {
 
   // Functions to handle modal
   const openArticleModal = (article: Article) => {
-    setSelectedArticle(article);
+    setSelectedArticle(articleToNewsItem(article));
     setIsModalOpen(true);
   };
 
@@ -64,8 +92,8 @@ export default function ArticleHighlights() {
     }, 300);
   };
 
-  const handleSelectRelatedArticle = (article: Article) => {
-    setSelectedArticle(article);
+  const handleSelectRelatedArticle = (newsItem: NewsItem) => {
+    setSelectedArticle(newsItem);
   };
 
   // Intersection Observer for animation
@@ -149,13 +177,15 @@ export default function ArticleHighlights() {
       </div>
       
       {/* Article modal - reusing the NewsModal component */}
-      <NewsModal
-        isOpen={isModalOpen}
-        onClose={closeArticleModal}
-        newsItem={selectedArticle}
-        relatedNews={articles}
-        onSelectRelatedNews={handleSelectRelatedArticle}
-      />
+      {selectedArticle && (
+        <NewsModal
+          isOpen={isModalOpen}
+          onClose={closeArticleModal}
+          newsItem={selectedArticle}
+          relatedNews={newsItems}
+          onSelectRelatedNews={handleSelectRelatedArticle}
+        />
+      )}
     </>
   );
 }
