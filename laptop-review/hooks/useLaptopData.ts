@@ -14,11 +14,20 @@ export function useLaptopData(id: string) {
     async function fetchLaptopData() {
       try {
         setLoading(true);
-        const data = await laptopService.getById(id);
+        
+        // Đầu tiên thử tìm bằng slug
+        let data = await laptopService.getBySlug(id);
+        
+        // Nếu không tìm thấy bằng slug, thử tìm bằng Firestore ID
+        if (!data) {
+          data = await laptopService.getById(id);
+        }
+        
         if (!data) {
           setError("Laptop not found");
         } else {
-          setLaptop(data);
+          // Đảm bảo dữ liệu phù hợp với kiểu Laptop
+          setLaptop(data as Laptop);
         }
       } catch (err: any) {
         console.error("Error fetching laptop:", err);

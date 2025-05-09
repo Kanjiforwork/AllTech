@@ -8,7 +8,8 @@ import {
   query, 
   orderBy, 
   limit, 
-  Timestamp 
+  Timestamp,
+  where
 } from 'firebase/firestore';
 
 // News Services
@@ -197,6 +198,29 @@ export const laptopService = {
       }
     } catch (error) {
       console.error("Error getting laptop: ", error);
+      throw error;
+    }
+  },
+  
+  // Get a specific laptop by slug/friendly ID
+  getBySlug: async (slug) => {
+    try {
+      const laptopsCollectionRef = collection(db, "laptops");
+      const q = query(laptopsCollectionRef, where("slug", "==", slug));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const docSnapshot = querySnapshot.docs[0];
+        return {
+          id: docSnapshot.id,
+          ...docSnapshot.data()
+        };
+      } else {
+        // Trả về null nếu không tìm thấy
+        return null;
+      }
+    } catch (error) {
+      console.error("Error getting laptop by slug: ", error);
       throw error;
     }
   },

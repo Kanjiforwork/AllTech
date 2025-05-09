@@ -117,6 +117,16 @@ But challenges remain - legacy enterprise software and niche drivers still requi
   },
 ];
 
+// Hàm tạo slug từ tên laptop
+function createSlug(name) {
+  return name
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Loại bỏ các ký tự đặc biệt
+    .replace(/\s+/g, '-')     // Thay thế khoảng trắng bằng dấu gạch ngang
+    .replace(/-+/g, '-')      // Thay thế nhiều dấu gạch ngang liên tiếp bằng một dấu
+    .trim();                  // Loại bỏ khoảng trắng ở đầu và cuối
+}
+
 // Hàm đọc dữ liệu laptop từ mock_data/data.ts
 async function getLaptopData() {
   try {
@@ -226,8 +236,17 @@ async function seedLaptopData() {
     const laptopsCollectionRef = collection(db, "laptops");
     
     for (const laptop of laptops) {
+      // Nếu laptop không có id, tạo slug từ tên laptop
+      if (!laptop.id) {
+        laptop.id = createSlug(laptop.name);
+      }
+      
+      // Lưu cả slug là id gốc từ mock data
+      const slug = laptop.id;
+      
       await addDoc(laptopsCollectionRef, {
         ...laptop,
+        slug: slug, // Thêm trường slug để dễ tìm kiếm
         createdAt: Timestamp.fromDate(new Date())
       });
     }
