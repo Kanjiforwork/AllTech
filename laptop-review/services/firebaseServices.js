@@ -1,291 +1,164 @@
-import { db } from '../lib/firebase';
-import { 
-  collection, 
-  getDocs, 
-  getDoc, 
-  doc, 
-  addDoc, 
-  query, 
-  orderBy, 
-  limit, 
-  Timestamp,
-  where
-} from 'firebase/firestore';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,GoogleAuthProvider, signInWithPopup,onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove,Timestamp,DocumentData } from "firebase/firestore";
 
-// News Services
-export const newsService = {
-  // Get all news items
-  getAll: async () => {
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAFSVL94k5zXkrAy5oQKbO7rT6W5fPAk4M",
+  authDomain: "laptop-review-all.firebaseapp.com",
+  projectId: "laptop-review-all",
+  storageBucket: "laptop-review-all.firebasestorage.app",
+  messagingSenderId: "1044782876129",
+  appId: "1:1044782876129:web:6e0891bf2753c5a3f63ea0"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const googleProvider = new GoogleAuthProvider(); // Add Google Provider
+
+// User class for OOP approach with TypeScript
+export class User {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL: string | null;
+  favoriteItems: string[];
+ createdAt: Timestamp;
+  constructor(uid: string, email: string, displayName: string = '', favoriteItems: string[] = [], photoURL: string | null = null, createdAt: Timestamp = Timestamp.now()) {
+    this.uid = uid;
+    this.email = email;
+    this.displayName = displayName;
+    this.photoURL = photoURL || null;
+    this.favoriteItems = favoriteItems;
+    this.createdAt = createdAt;
+  }
+  // Save user to Firestore
+  async saveToFirestore(): Promise<boolean> {
     try {
-      const newsCollectionRef = collection(db, "news");
-      const q = query(newsCollectionRef, orderBy("createdAt", "desc"));
-      const querySnapshot = await getDocs(q);
-      
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      await setDoc(doc(db, "users", this.uid), {
+        email: this.email,
+        displayName: this.displayName,
+        favoriteItems: this.favoriteItems,
+        createdAt: new Date(),
+      }, { merge: true });
+      return true;
     } catch (error) {
-      console.error("Error getting news: ", error);
-      throw error;
+      console.error("Error saving user to Firestore:", error);
+      return false;
     }
-  },
-  
-  // Get a specific news item by ID
-  getById: async (id) => {
+  }
+
+  // Get user data from Firestore
+  static async getFromFirestore(uid: string): Promise<User | null> {
     try {
-      const newsDocRef = doc(db, "news", id);
-      const docSnapshot = await getDoc(newsDocRef);
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
       
-      if (docSnapshot.exists()) {
-        return {
-          id: docSnapshot.id,
-          ...docSnapshot.data()
-        };
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        return new User(
+          uid,
+          data.email,
+          data.displayName || '',
+          data.favoriteItems || [],
+          data.photoURL || null,
+          data.createdAt || Timestamp.now()
+        );
       } else {
+        console.log("No user document found!");
         return null;
       }
     } catch (error) {
-      console.error("Error getting news item: ", error);
-      throw error;
-    }
-  },
-  
-  // Get latest news items with a limit
-  getLatest: async (itemCount = 3) => {
-    try {
-      const newsCollectionRef = collection(db, "news");
-      const q = query(
-        newsCollectionRef, 
-        orderBy("createdAt", "desc"),
-        limit(itemCount)
-      );
-      const querySnapshot = await getDocs(q);
-      
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-    } catch (error) {
-      console.error("Error getting latest news: ", error);
-      throw error;
-    }
-  },
-  
-  // Add a new news item
-  add: async (newsItem) => {
-    try {
-      const newsCollectionRef = collection(db, "news");
-      const docRef = await addDoc(newsCollectionRef, {
-        ...newsItem,
-        createdAt: Timestamp.fromDate(new Date())
-      });
-      return docRef.id;
-    } catch (error) {
-      console.error("Error adding news item: ", error);
-      throw error;
-    }
-  }
-};
-
-// Articles Services
-export const articleService = {
-  // Get all articles
-  getAll: async () => {
-    try {
-      const articlesCollectionRef = collection(db, "articles");
-      const q = query(articlesCollectionRef, orderBy("createdAt", "desc"));
-      const querySnapshot = await getDocs(q);
-      
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-    } catch (error) {
-      console.error("Error getting articles: ", error);
-      throw error;
-    }
-  },
-  
-  // Get a specific article by ID
-  getById: async (id) => {
-    try {
-      const articleDocRef = doc(db, "articles", id);
-      const docSnapshot = await getDoc(articleDocRef);
-      
-      if (docSnapshot.exists()) {
-        return {
-          id: docSnapshot.id,
-          ...docSnapshot.data()
-        };
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.error("Error getting article: ", error);
-      throw error;
-    }
-  },
-  
-  // Get latest articles with a limit
-  getLatest: async (itemCount = 3) => {
-    try {
-      const articlesCollectionRef = collection(db, "articles");
-      const q = query(
-        articlesCollectionRef, 
-        orderBy("createdAt", "desc"),
-        limit(itemCount)
-      );
-      const querySnapshot = await getDocs(q);
-      
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-    } catch (error) {
-      console.error("Error getting latest articles: ", error);
-      throw error;
-    }
-  },
-  
-  // Add a new article
-  add: async (article) => {
-    try {
-      const articlesCollectionRef = collection(db, "articles");
-      const docRef = await addDoc(articlesCollectionRef, {
-        ...article,
-        createdAt: Timestamp.fromDate(new Date())
-      });
-      return docRef.id;
-    } catch (error) {
-      console.error("Error adding article: ", error);
-      throw error;
-    }
-  }
-};
-
-// Laptop Services
-export const laptopService = {
-  // Get all laptops
-  getAll: async () => {
-    try {
-      const laptopsCollectionRef = collection(db, "laptops");
-      const querySnapshot = await getDocs(laptopsCollectionRef);
-      
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-    } catch (error) {
-      console.error("Error getting laptops: ", error);
-      throw error;
-    }
-  },
-  
-  // Get a specific laptop by ID
-  getById: async (id) => {
-    try {
-      console.log("Đang tìm laptop với ID:", id);
-      
-      // Trước tiên thử tìm bằng ID Firestore
-      const laptopDocRef = doc(db, "laptops", id);
-      const docSnapshot = await getDoc(laptopDocRef);
-      
-      if (docSnapshot.exists()) {
-        console.log("Đã tìm thấy laptop bằng Firestore ID");
-        return {
-          id: docSnapshot.id,
-          ...docSnapshot.data()
-        };
-      } 
-      
-      // Nếu không tìm thấy bằng ID, thử tìm bằng slug/ID đơn giản
-      console.log("Không tìm thấy bằng Firestore ID, thử tìm bằng slug:", id);
-      const laptopsCollectionRef = collection(db, "laptops");
-      const q = query(laptopsCollectionRef, where("id", "==", id));
-      const querySnapshot = await getDocs(q);
-      
-      if (!querySnapshot.empty) {
-        console.log("Đã tìm thấy laptop bằng ID đơn giản");
-        const docSnap = querySnapshot.docs[0];
-        return {
-          id: docSnap.id,
-          ...docSnap.data()
-        };
-      }
-      
-      console.log("Không tìm thấy laptop với ID:", id);
+      console.error("Error getting user from Firestore:", error);
       return null;
-    } catch (error) {
-      console.error("Error getting laptop: ", error);
-      throw error;
     }
-  },
-  
-  // Get a specific laptop by slug/friendly ID
-  getBySlug: async (slug) => {
+  }
+
+  // Add item to favorites
+  async addFavoriteItem(itemId: string): Promise<boolean> {
     try {
-      const laptopsCollectionRef = collection(db, "laptops");
-      const q = query(laptopsCollectionRef, where("slug", "==", slug));
-      const querySnapshot = await getDocs(q);
-      
-      if (!querySnapshot.empty) {
-        const docSnapshot = querySnapshot.docs[0];
-        return {
-          id: docSnapshot.id,
-          ...docSnapshot.data()
-        };
-      } else {
-        // Trả về null nếu không tìm thấy
-        return null;
-      }
-    } catch (error) {
-      console.error("Error getting laptop by slug: ", error);
-      throw error;
-    }
-  },
-  
-  // Search laptops by name or specs
-  search: async (query) => {
-    try {
-      const laptopsCollectionRef = collection(db, "laptops");
-      const querySnapshot = await getDocs(laptopsCollectionRef);
-      
-      // Perform client-side filtering
-      // Note: For a production app, consider using Firebase extensions like Algolia
-      const results = querySnapshot.docs
-        .map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-        .filter(laptop => {
-          const searchTerms = query.toLowerCase().split(' ');
-          return searchTerms.some(term => 
-            laptop.name.toLowerCase().includes(term) ||
-            laptop.specs.cpu.toLowerCase().includes(term) ||
-            laptop.specs.gpu.toLowerCase().includes(term)
-          );
-        });
-      
-      return results;
-    } catch (error) {
-      console.error("Error searching laptops: ", error);
-      throw error;
-    }
-  },
-  
-  // Add a new laptop
-  add: async (laptop) => {
-    try {
-      const laptopsCollectionRef = collection(db, "laptops");
-      const docRef = await addDoc(laptopsCollectionRef, {
-        ...laptop,
-        createdAt: Timestamp.fromDate(new Date())
+      this.favoriteItems.push(itemId);
+      await updateDoc(doc(db, "users", this.uid), {
+        favoriteItems: arrayUnion(itemId)
       });
-      return docRef.id;
+      return true;
     } catch (error) {
-      console.error("Error adding laptop: ", error);
-      throw error;
+      console.error("Error adding favorite item:", error);
+      return false;
     }
+  }
+
+  // Remove item from favorites
+  async removeFavoriteItem(itemId: string): Promise<boolean> {
+    try {
+      this.favoriteItems = this.favoriteItems.filter(item => item !== itemId);
+      await updateDoc(doc(db, "users", this.uid), {
+        favoriteItems: arrayRemove(itemId)
+      });
+      return true;
+    } catch (error) {
+      console.error("Error removing favorite item:", error);
+      return false;
+    }
+  }
+
+  // Check if an item is in favorites
+  isFavorite(itemId: string): boolean {
+    return this.favoriteItems.includes(itemId);
+  }
+  
+  // Get all favorite items
+  getFavorites(): string[] {
+    return this.favoriteItems;
+  }
+}
+
+// Authentication helper functions
+export const createUserAccount = async (email: string, password: string): Promise<User> => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const newUser = new User(userCredential.user.uid, email);
+    await newUser.saveToFirestore();
+    return newUser;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
+  }
+};
+
+export const signInUser = async (email: string, password: string): Promise<User | null> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return await User.getFromFirestore(userCredential.user.uid);
+  } catch (error) {
+    console.error("Error signing in:", error);
+    throw error;
+  }
+};
+
+export const signInWithGoogle = async (): Promise<User | null> => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    
+    // Check if user exists in Firestore
+    let userObj = await User.getFromFirestore(user.uid);
+    
+    // If not, create a new user document
+    if (!userObj) {
+      userObj = new User(user.uid, user.email || '', user.displayName || '');
+      await userObj.saveToFirestore();
+    }
+    
+    return userObj;
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
+    throw error;
   }
 };
