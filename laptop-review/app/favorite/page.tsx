@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from "next/image"
 import Link from "next/link"
-import { Heart } from "lucide-react"
+import { Heart, Trash2, RefreshCw, ChevronLeft, Star, ShoppingCart } from "lucide-react"
 import { User } from '@/lib/firebase'
 import { laptopService } from '@/services/firebaseServices'
 import FavoriteButton from '@/components/common/FavoriteButton'
@@ -107,10 +107,25 @@ const FavoritePage = () => {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-semibold mb-6">Laptop Yêu Thích</h2>
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center mb-8 text-gray-600">
+            <Link href="/" className="flex items-center text-sm font-medium hover:text-blue-600 transition-colors">
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              Trang chủ
+            </Link>
+          </div>
+          
+          <h1 className="text-3xl font-bold mb-8 text-gray-900 flex items-center">
+            <Heart className="w-8 h-8 mr-3 text-red-500" />
+            Laptop Yêu Thích
+          </h1>
+          
+          <div className="bg-white rounded-xl shadow-sm p-10 text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600 mx-auto mb-6"></div>
+            <p className="text-xl font-medium text-gray-700">Đang tải danh sách yêu thích...</p>
+            <p className="text-gray-500 mt-2">Vui lòng đợi trong giây lát</p>
+          </div>
         </div>
       </div>
     )
@@ -118,20 +133,37 @@ const FavoritePage = () => {
 
   if (!user) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-semibold mb-6">Laptop Yêu Thích</h2>
-        <div className="p-8 text-center bg-white border rounded-lg shadow-sm">
-          <Heart className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-          <h3 className="mb-2 text-lg font-medium">Vui lòng đăng nhập</h3>
-          <p className="mb-4 text-sm text-gray-500">
-            Đăng nhập để lưu và xem danh sách laptop yêu thích của bạn.
-          </p>
-          <Link
-            href="/login"
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-          >
-            Đăng nhập
-          </Link>
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center mb-8 text-gray-600">
+            <Link href="/" className="flex items-center text-sm font-medium hover:text-blue-600 transition-colors">
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              Trang chủ
+            </Link>
+          </div>
+          
+          <h1 className="text-3xl font-bold mb-8 text-gray-900 flex items-center">
+            <Heart className="w-8 h-8 mr-3 text-red-500" />
+            Laptop Yêu Thích
+          </h1>
+          
+          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="p-8 sm:p-12 text-center">
+              <div className="bg-red-50 rounded-full p-5 inline-flex mb-6">
+                <Heart className="w-12 h-12 text-red-500" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">Vui lòng đăng nhập</h3>
+              <p className="text-lg text-gray-600 mb-8 max-w-md mx-auto">
+                Đăng nhập để lưu và quản lý danh sách laptop yêu thích của bạn trên mọi thiết bị.
+              </p>
+              <Link
+                href="/login"
+                className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+              >
+                Đăng nhập ngay
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -139,91 +171,186 @@ const FavoritePage = () => {
 
   if (favoriteItems.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-semibold mb-6">Laptop Yêu Thích</h2>
-        <div className="p-8 text-center bg-white border rounded-lg shadow-sm">
-          <Heart className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-          <h3 className="mb-2 text-lg font-medium">Bạn chưa có laptop yêu thích</h3>
-          <p className="mb-4 text-sm text-gray-500">
-            Hãy duyệt qua các laptop và nhấn vào biểu tượng trái tim để thêm vào danh sách yêu thích.
-          </p>
-          <Link href="/all-laptops" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-            Xem Laptop
-          </Link>
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center mb-8 text-gray-600">
+            <Link href="/" className="flex items-center text-sm font-medium hover:text-blue-600 transition-colors">
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              Trang chủ
+            </Link>
+          </div>
+          
+          <h1 className="text-3xl font-bold mb-8 text-gray-900 flex items-center">
+            <Heart className="w-8 h-8 mr-3 text-red-500" />
+            Laptop Yêu Thích
+          </h1>
+          
+          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="p-8 sm:p-12 text-center">
+              <div className="bg-gray-100 rounded-full p-5 inline-flex mb-6">
+                <Heart className="w-12 h-12 text-gray-400" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">Bạn chưa có laptop yêu thích</h3>
+              <p className="text-lg text-gray-600 mb-8 max-w-md mx-auto">
+                Hãy duyệt qua các laptop và nhấn vào biểu tượng trái tim để thêm vào danh sách yêu thích.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link 
+                  href="/all-laptops" 
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                >
+                  Khám phá laptop
+                </Link>
+                <button
+                  onClick={forceRefresh}
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-blue-600 bg-white border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                >
+                  <RefreshCw className="w-5 h-5 mr-2" />
+                  Làm mới trang
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-semibold mb-6">Laptop Yêu Thích</h2>
-      <div className="flex justify-between items-center mb-4">
-        <p className="text-gray-600">{favoriteItems.length} laptop yêu thích</p>
-        <div className="flex gap-2">
-          <button 
-            onClick={refreshData}
-            className="px-3 py-1 text-sm font-medium text-blue-600 bg-white border border-blue-600 rounded-lg hover:bg-blue-50"
-          >
-            Làm mới dữ liệu
-          </button>
-          <button 
-            onClick={forceRefresh}
-            className="px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-          >
-            Làm mới trang
-          </button>
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center mb-8 text-gray-600">
+          <Link href="/" className="flex items-center text-sm font-medium hover:text-blue-600 transition-colors">
+            <ChevronLeft className="w-4 h-4 mr-1" />
+            Trang chủ
+          </Link>
         </div>
-      </div>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {favoriteItems.map((laptop) => (
-          <div key={laptop.id} className="relative overflow-hidden bg-white border rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-            <div className="absolute top-2 right-2 z-10">
-              <FavoriteButton
-                laptopId={laptop.id}
-                initialFavorite={true}
-                onToggleFavorite={(isFavorite) => {
-                  if (!isFavorite) {
-                    removeFavorite(laptop.id)
-                  }
-                }}
-                size={20}
-                className="p-1.5 bg-white rounded-full shadow-sm"
-              />
-            </div>
-            
-            <Link href={`/laptops/${laptop.id}`}>
-              <div className="p-4">
-                <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md">
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+        
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 flex items-center">
+            <Heart className="w-8 h-8 mr-3 text-red-500" />
+            Laptop Yêu Thích
+          </h1>
+          
+          <div className="flex gap-3">
+            <button 
+              onClick={refreshData}
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors shadow-sm"
+            >
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Làm mới dữ liệu
+            </button>
+            <button 
+              onClick={forceRefresh}
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+            >
+              Làm mới trang
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+          <p className="text-gray-700">
+            <span className="font-semibold">{favoriteItems.length}</span> laptop yêu thích
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {favoriteItems.map((laptop) => (
+            <div 
+              key={laptop.id} 
+              className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 border border-gray-100 group"
+            >
+              <div className="relative">
+                {/* Ảnh thumbnail */}
+                <div className="relative h-52 bg-gray-100 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-medium text-lg">
                     {laptop.name}
                   </div>
                 </div>
-
-                <div className="flex items-center mb-2">
-                  {Array.from({ length: 5 }).map((_, j) => (
-                    <svg key={j} className={`w-4 h-4 ${j < Math.floor(laptop.benchmarks?.overall || 0) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                  ))}
-                  <span className="ml-2 text-sm text-gray-600">
-                    {laptop.benchmarks?.overall.toFixed(1) || "N/A"}
-                  </span>
+                
+                {/* Nút yêu thích */}
+                <div className="absolute top-3 right-3 z-10">
+                  <FavoriteButton
+                    laptopId={laptop.id}
+                    initialFavorite={true}
+                    onToggleFavorite={(isFavorite) => {
+                      if (!isFavorite) {
+                        removeFavorite(laptop.id)
+                      }
+                    }}
+                    size={24}
+                    className="p-2 bg-white rounded-full shadow-sm"
+                  />
                 </div>
 
-                <h3 className="mb-1 font-semibold">{laptop.name}</h3>
-                <p className="mb-2 text-sm text-gray-600">{laptop.specs?.cpu}</p>
-
-                <div className="flex items-baseline gap-2">
-                  <span className="text-xl font-bold">{laptop.price}</span>
-                  {laptop.originalPrice && laptop.originalPrice !== laptop.price && (
-                    <span className="text-sm text-gray-500 line-through">{laptop.originalPrice}</span>
-                  )}
+                {/* Badge giảm giá */}
+                {laptop.originalPrice && laptop.price !== laptop.originalPrice && (
+                  <div className="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold py-1 px-2 rounded-md">
+                    Giảm giá
+                  </div>
+                )}
+              </div>
+              
+              <div className="p-5">
+                <Link href={`/laptops/${laptop.id}`}>
+                  {/* Rating */}
+                  <div className="flex items-center mb-3">
+                    <div className="flex items-center">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star 
+                          key={i} 
+                          size={16} 
+                          className={`${i < Math.floor(laptop.benchmarks?.overall || 0) 
+                            ? 'text-yellow-400 fill-yellow-400' 
+                            : 'text-gray-300'} mr-0.5`} 
+                        />
+                      ))}
+                    </div>
+                    <span className="ml-2 text-sm font-medium text-gray-600">
+                      {laptop.benchmarks?.overall.toFixed(1) || "N/A"}
+                    </span>
+                  </div>
+                  
+                  {/* Tên laptop */}
+                  <h3 className="font-bold text-gray-800 mb-2 hover:text-blue-600 transition-colors">
+                    {laptop.name}
+                  </h3>
+                  
+                  {/* Thông số kỹ thuật */}
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                    {laptop.specs?.cpu}, {laptop.specs?.ram}, {laptop.specs?.storage}
+                  </p>
+                  
+                  {/* Giá */}
+                  <div className="flex items-baseline gap-2 mb-4">
+                    <span className="text-xl font-bold text-gray-900">{laptop.price}</span>
+                    {laptop.originalPrice && laptop.originalPrice !== laptop.price && (
+                      <span className="text-sm text-gray-500 line-through">{laptop.originalPrice}</span>
+                    )}
+                  </div>
+                </Link>
+                
+                {/* Nút hành động */}
+                <div className="flex gap-2 pt-2 border-t border-gray-100">
+                  <Link 
+                    href={`/laptops/${laptop.id}`}
+                    className="flex-1 py-2 rounded-lg text-sm font-medium text-blue-600 text-center hover:bg-blue-50 transition-colors"
+                  >
+                    Xem chi tiết
+                  </Link>
+                  <button 
+                    onClick={() => removeFavorite(laptop.id)}
+                    className="w-10 h-10 flex items-center justify-center rounded-lg text-red-500 hover:bg-red-50 transition-colors"
+                    aria-label="Xóa khỏi danh sách yêu thích"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
               </div>
-            </Link>
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
