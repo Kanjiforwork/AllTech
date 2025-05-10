@@ -2,9 +2,9 @@
 
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
-import Link from "next/link"
-import { Calendar, User, Clock } from "lucide-react"
+import { Calendar, User, Clock, ChevronLeft, ChevronRight } from "lucide-react"
 import { newsService } from "../services/firebaseServices"
+import NewsModal from "./news-modal"
 
 // Define the NewsItem interface
 interface NewsItem {
@@ -27,14 +27,25 @@ export default function LatestNews() {
   const [startX, setStartX] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   const [isAnimated, setIsAnimated] = useState(false);
+  const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showControls, setShowControls] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const slideStartTime = useRef<number | null>(null);
 
   // Fetch news items from Firestore
   useEffect(() => {
     const fetchNews = async () => {
       try {
         const fetchedNews = await newsService.getLatest(3);
-        setNewsItems(fetchedNews);
+        
+        // Add a default content if none exists
+        const processedNews = fetchedNews.map(news => ({
+          ...news,
+          content: news.content || `<p>${news.excerpt}</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl.</p><p>Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl.</p>`
+        }));
+        
+        setNewsItems(processedNews);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching news:", error);
@@ -44,6 +55,25 @@ export default function LatestNews() {
 
     fetchNews();
   }, []);
+
+  const openNewsModal = (newsItem: NewsItem) => {
+    setSelectedNews(newsItem);
+    setIsModalOpen(true);
+  };
+
+  const closeNewsModal = () => {
+    setIsModalOpen(false);
+    // Keep a small delay before clearing the selected news
+    // to avoid flickering during modal close animation
+    setTimeout(() => {
+      setSelectedNews(null);
+    }, 300);
+  };
+
+  const handleSelectRelatedNews = (newsItem: NewsItem) => {
+    setSelectedNews(newsItem);
+    // No need to open modal as it's already open
+  };
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === newsItems.length - 1 ? 0 : prev + 1));
@@ -57,6 +87,7 @@ export default function LatestNews() {
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setStartX(e.clientX);
+    slideStartTime.current = Date.now();
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -78,11 +109,20 @@ export default function LatestNews() {
     const deltaX = e.clientX - startX;
     const containerWidth = sliderRef.current?.offsetWidth || 0;
     const threshold = containerWidth * 0.2;
+    const clickDuration = Date.now() - (slideStartTime.current || 0);
     
-    if (deltaX > threshold) {
-      prevSlide();
-    } else if (deltaX < -threshold) {
-      nextSlide();
+    // If it's a short click (less than 200ms) and minimal movement, treat as a click not a drag
+    if (clickDuration < 200 && Math.abs(deltaX) < 10) {
+      // Find which slide was clicked
+      const currentNewsItem = newsItems[currentSlide];
+      openNewsModal(currentNewsItem);
+    } else {
+      // Handle as a drag
+      if (deltaX > threshold) {
+        prevSlide();
+      } else if (deltaX < -threshold) {
+        nextSlide();
+      }
     }
     
     setIsDragging(false);
@@ -94,18 +134,23 @@ export default function LatestNews() {
       setIsDragging(false);
       setTranslateX(0);
     }
+    setShowControls(false);
+  };
+  
+  const handleMouseEnter = () => {
+    setShowControls(true);
   };
 
   // Auto-rotating slides
   useEffect(() => {
-    if (newsItems.length === 0) return; // Don't start the interval if no news items
+    if (newsItems.length === 0 || isModalOpen) return; // Don't rotate when modal is open
     
     const interval = setInterval(() => {
       nextSlide();
     }, 6000);
     
     return () => clearInterval(interval);
-  }, [currentSlide, newsItems.length]);
+  }, [currentSlide, newsItems.length, isModalOpen]);
 
   useEffect(() => {
     const preventDefault = (e: Event) => {
@@ -146,74 +191,120 @@ export default function LatestNews() {
   }
 
   return (
-    <div 
-      className={`relative transition-opacity duration-700 ${isAnimated ? 'opacity-100' : 'opacity-0'}`}
-    >
+    <>
       <div 
-        className="overflow-hidden rounded-xl"
-        ref={sliderRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        className={`relative transition-opacity duration-700 ${isAnimated ? 'opacity-100' : 'opacity-0'}`}
+        onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ 
-            transform: `translateX(calc(-${currentSlide * 100}% + ${translateX}px))`,
-            transitionProperty: isDragging ? 'none' : 'transform'
+        {/* Left arrow navigation */}
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            prevSlide();
           }}
+          className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white transition-opacity duration-300 ${
+            showControls ? 'opacity-80' : 'opacity-0'
+          }`}
+          aria-label="Previous slide"
         >
-          {newsItems.map((item) => (
-            <div key={item.id} className="relative w-full flex-shrink-0">
-              <div className="relative h-[400px] w-full bg-gray-200">
-                <Image src={item.image} alt={item.title} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-6 text-white">
-                  <h3 className="mb-3 text-2xl font-bold">{item.title}</h3>
-                  <p className="mb-4 text-gray-200 line-clamp-2 max-w-3xl">{item.excerpt}</p>
-                  
-                  <div className="flex items-center mb-4 text-gray-300 text-sm">
-                    <div className="flex items-center mr-4">
-                      <User className="w-4 h-4 mr-1" />
-                      <span>{item.author}</span>
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        {/* Right arrow navigation */}
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            nextSlide();
+          }}
+          className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white transition-opacity duration-300 ${
+            showControls ? 'opacity-80' : 'opacity-0'
+          }`}
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        <div 
+          className="overflow-hidden rounded-xl"
+          ref={sliderRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+        >
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ 
+              transform: `translateX(calc(-${currentSlide * 100}% + ${translateX}px))`,
+              transitionProperty: isDragging ? 'none' : 'transform'
+            }}
+          >
+            {newsItems.map((item) => (
+              <div 
+                key={item.id} 
+                className="relative w-full flex-shrink-0 cursor-pointer"
+              >
+                <div className="relative h-[400px] w-full bg-gray-200">
+                  <Image src={item.image} alt={item.title} fill className="object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute bottom-0 left-0 p-6 text-white">
+                    <h3 className="mb-3 text-2xl font-bold">{item.title}</h3>
+                    <p className="mb-4 text-gray-200 line-clamp-2 max-w-3xl">{item.excerpt}</p>
+                    
+                    <div className="flex items-center mb-4 text-gray-300 text-sm">
+                      <div className="flex items-center mr-4">
+                        <User className="w-4 h-4 mr-1" />
+                        <span>{item.author}</span>
+                      </div>
+                      <div className="flex items-center mr-4">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        <span>{item.date}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 mr-1" />
+                        <span>{item.readTime}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center mr-4">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      <span>{item.date}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
-                      <span>{item.readTime}</span>
-                    </div>
+                    
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openNewsModal(item);
+                      }}
+                      className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition-all duration-300 hover:scale-105"
+                    >
+                      Read More
+                    </button>
                   </div>
-                  
-                  <Link
-                    href={`/news/${item.id}`}
-                    className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition-all duration-300 hover:scale-105"
-                  >
-                    Read More
-                  </Link>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 space-x-2">
+          {newsItems.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                currentSlide === index 
+                  ? "bg-white scale-125" 
+                  : "bg-white/50 scale-100"
+              }`}
+            />
           ))}
         </div>
       </div>
-
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 space-x-2">
-        {newsItems.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`h-2 w-2 rounded-full transition-all duration-300 ${
-              currentSlide === index 
-                ? "bg-white scale-125" 
-                : "bg-white/50 scale-100"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
+      
+      {/* News modal */}
+      <NewsModal 
+        isOpen={isModalOpen} 
+        onClose={closeNewsModal} 
+        newsItem={selectedNews}
+        relatedNews={newsItems} 
+        onSelectRelatedNews={handleSelectRelatedNews}
+      />
+    </>
   );
 }

@@ -1,8 +1,31 @@
-import { db } from '../lib/firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { seedLaptopData } from './seedLaptopData';
+// seedFirestore.mjs
+// Script để nhập dữ liệu vào Firestore
 
-// News data
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Lấy đường dẫn hiện tại
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Cấu hình Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAFSVL94k5zXkrAy5oQKbO7rT6W5fPAk4M",
+  authDomain: "laptop-review-all.firebaseapp.com",
+  projectId: "laptop-review-all",
+  storageBucket: "laptop-review-all.firebasestorage.app",
+  messagingSenderId: "1044782876129",
+  appId: "1:1044782876129:web:6e0891bf2753c5a3f63ea0"
+};
+
+// Khởi tạo Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Dữ liệu mẫu - Tin tức
 const newsItems = [
   {
     title: "Apple Unveils M3-Powered MacBook Pro with Revolutionary Cooling System",
@@ -42,7 +65,7 @@ CEO Nirav Patel told us: "We're challenging the throwaway culture in tech." Earl
   },
 ];
 
-// Articles data
+// Dữ liệu mẫu - Bài viết
 const articles = [
   {
     title: "Best Productivity Laptops 2024: Ultimate Guide",
@@ -94,8 +117,74 @@ But challenges remain - legacy enterprise software and niche drivers still requi
   },
 ];
 
-// Function to seed news data
-export const seedNewsData = async () => {
+// Hàm tạo slug từ tên laptop
+function createSlug(name) {
+  return name
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Loại bỏ các ký tự đặc biệt
+    .replace(/\s+/g, '-')     // Thay thế khoảng trắng bằng dấu gạch ngang
+    .replace(/-+/g, '-')      // Thay thế nhiều dấu gạch ngang liên tiếp bằng một dấu
+    .trim();                  // Loại bỏ khoảng trắng ở đầu và cuối
+}
+
+// Hàm đọc dữ liệu laptop từ mock_data/data.ts
+async function getLaptopData() {
+  try {
+    // Đường dẫn đến file data.ts
+    const filePath = path.join(__dirname, 'mock_data', 'data.ts');
+    console.log(`Đang đọc file từ đường dẫn: ${filePath}`);
+    
+    // Đọc nội dung file
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    
+    // Tìm đoạn "export const laptops = [" trong file
+    const laptopsStartMatch = fileContent.match(/export\s+const\s+laptops\s*=\s*\[/);
+    if (!laptopsStartMatch) {
+      throw new Error('Không tìm thấy khai báo laptops trong file data.ts');
+    }
+    
+    // Lấy vị trí bắt đầu của mảng laptop
+    const startIdx = laptopsStartMatch.index + laptopsStartMatch[0].length;
+    
+    // Tìm dấu ngoặc vuông đóng cuối cùng (không hoàn hảo nhưng hoạt động cho trường hợp này)
+    let balance = 1; // Bắt đầu với 1 ngoặc vuông mở
+    let endIdx = startIdx;
+    
+    for (let i = startIdx; i < fileContent.length; i++) {
+      if (fileContent[i] === '[') balance++;
+      if (fileContent[i] === ']') balance--;
+      
+      if (balance === 0) {
+        endIdx = i;
+        break;
+      }
+    }
+    
+    // Lấy nội dung mảng laptops
+    const laptopsArrayString = fileContent.substring(startIdx, endIdx);
+    
+    // Chuyển đổi string thành mảng JavaScript bằng cách thêm dấu ngoặc vuông 
+    // Lưu ý: eval không khả dụng do ta đang sử dụng ES modules với import statements
+    // Thay vào đó, chúng ta sẽ tạo một file tạm thời để import dữ liệu
+    const tempFilePath = path.join(__dirname, 'temp_laptops_data.mjs');
+    fs.writeFileSync(tempFilePath, `export const laptops = [${laptopsArrayString}];`);
+    
+    // Import dữ liệu laptop từ file tạm
+    const { laptops } = await import(`./temp_laptops_data.mjs?t=${Date.now()}`);
+    
+    // Xóa file tạm
+    fs.unlinkSync(tempFilePath);
+    
+    console.log(`Đã tìm thấy ${laptops.length} laptop trong data.ts`);
+    return laptops;
+  } catch (error) {
+    console.error('Lỗi khi đọc dữ liệu laptop:', error);
+    return [];
+  }
+}
+
+// Hàm nhập dữ liệu tin tức
+async function seedNewsData() {
   try {
     const newsCollectionRef = collection(db, "news");
     
@@ -106,16 +195,16 @@ export const seedNewsData = async () => {
       });
     }
     
-    console.log("News data successfully seeded to Firestore!");
+    console.log("Đã nhập dữ liệu tin tức thành công!");
     return true;
   } catch (error) {
-    console.error("Error seeding news data: ", error);
+    console.error("Lỗi khi nhập dữ liệu tin tức:", error);
     return false;
   }
-};
+}
 
-// Function to seed articles data
-export const seedArticlesData = async () => {
+// Hàm nhập dữ liệu bài viết
+async function seedArticlesData() {
   try {
     const articlesCollectionRef = collection(db, "articles");
     
@@ -126,25 +215,72 @@ export const seedArticlesData = async () => {
       });
     }
     
-    console.log("Articles data successfully seeded to Firestore!");
+    console.log("Đã nhập dữ liệu bài viết thành công!");
     return true;
   } catch (error) {
-    console.error("Error seeding articles data: ", error);
+    console.error("Lỗi khi nhập dữ liệu bài viết:", error);
     return false;
   }
-};
+}
 
-// Function to seed all data
-export const seedAllData = async () => {
+// Hàm nhập dữ liệu laptop
+async function seedLaptopData() {
+  try {
+    const laptops = await getLaptopData();
+    
+    if (laptops.length === 0) {
+      console.error("Không có dữ liệu laptop để nhập");
+      return false;
+    }
+    
+    const laptopsCollectionRef = collection(db, "laptops");
+    
+    for (const laptop of laptops) {
+      // Nếu laptop không có id, tạo slug từ tên laptop
+      if (!laptop.id) {
+        laptop.id = createSlug(laptop.name);
+      }
+      
+      // Lưu cả slug là id gốc từ mock data
+      const slug = laptop.id;
+      
+      await addDoc(laptopsCollectionRef, {
+        ...laptop,
+        slug: slug, // Thêm trường slug để dễ tìm kiếm
+        createdAt: Timestamp.fromDate(new Date())
+      });
+    }
+    
+    console.log("Đã nhập dữ liệu laptop thành công!");
+    return true;
+  } catch (error) {
+    console.error("Lỗi khi nhập dữ liệu laptop:", error);
+    return false;
+  }
+}
+
+// Hàm nhập tất cả dữ liệu
+async function seedAllData() {
+  console.log('Bắt đầu nhập dữ liệu vào Firestore...');
+  
   const newsResult = await seedNewsData();
   const articlesResult = await seedArticlesData();
   const laptopsResult = await seedLaptopData();
   
   if (newsResult && articlesResult && laptopsResult) {
-    console.log("All data seeded successfully!");
+    console.log("Đã nhập tất cả dữ liệu thành công!");
     return true;
   } else {
-    console.error("There was a problem seeding the data.");
+    console.error("Có lỗi khi nhập dữ liệu.");
     return false;
   }
-};
+}
+
+// Chạy hàm nhập dữ liệu
+seedAllData().then(() => {
+  console.log('Hoàn thành quá trình nhập dữ liệu!');
+  process.exit(0);
+}).catch(error => {
+  console.error('Lỗi:', error);
+  process.exit(1);
+}); 

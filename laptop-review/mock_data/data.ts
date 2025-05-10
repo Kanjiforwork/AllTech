@@ -5,8 +5,8 @@ export const laptops = [
   id: "macbook-pro-14-m3-pro",
   name: "MacBook Pro 14-inch (M3 Pro)",
   image: "/placeholder.svg?height=600&width=600",
-  price: "$1,999.00",
-  originalPrice: "$1,999.00",
+  price: "$1,999",
+  originalPrice: "$1,999",
   specs: {
     cpu: "Apple M3 Pro (12-core CPU)",
     gpu: "16-core GPU",

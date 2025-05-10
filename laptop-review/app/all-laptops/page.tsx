@@ -3,14 +3,15 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { SearchIcon, Heart, ChevronLeft, Filter, ChevronRight } from "lucide-react"
-import { laptops } from "@/mock_data/data"
+import { laptopService } from "@/services/firebaseServices"
+import { Laptop } from "@/types/laptop"
 
 import FilterPanel from "@/components/filter-panel"
 import NotificationBell from "@/components/notification-bell"
 
 export default function AllLaptopsPage() {
   // State for animation of laptop cards
-  const [visibleCards, setVisibleCards] = useState<boolean[]>(Array(laptops.length).fill(false))
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([])
   // Reference for the laptop grid container
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null)
@@ -21,14 +22,31 @@ export default function AllLaptopsPage() {
   const [itemsPerPage, setItemsPerPage] = useState(12)
   const [sortOption, setSortOption] = useState('relevance')
   
-  const [filteredLaptops, setFilteredLaptops] = useState(laptops)
-  const [displayedLaptops, setDisplayedLaptops] = useState<typeof laptops>([])
+  // State để lưu trữ dữ liệu laptop từ Firestore
+  const [allLaptops, setAllLaptops] = useState<Laptop[]>([])
+  const [filteredLaptops, setFilteredLaptops] = useState<Laptop[]>([])
+  const [displayedLaptops, setDisplayedLaptops] = useState<Laptop[]>([])
+  const [loading, setLoading] = useState(true)
   
   // Total number of pages for pagination
   const totalPages = Math.ceil(filteredLaptops.length / itemsPerPage)
   
-  // Animation for laptop cards and load user data
+  // Fetch laptop data from Firestore
   useEffect(() => {
+    const fetchLaptops = async () => {
+      try {
+        const laptops = await laptopService.getAll();
+        setAllLaptops(laptops);
+        setFilteredLaptops(laptops);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching laptops:", error);
+        setLoading(false);
+      }
+    };
+    
+    fetchLaptops();
+    
     const storedUser = localStorage.getItem("user")
     if (storedUser) {
       setUser(JSON.parse(storedUser))
@@ -37,20 +55,22 @@ export default function AllLaptopsPage() {
   
   // Sort and filter laptops
   useEffect(() => {
+    if (filteredLaptops.length === 0) return;
+    
     let sorted = [...filteredLaptops]
     
     // Apply sorting
     switch (sortOption) {
       case 'price-low':
         sorted.sort((a, b) => 
-          parseInt(a.price.replace(/[^0-9]/g, '')) - 
-          parseInt(b.price.replace(/[^0-9]/g, ''))
+          parseInt(a.price?.replace(/[^0-9]/g, '') || '0') - 
+          parseInt(b.price?.replace(/[^0-9]/g, '') || '0')
         )
         break
       case 'price-high':
         sorted.sort((a, b) => 
-          parseInt(b.price.replace(/[^0-9]/g, '')) - 
-          parseInt(a.price.replace(/[^0-9]/g, ''))
+          parseInt(b.price?.replace(/[^0-9]/g, '') || '0') - 
+          parseInt(a.price?.replace(/[^0-9]/g, '') || '0')
         )
         break
       case 'rating':
@@ -87,10 +107,10 @@ export default function AllLaptopsPage() {
   // Handle search query
   useEffect(() => {
     if (searchQuery.trim() === "") {
-      setFilteredLaptops(laptops)
+      setFilteredLaptops(allLaptops)
     } else {
       const query = searchQuery.toLowerCase()
-      const results = laptops.filter(
+      const results = allLaptops.filter(
         laptop => 
           laptop.name.toLowerCase().includes(query) ||
           laptop.specs.cpu.toLowerCase().includes(query) ||
@@ -101,7 +121,7 @@ export default function AllLaptopsPage() {
       setFilteredLaptops(results)
       setCurrentPage(1) // Reset to first page when search changes
     }
-  }, [searchQuery])
+  }, [searchQuery, allLaptops])
 
   const handleLogout = () => {
     localStorage.removeItem("user")
@@ -211,7 +231,9 @@ export default function AllLaptopsPage() {
               </Link>
             </div>
             <h1 className="text-2xl font-bold">All Laptops</h1>
-            <p className="text-gray-600">Showing {filteredLaptops.length} laptops</p>
+            <p className="text-gray-600">
+              {loading ? 'Đang tải dữ liệu...' : `Showing ${filteredLaptops.length} laptops`}
+            </p>
           </div>
           
           <button 

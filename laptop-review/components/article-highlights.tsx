@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { articleService } from "../services/firebaseServices"
+import NewsModal from "./news-modal"
 
 // Define the Article interface
 interface Article {
@@ -17,10 +18,43 @@ interface Article {
   createdAt?: any; // Firestore timestamp
 }
 
+// Define the NewsItem interface to match what the modal expects
+interface NewsItem {
+  id?: string;
+  title: string;
+  image: string;
+  excerpt: string;
+  content?: string;
+  author: string;
+  date: string;
+  readTime: string;
+  createdAt?: any;
+  category?: string; // Optional for NewsItem
+}
+
 export default function ArticleHighlights() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedArticle, setSelectedArticle] = useState<NewsItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const articlesRef = useRef<HTMLDivElement>(null);
+
+  // Convert Article to NewsItem for the modal
+  const articleToNewsItem = (article: Article): NewsItem => {
+    return {
+      id: article.id,
+      title: article.title,
+      image: article.image,
+      excerpt: article.excerpt,
+      content: article.content,
+      author: "LapInsight Team", // Default author for articles
+      date: article.date,
+      readTime: `${Math.floor(Math.random() * 5) + 3} min read`, // Generate random read time
+      createdAt: article.createdAt,
+      category: article.category
+    };
+  };
 
   // Fetch articles from Firestore
   useEffect(() => {
@@ -28,6 +62,11 @@ export default function ArticleHighlights() {
       try {
         const fetchedArticles = await articleService.getLatest(3);
         setArticles(fetchedArticles);
+        
+        // Convert articles to newsItems for the modal
+        const adaptedArticles = fetchedArticles.map(articleToNewsItem);
+        setNewsItems(adaptedArticles);
+        
         setLoading(false);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -38,6 +77,26 @@ export default function ArticleHighlights() {
     fetchArticles();
   }, []);
 
+  // Functions to handle modal
+  const openArticleModal = (article: Article) => {
+    setSelectedArticle(articleToNewsItem(article));
+    setIsModalOpen(true);
+  };
+
+  const closeArticleModal = () => {
+    setIsModalOpen(false);
+    // Keep a small delay before clearing the selected news
+    // to avoid flickering during modal close animation
+    setTimeout(() => {
+      setSelectedArticle(null);
+    }, 300);
+  };
+
+  const handleSelectRelatedArticle = (newsItem: NewsItem) => {
+    setSelectedArticle(newsItem);
+  };
+
+  // Intersection Observer for animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -84,33 +143,49 @@ export default function ArticleHighlights() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-8 md:grid-cols-3" ref={articlesRef}>
-      {articles.map((article) => (
-        <Link 
-          key={article.id} 
-          href={`/articles/${article.id}`} 
-          className="group article-card opacity-0"
-        >
-          <div className="overflow-hidden transition-all duration-200 bg-white border rounded-lg shadow-sm group-hover:shadow-md hover-lift">
-            <div className="relative h-48 overflow-hidden">
-              <Image
-                src={article.image || "/placeholder.svg"}
-                alt={article.title}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute top-0 right-0 px-3 py-1 m-2 text-xs font-medium text-white bg-gray-900 rounded-full">
-                {article.category}
+    <>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-3" ref={articlesRef}>
+        {articles.map((article) => (
+          <div 
+            key={article.id} 
+            className="group article-card opacity-0 cursor-pointer"
+            onClick={() => openArticleModal(article)}
+          >
+            <div className="overflow-hidden transition-all duration-200 bg-white border rounded-lg shadow-sm group-hover:shadow-md hover:shadow-lg hover:-translate-y-1">
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src={article.image || "/placeholder.svg"}
+                  alt={article.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute top-0 right-0 px-3 py-1 m-2 text-xs font-medium text-white bg-gray-900 rounded-full">
+                  {article.category}
+                </div>
+              </div>
+              <div className="p-4">
+                <p className="mb-2 text-sm text-gray-500">{article.date}</p>
+                <h3 className="mb-2 text-lg font-bold transition-colors group-hover:text-gray-700">{article.title}</h3>
+                <p className="text-sm text-gray-600">{article.excerpt}</p>
+                <button className="mt-3 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">
+                  Read Article →
+                </button>
               </div>
             </div>
-            <div className="p-4">
-              <p className="mb-2 text-sm text-gray-500">{article.date}</p>
-              <h3 className="mb-2 text-lg font-bold transition-colors group-hover:text-gray-700">{article.title}</h3>
-              <p className="text-sm text-gray-600">{article.excerpt}</p>
-            </div>
           </div>
-        </Link>
-      ))}
-    </div>
-  )
+        ))}
+      </div>
+      
+      {/* Article modal - reusing the NewsModal component */}
+      {selectedArticle && (
+        <NewsModal
+          isOpen={isModalOpen}
+          onClose={closeArticleModal}
+          newsItem={selectedArticle}
+          relatedNews={newsItems}
+          onSelectRelatedNews={handleSelectRelatedArticle}
+        />
+      )}
+    </>
+  );
 }
