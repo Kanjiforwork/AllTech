@@ -308,7 +308,7 @@ const FavoritePage = () => {
                       ))}
                     </div>
                     <span className="ml-2 text-sm font-medium text-gray-600">
-                      {laptop.benchmarks?.overall.toFixed(1) || "N/A"}
+                      {laptop.benchmarks?.overall ? laptop.benchmarks.overall.toFixed(1) : "N/A"}
                     </span>
                   </div>
                   
