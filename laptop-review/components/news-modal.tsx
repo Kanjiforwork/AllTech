@@ -13,7 +13,6 @@ interface NewsItem {
   author: string;
   date: string;
   readTime: string;
-  category?: string; // Add category to determine the type of content
 }
 
 interface NewsModalProps {
@@ -36,24 +35,13 @@ export default function NewsModal({
   const [likes, setLikes] = useState<{ [key: string]: number }>({});
   const [hasLiked, setHasLiked] = useState<{ [key: string]: boolean }>({});
 
-  // Generate consistent likes based on item ID
+  // Generate random likes count between 12 and 230
   useEffect(() => {
     if (newsItem?.id && !likes[newsItem.id]) {
-      // Use a deterministic method to generate consistent likes based on the ID
-      // This creates a hash-like number from the string ID
-      let hashValue = 0;
-      const id = newsItem.id.toString();
-      for (let i = 0; i < id.length; i++) {
-        hashValue = ((hashValue << 5) - hashValue) + id.charCodeAt(i);
-        hashValue = hashValue & hashValue; // Convert to 32bit integer
-      }
-      
-      // Use the hash to generate a number between 12 and 230
-      const consistentLikes = Math.abs(hashValue % 219) + 12;
-      
+      const randomLikes = Math.floor(Math.random() * (230 - 12 + 1)) + 12;
       setLikes(prev => ({
         ...prev,
-        [newsItem.id as string]: consistentLikes
+        [newsItem.id as string]: randomLikes
       }));
     }
   }, [newsItem, likes]);
@@ -137,24 +125,6 @@ export default function NewsModal({
 
   // Filter out the current news item from related news
   const filteredRelatedNews = relatedNews.filter(item => item.id !== newsItem.id).slice(0, 2);
-
-  // Determine the content type based on the category or a default
-  const getContentLabel = () => {
-    // Check if the item has a category that indicates it's an article
-    if (newsItem.category) {
-      return "LATEST ARTICLES";
-    }
-    // Default to news if no category is specified
-    return "LATEST NEWS";
-  };
-
-  // Determine the related content section label
-  const getRelatedContentLabel = () => {
-    if (newsItem.category) {
-      return "Latest Articles";
-    }
-    return "Latest News";
-  };
 
   const formatContent = (content: string) => {
     // First, split content into lines to handle block elements
@@ -303,7 +273,7 @@ export default function NewsModal({
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
           <div className="absolute bottom-0 left-0 p-8 text-white">
             <div className="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3">
-              {getContentLabel()}
+              LATEST NEWS
             </div>
             <h2 className="text-3xl font-bold mb-2 leading-tight">{newsItem.title}</h2>
             
@@ -361,10 +331,10 @@ export default function NewsModal({
             }}
           />
           
-          {/* Related Content */}
+          {/* Latest News */}
           {filteredRelatedNews.length > 0 && (
             <div className="mt-12 pt-6 border-t border-gray-200">
-              <h3 className="text-xl font-bold mb-4">{getRelatedContentLabel()}</h3>
+              <h3 className="text-xl font-bold mb-4">Latest News</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredRelatedNews.map((item) => (
                   <div 
