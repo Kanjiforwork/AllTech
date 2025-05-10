@@ -273,7 +273,7 @@ export default function NewsModal({
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
           <div className="absolute bottom-0 left-0 p-8 text-white">
             <div className="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3">
-              LATEST NEWS
+              LATEST CONTENT
             </div>
             <h2 className="text-3xl font-bold mb-2 leading-tight">{newsItem.title}</h2>
             
