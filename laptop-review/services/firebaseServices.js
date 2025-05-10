@@ -185,17 +185,37 @@ export const laptopService = {
   // Get a specific laptop by ID
   getById: async (id) => {
     try {
+      console.log("Đang tìm laptop với ID:", id);
+      
+      // Trước tiên thử tìm bằng ID Firestore
       const laptopDocRef = doc(db, "laptops", id);
       const docSnapshot = await getDoc(laptopDocRef);
       
       if (docSnapshot.exists()) {
+        console.log("Đã tìm thấy laptop bằng Firestore ID");
         return {
           id: docSnapshot.id,
           ...docSnapshot.data()
         };
-      } else {
-        return null;
+      } 
+      
+      // Nếu không tìm thấy bằng ID, thử tìm bằng slug/ID đơn giản
+      console.log("Không tìm thấy bằng Firestore ID, thử tìm bằng slug:", id);
+      const laptopsCollectionRef = collection(db, "laptops");
+      const q = query(laptopsCollectionRef, where("id", "==", id));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        console.log("Đã tìm thấy laptop bằng ID đơn giản");
+        const docSnap = querySnapshot.docs[0];
+        return {
+          id: docSnap.id,
+          ...docSnap.data()
+        };
       }
+      
+      console.log("Không tìm thấy laptop với ID:", id);
+      return null;
     } catch (error) {
       console.error("Error getting laptop: ", error);
       throw error;

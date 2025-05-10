@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Youtube, ChevronDown } from "lucide-react";
 import SpecItem from "@/components/common/spec-item";
 import { Cpu, CpuIcon as Gpu, MemoryStickIcon as Memory, HardDrive, Monitor, Battery } from "lucide-react";
+import FavoriteButton from "@/components/common/FavoriteButton";
 
 type OverviewProps = {
   laptop: any;
@@ -77,6 +78,15 @@ export default function Overview({ laptop, detailed = false }: OverviewProps) {
                   <span className="ml-2 text-sm text-gray-500 line-through">{laptop.originalPrice}</span>
                 )}
               </div>
+            </div>
+            
+            <div className="mb-5 flex items-center justify-between">
+              <span className="text-sm text-gray-600">Thêm vào danh sách yêu thích</span>
+              <FavoriteButton
+                laptopId={laptop.id}
+                size={24}
+                className="ml-2"
+              />
             </div>
             
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">

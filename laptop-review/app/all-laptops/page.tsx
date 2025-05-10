@@ -8,6 +8,7 @@ import { Laptop } from "@/types/laptop"
 
 import FilterPanel from "@/components/filter-panel"
 import NotificationBell from "@/components/notification-bell"
+import FavoriteButton from '@/components/common/FavoriteButton'
 
 export default function AllLaptopsPage() {
   // State for animation of laptop cards
@@ -310,6 +311,15 @@ export default function AllLaptopsPage() {
                     ${visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} 
                     hover:shadow-md hover:-translate-y-1 relative`}
                 >
+                  {/* Nút yêu thích */}
+                  <div className="absolute top-2 right-2 z-10">
+                    <FavoriteButton
+                      laptopId={laptop.id}
+                      size={20}
+                      className="p-1.5 bg-white rounded-full shadow-sm"
+                    />
+                  </div>
+                  
                   <div className="p-4">
                     <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md">
                       <div className="absolute inset-0 flex items-center justify-center text-gray-500">
