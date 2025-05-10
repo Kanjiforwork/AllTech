@@ -39,8 +39,8 @@ export default function AllLaptopsPage() {
     const fetchLaptops = async () => {
       try {
         const laptops = await laptopService.getAll();
-        setAllLaptops(laptops);
-        setFilteredLaptops(laptops);
+        setAllLaptops(laptops as Laptop[]);
+        setFilteredLaptops(laptops as Laptop[]);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching laptops:", error);
@@ -260,7 +260,7 @@ export default function AllLaptopsPage() {
                         </svg>
                       ))}
                       <span className="ml-2 text-sm text-gray-600">
-                        {laptop.benchmarks?.overall.toFixed(1) || "N/A"}
+                        {laptop.benchmarks?.overall ? laptop.benchmarks.overall.toFixed(1) : "N/A"}
                       </span>
                     </div>
                     
@@ -279,7 +279,7 @@ export default function AllLaptopsPage() {
                             On Sale
                           </span>
                         )}
-                        {laptop.benchmarks?.value > 8.5 && (
+                        {(laptop.benchmarks?.value !== undefined && laptop.benchmarks.value > 8.5) && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
                             Great Value
                           </span>
