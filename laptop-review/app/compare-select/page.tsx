@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { SearchIcon, Heart } from "lucide-react"
 import { laptopData } from "@/data/laptops"
+import { useSearchParams } from "next/navigation"
 
 import FilterPanel from "@/components/filter-panel"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
@@ -23,6 +24,7 @@ export default function CompareSelectPage() {
   const [dataSort, setDataSort] = useState(laptopData)
   const [quickViewLaptop, setQuickViewLaptop] = useState<number | string | null>(null)
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
+  const searchParams = useSearchParams()
 
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
@@ -60,6 +62,14 @@ export default function CompareSelectPage() {
     }
     
   }, [])
+
+  // Đọc tham số current từ URL và thêm laptop đó vào danh sách đã chọn
+  useEffect(() => {
+    const currentLaptopId = searchParams.get('current')
+    if (currentLaptopId) {
+      setSelectedLaptops([currentLaptopId])
+    }
+  }, [searchParams])
 
   const handleLogout = () => {
     localStorage.removeItem("user")
