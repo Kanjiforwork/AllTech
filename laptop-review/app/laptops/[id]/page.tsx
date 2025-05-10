@@ -5,23 +5,34 @@ import { useLaptopData } from "@/hooks/useLaptopData";
 import LaptopDetailPage from "@/components/laptop-detail/LaptopDetailPageUI";
 import { useState, useEffect } from "react";
 import { laptopService } from "@/services/firebaseServices";
-import { SimilarLaptop } from "@/types/laptop";
+import { SimilarLaptop, Laptop } from "@/types/laptop";
+
+interface LaptopData {
+  laptop: Laptop | null;
+  loading: boolean;
+  error: any;
+}
 
 export default function LaptopDetailPageContainer() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
-  const { laptop, loading, error } = useLaptopData(id || '');
+  const { laptop, loading, error }: LaptopData = useLaptopData(id || '');
   const [similarLaptops, setSimilarLaptops] = useState<SimilarLaptop[]>([]);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
   
   // Lấy laptop tương tự từ Firestore
   useEffect(() => {
-    if (!laptop || !laptop.similarLaptopIds) return;
+    // Kiểm tra laptop có tồn tại
+    if (!laptop) return;
+    
+    // Kiểm tra có similarLaptopIds không
+    const similarIds = laptop.similarLaptopIds || [];
+    if (similarIds.length === 0) return;
     
     async function fetchSimilarLaptops() {
       try {
         setLoadingSimilar(true);
-        const laptopPromises = laptop.similarLaptopIds.map(
+        const laptopPromises = similarIds.map(
           (similarId: string) => laptopService.getById(similarId)
         );
         
@@ -29,8 +40,8 @@ export default function LaptopDetailPageContainer() {
         
         // Chuyển đổi dữ liệu Laptop thành SimilarLaptop
         const similarLaptopsData = results
-          .filter(item => item !== null)
-          .map(item => ({
+          .filter((item: any) => item !== null)
+          .map((item: any) => ({
             id: item.id,
             name: item.name,
             image: item.image,
