@@ -24,6 +24,9 @@ export const laptops = [
     build: 9.7,
     value: 7.6,
     overall: 9.3,
+    batteryLifeCasual: "12.5 hours",
+    batteryLifeVideo: "18 hours",
+    batteryLifeHeavy: "3.8 hours"
   },
   detailedSpecs: {
     case: {
@@ -180,6 +183,9 @@ export const laptops = [
     build: 9.5,
     value: 8.7,
     overall: 8.6,
+    batteryLifeCasual: "15 hours",
+    batteryLifeVideo: "16.5 hours",
+    batteryLifeHeavy: "6.2 hours"
   },
   detailedSpecs: {
     case: {
@@ -336,6 +342,9 @@ export const laptops = [
     build: 9.8,
     value: 7.2,
     overall: 9.6,
+    batteryLifeCasual: "14 hours",
+    batteryLifeVideo: "22 hours",
+    batteryLifeHeavy: "5.5 hours"
   },
   detailedSpecs: {
     case: {
@@ -492,6 +501,9 @@ export const laptops = [
     build: 9.4,
     value: 8.5,
     overall: 8.4,
+    batteryLifeCasual: "13.5 hours",
+    batteryLifeVideo: "18 hours",
+    batteryLifeHeavy: "5.8 hours"
   },
   detailedSpecs: {
     case: {
@@ -648,6 +660,9 @@ export const laptops = [
       build: 9.5,
       value: 7.2,
       overall: 8.1,
+      batteryLifeCasual: "10 hours",
+      batteryLifeVideo: "13.5 hours",
+      batteryLifeHeavy: "3.4 hours"
     },
     detailedSpecs: {
       case: {
@@ -803,6 +818,9 @@ export const laptops = [
       build: 8.5,
       value: 8.2,
       overall: 7.6,
+      batteryLifeCasual: "12 hours",
+      batteryLifeVideo: "14 hours",
+      batteryLifeHeavy: "4.5 hours"
     },
     detailedSpecs: {
       case: {
@@ -957,6 +975,9 @@ export const laptops = [
         build: 7.9,
         value: 9.2,
         overall: 8.3,
+        batteryLifeCasual: "12.5 hours",
+        batteryLifeVideo: "10.2 hours",
+        batteryLifeHeavy: "3.8 hours"
       },
       detailedSpecs: {
         case: {
@@ -1111,6 +1132,9 @@ export const laptops = [
         build: 9.0,
         value: 8.5,
         overall: 8.7,
+        batteryLifeCasual: "10 hours",
+        batteryLifeVideo: "11.5 hours",
+        batteryLifeHeavy: "2.5 hours"
       },
       detailedSpecs: {
         case: {
@@ -1260,6 +1284,9 @@ export const laptops = [
         build: 9.5,
         value: 7.8,
         overall: 8.6,
+        batteryLifeCasual: "8 hours",
+        batteryLifeVideo: "10.5 hours",
+        batteryLifeHeavy: "2.2 hours"
       },
       detailedSpecs: {
         case: {
@@ -1409,6 +1436,9 @@ export const laptops = [
         build: 9.5,
         value: 8.0,
         overall: 8.2,
+        batteryLifeCasual: "13 hours",
+        batteryLifeVideo: "14 hours",
+        batteryLifeHeavy: "4 hours"
       },
       detailedSpecs: {
         case: {
@@ -1563,6 +1593,9 @@ export const laptops = [
         build: 7.0,
         value: 9.0,
         overall: 7.8,
+        batteryLifeCasual: "7 hours",
+        batteryLifeVideo: "8 hours",
+        batteryLifeHeavy: "1.5 hours"
       },
       detailedSpecs: {
         case: {
