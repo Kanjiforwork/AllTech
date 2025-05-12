@@ -224,7 +224,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
                   <div className="w-full bg-gray-200 rounded-full h-4">
                     <div
                       className="h-4 rounded-full bg-green-500 flex items-center justify-end px-2"
-                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeCasual) / 15 * 100, 100)}%` }}
+                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeCasual.replace(' hours', '').replace(' hour', '')) / 20 * 100, 100)}%` }}
                     >
                       <span className="text-xs text-white font-medium">
                         {laptop.benchmarks.batteryLifeCasual.replace(' hours', 'h').replace(' hour', 'h')}
@@ -236,14 +236,14 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="font-medium">Casual Use</span>
-                    <span className="font-medium">12.5 hours</span>
+                    <span className="font-medium">8 hours</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-4">
                     <div
                       className="h-4 rounded-full bg-green-500 flex items-center justify-end px-2"
-                      style={{ width: "83%" }}
+                      style={{ width: "40%" }}
                     >
-                      <span className="text-xs text-white font-medium">12.5h</span>
+                      <span className="text-xs text-white font-medium">8h</span>
                     </div>
                   </div>
                 </div>
@@ -258,7 +258,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
                   <div className="w-full bg-gray-200 rounded-full h-4">
                     <div
                       className="h-4 rounded-full bg-blue-500 flex items-center justify-end px-2"
-                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeVideo) / 20 * 100, 100)}%` }}
+                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeVideo.replace(' hours', '').replace(' hour', '')) / 25 * 100, 100)}%` }}
                     >
                       <span className="text-xs text-white font-medium">
                         {laptop.benchmarks.batteryLifeVideo.replace(' hours', 'h').replace(' hour', 'h')}
@@ -270,14 +270,14 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="font-medium">Watching Online Video</span>
-                    <span className="font-medium">10.2 hours</span>
+                    <span className="font-medium">10.5 hours</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-4">
                     <div
                       className="h-4 rounded-full bg-blue-500 flex items-center justify-end px-2"
-                      style={{ width: "68%" }}
+                      style={{ width: "42%" }}
                     >
-                      <span className="text-xs text-white font-medium">10.2h</span>
+                      <span className="text-xs text-white font-medium">10.5h</span>
                     </div>
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
                   <div className="w-full bg-gray-200 rounded-full h-4">
                     <div
                       className="h-4 rounded-full bg-yellow-500 flex items-center justify-end px-2"
-                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeHeavy) / 10 * 100, 100)}%` }}
+                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeHeavy.replace(' hours', '').replace(' hour', '')) / 7 * 100, 100)}%` }}
                     >
                       <span className="text-xs text-white font-medium">
                         {laptop.benchmarks.batteryLifeHeavy.replace(' hours', 'h').replace(' hour', 'h')}
@@ -304,14 +304,14 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="font-medium">Extreme Use (Gaming/Rendering)</span>
-                    <span className="font-medium">3.8 hours</span>
+                    <span className="font-medium">2.2 hours</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-4">
                     <div
                       className="h-4 rounded-full bg-yellow-500 flex items-center justify-end px-2"
-                      style={{ width: "25%" }}
+                      style={{ width: "31%" }}
                     >
-                      <span className="text-xs text-white font-medium">3.8h</span>
+                      <span className="text-xs text-white font-medium">2.2h</span>
                     </div>
                   </div>
                 </div>
