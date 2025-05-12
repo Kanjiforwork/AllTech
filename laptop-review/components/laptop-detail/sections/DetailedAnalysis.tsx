@@ -39,7 +39,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.cpu?.benchmarks?.geekbench6Single && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.cpu.benchmarks.geekbench6Single / 30)}%` }}></div>
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.cpu.benchmarks.geekbench6Single / 30), 100)}%` }}></div>
               </div>
             )}
 
@@ -51,7 +51,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.cpu?.benchmarks?.geekbench6Multi && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.cpu.benchmarks.geekbench6Multi / 150)}%` }}></div>
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.cpu.benchmarks.geekbench6Multi / 150), 100)}%` }}></div>
               </div>
             )}
 
@@ -63,7 +63,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.cpu?.benchmarks?.cinebenchR23Single && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.cpu.benchmarks.cinebenchR23Single / 18)}%` }}></div>
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.cpu.benchmarks.cinebenchR23Single / 18), 100)}%` }}></div>
               </div>
             )}
 
@@ -75,7 +75,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.cpu?.benchmarks?.cinebenchR23Multi && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.cpu.benchmarks.cinebenchR23Multi / 150)}%` }}></div>
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.cpu.benchmarks.cinebenchR23Multi / 150), 100)}%` }}></div>
               </div>
             )}
           </div>
@@ -99,7 +99,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.gpu?.benchmarks?.wildlifeExtreme && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-green-500 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.gpu.benchmarks.wildlifeExtreme / 100)}%` }}></div>
+                <div className="bg-green-500 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.gpu.benchmarks.wildlifeExtreme / 100), 100)}%` }}></div>
               </div>
             )}
 
