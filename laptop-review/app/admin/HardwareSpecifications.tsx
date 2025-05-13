@@ -72,18 +72,34 @@ export default function HardwareSpecifications({ formData, handleChange }) {
             </div>
 
 
-            <Feature
-                identity={"graphicsCard"}
-                clasNameForInput={"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"}
-                classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
-                type="text"
-                value={formData.cpu}
-                onChange={handleChange}
-                placeholder="e.g. NVIDIA GeForce RTX 3060 6GB GDDR6"
-            >
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
-                Graphics Card
-            </Feature>
+                <Feature
+                    identity={"graphicsCard"}
+                    clasNameForInput={"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"}
+                    classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
+                    type="text"
+                    value={formData.cpu}
+                    onChange={handleChange}
+                    placeholder="e.g. NVIDIA GeForce RTX 3060 6GB GDDR6"
+                >
+
+                    Graphics Card
+                </Feature>
+
+                <Feature
+                    identity={"ports"}
+                    clasNameForInput={"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"}
+                    classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
+                    type="text"
+                    value={formData.cpu}
+                    onChange={handleChange}
+                    placeholder="e.g. 2x USB-C, 2x USB-A, HDMI, SD card"
+                >
+
+                    Ports
+                </Feature>
+            </div>
 
 
 
