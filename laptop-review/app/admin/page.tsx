@@ -10,6 +10,7 @@ import AdditionalFeautures from "./AdditionalFeatures"
 import BasicInformation from "./BasicInfomation"
 import HardwareSpecifications from "./HardwareSpecifications"
 import ProsConsSection from "./ProsConsSection"
+import DetailedAnalysisForm from "./detailed-analysis-form"
 
 type RatingCategory = {
   name: string
@@ -224,6 +225,8 @@ export default function LaptopForm() {
         {/* Add the Pros & Cons section here */}
         <ProsConsSection formData={formData} handleProsConsChange={handleProsConsChange} />
 
+        <DetailedAnalysisForm/>
+        
         <div className="mt-8 flex justify-end">
           <button
             type="submit"
