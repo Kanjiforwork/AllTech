@@ -286,7 +286,17 @@ export default function CompareSelectPage() {
         )}
       </main>
 
-      {/* Footer */}
+      {/* Comparison Sticky Bar */}
+      {selectedLaptops.length > 0 && (
+        <ComparisonStickyBar
+          selectedIds={selectedLaptops}
+          laptopData={laptopData}
+          onRemove={toggleLaptopSelection}
+          onClearAll={clearSelection}
+          maxSelections={2}
+        />
+      )}
+
       <Footer />
     </div>
   )

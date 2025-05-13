@@ -364,9 +364,9 @@ export default function AllLaptopsPage() {
               <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-600 dark:text-gray-300">Sort by:</span>
-                  <select
+                <select 
                     className="px-2 py-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                    value={sortOption}
+                  value={sortOption}
                     onChange={(e) => {
                       const option = e.target.value;
                       setSortOption(option);
@@ -374,15 +374,15 @@ export default function AllLaptopsPage() {
                       // Hiển thị theo trình tự mới mà không thay đổi filteredLaptops
                       setCurrentPage(1); // Đặt lại trang về 1 khi thay đổi sắp xếp
                     }}
-                  >
+                >
                     <option value="relevance">Relevance</option>
                     <option value="priceLowToHigh">Price: Low to High</option>
                     <option value="priceHighToLow">Price: High to Low</option>
                     <option value="rating">Rating</option>
                     <option value="newest">Newest</option>
-                  </select>
-                </div>
-                
+                </select>
+              </div>
+              
                 <div className="relative flex-1 max-w-sm">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <SearchIcon className="w-4 h-4 text-gray-400" />
