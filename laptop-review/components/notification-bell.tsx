@@ -1,30 +1,38 @@
 "use client"
 
-import { useState } from "react"
+import { useState , useEffect} from "react"
 import { BellIcon } from "lucide-react"
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, getDocs } from "firebase/firestore"
+import { initializeApp } from "firebase/app"
+import {firebaseConfig} from "../lib/firebase"
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
 
 export default function NotificationBell() {
   const [showNotifications, setShowNotifications] = useState(false)
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      title: "New Review: Dell XPS 15",
-      time: "2 hours ago",
-      read: false,
-    },
-    {
-      id: 2,
-      title: "Price Drop Alert: MacBook Air M3",
-      time: "Yesterday",
-      read: false,
-    },
-    {
-      id: 3,
-      title: "New Comment on Your Review",
-      time: "3 days ago",
-      read: true,
-    },
-  ])
+  const [notifications, setNotifications] = useState([])
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const queryNoti = await getDocs(collection(db, "notification"))
+      let dbNoti = []
+      queryNoti.forEach((noti) => {
+        const objNoti = {
+          id: noti.id,
+          title: noti.data().title,  // Use .data() to access document fields
+          time: noti.data().time,
+          read: noti.data().read,
+        }
+        dbNoti = [...dbNoti, objNoti]
+      })
+      setNotifications(dbNoti)
+    }
+  
+    fetchNotifications()
+  }, [])
 
   const unreadCount = notifications.filter((notification) => !notification.read).length
 
@@ -59,9 +67,9 @@ export default function NotificationBell() {
       </button>
 
       {showNotifications && (
-        <div 
+        <div
           className="absolute right-0 z-20 w-80 mt-2 overflow-hidden bg-white rounded-lg shadow-lg animate-fade-in"
-          style={{animationDuration: '0.2s'}}
+          style={{ animationDuration: '0.2s' }}
         >
           <div className="flex items-center justify-between p-4 border-b">
             <h3 className="font-semibold">Notifications</h3>
@@ -81,10 +89,9 @@ export default function NotificationBell() {
               notifications.map((notification, index) => (
                 <div
                   key={notification.id}
-                  className={`p-4 border-b transition-colors hover:bg-gray-50 ${
-                    !notification.read ? "bg-gray-50" : ""
-                  } animate-fade-up`}
-                  style={{animationDelay: `${index * 0.05}s`}}
+                  className={`p-4 border-b transition-colors hover:bg-gray-50 ${!notification.read ? "bg-gray-50" : ""
+                    } animate-fade-up`}
+                  style={{ animationDelay: `${index * 0.05}s` }}
                   onClick={() => markAsRead(notification.id)}
                 >
                   <div className="flex items-start">

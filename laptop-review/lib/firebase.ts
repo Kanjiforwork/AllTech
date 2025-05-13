@@ -7,7 +7,9 @@ import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove }
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+
+export const firebaseConfig = {
+
   apiKey: "AIzaSyAFSVL94k5zXkrAy5oQKbO7rT6W5fPAk4M",
   authDomain: "laptop-review-all.firebaseapp.com",
   projectId: "laptop-review-all",
