@@ -8,7 +8,7 @@ import { laptopData } from "@/data/laptops";
 
 import LatestNews from "@/components/latest-news"
 import ArticleHighlights from "@/components/article-highlights"
-import FilterPanel from "@/components/filter-panel"
+import FilterPanel, { FilterState } from "@/components/filter-panel"
 //import ComparisonTool from "@/components/comparison-tool"
 import RecommendedSection from "@/components/recommended-section"
 //import FavoritesSection from "@/components/favorites-section"
@@ -24,6 +24,22 @@ export default function Home() {
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  
+  // State cho bộ lọc
+  const [filters, setFilters] = useState<FilterState>({
+    brands: [],
+    cpuTypes: [],
+    ramSizes: [],
+    storageOptions: [],
+    priceRanges: [],
+    displaySizes: [],
+    batteryLife: [],
+    features: [],
+  })
+
+  const [dataSort, setDataSort] = useState(laptopData)
+  const [filteredData, setFilteredData] = useState(laptopData)
+  
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -60,6 +76,7 @@ export default function Home() {
     }
     
   }, [])
+  
   const handleLogout = () => {
     // Xóa thông tin người dùng khỏi localStorage và cập nhật trạng thái
     localStorage.removeItem("user");
@@ -67,12 +84,71 @@ export default function Home() {
     alert("Logged out successfully!");
   };
 
-  const [dataSort, setDataSort] = useState(laptopData)
-  
+  // Xử lý sắp xếp theo giá
   function handleSort(newListData: typeof laptopData) {
-    console.log(dataSort)
     setDataSort(newListData)
   }
+  
+  // Áp dụng bộ lọc
+  useEffect(() => {
+    let results = [...laptopData];
+    
+    // Áp dụng các bộ lọc
+    // Filter by brand
+    if (filters.brands.length > 0) {
+      results = results.filter(laptop => {
+        // Extract brand from laptop name
+        const laptopBrands = filters.brands.map((brand: string) => brand.toLowerCase());
+        const laptopBrand = laptop.name.split(' ')[0].toLowerCase();
+        return laptopBrands.includes(laptopBrand);
+      });
+    }
+    
+    // Filter by CPU
+    if (filters.cpuTypes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.cpuTypes.some((cpuType: string) => 
+          laptop.specs.includes(cpuType)
+        );
+      });
+    }
+    
+    // Filter by RAM
+    if (filters.ramSizes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.ramSizes.some((ramSize: string) => 
+          laptop.specs.includes(ramSize)
+        );
+      });
+    }
+    
+    // Filter by Storage
+    if (filters.storageOptions.length > 0) {
+      results = results.filter(laptop => {
+        return filters.storageOptions.some((storageOption: string) => 
+          laptop.specs.includes(storageOption.replace(' SSD', ''))
+        );
+      });
+    }
+    
+    // Filter by price range
+    if (filters.priceRanges.length > 0) {
+      results = results.filter(laptop => {
+        return filters.priceRanges.some((range: { min: number; max: number }) => 
+          laptop.salePrice >= range.min && laptop.salePrice <= range.max
+        );
+      });
+    }
+    
+    // Set filtered data
+    setFilteredData(results);
+    setDataSort(results);
+  }, [filters]);
+  
+  // Handle filter changes from FilterPanel
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -96,10 +172,10 @@ export default function Home() {
         {/* Filter and Results */}
         <div className="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <FilterPanel />
+            <FilterPanel onFilter={handleFilterChange} />
           </div>
           <div className="lg:col-span-3 relative z-0">
-            <BrowseLaptopsHeader laptopData={laptopData} handle={(newList: typeof laptopData) => handleSort(newList)}/>
+            <BrowseLaptopsHeader laptopData={laptopData} handle={handleSort} />
             {/* Laptop Grid with animation */}
           
             <div 

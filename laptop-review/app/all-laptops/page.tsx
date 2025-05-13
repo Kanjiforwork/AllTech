@@ -7,7 +7,7 @@ import { SearchIcon, Heart, ChevronLeft, Filter, ChevronRight } from "lucide-rea
 import { laptopService } from "@/services/firebaseServices"
 import { Laptop } from "@/types/laptop"
 
-import FilterPanel from "@/components/filter-panel"
+import FilterPanel, { FilterState } from "@/components/filter-panel"
 import NotificationBell from "@/components/notification-bell"
 import FavoriteButton from '@/components/common/FavoriteButton'
 import Header from "@/components/common/header"
@@ -24,6 +24,18 @@ export default function AllLaptopsPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(12)
   const [sortOption, setSortOption] = useState('relevance')
+  
+  // State cho bộ lọc
+  const [filters, setFilters] = useState<FilterState>({
+    brands: [],
+    cpuTypes: [],
+    ramSizes: [],
+    storageOptions: [],
+    priceRanges: [],
+    displaySizes: [],
+    batteryLife: [],
+    features: [],
+  })
   
   // State để lưu trữ dữ liệu laptop từ Firestore
   const [allLaptops, setAllLaptops] = useState<Laptop[]>([])
@@ -126,6 +138,112 @@ export default function AllLaptopsPage() {
     }
   }, [searchQuery, allLaptops])
 
+  // Apply filters to laptops
+  useEffect(() => {
+    if (allLaptops.length === 0) return;
+    
+    let results = [...allLaptops];
+    
+    // Apply search query
+    if (searchQuery.trim() !== "") {
+      const query = searchQuery.toLowerCase();
+      results = results.filter(
+        laptop => 
+          laptop.name.toLowerCase().includes(query) ||
+          laptop.specs.cpu.toLowerCase().includes(query) ||
+          laptop.specs.gpu.toLowerCase().includes(query) ||
+          laptop.specs.ram.toLowerCase().includes(query) ||
+          laptop.specs.storage.toLowerCase().includes(query)
+      );
+    }
+    
+    // Apply filters
+    // Filter by brand
+    if (filters.brands.length > 0) {
+      results = results.filter(laptop => {
+        // Extract brand from laptop name
+        const laptopBrands = filters.brands.map((brand: string) => brand.toLowerCase());
+        const laptopBrand = laptop.name.split(' ')[0].toLowerCase();
+        return laptopBrands.includes(laptopBrand);
+      });
+    }
+    
+    // Filter by CPU
+    if (filters.cpuTypes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.cpuTypes.some((cpuType: string) => 
+          laptop.specs.cpu.toLowerCase().includes(cpuType.toLowerCase())
+        );
+      });
+    }
+    
+    // Filter by RAM
+    if (filters.ramSizes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.ramSizes.some((ramSize: string) => 
+          laptop.specs.ram.toLowerCase().includes(ramSize.toLowerCase())
+        );
+      });
+    }
+    
+    // Filter by Storage
+    if (filters.storageOptions.length > 0) {
+      results = results.filter(laptop => {
+        return filters.storageOptions.some((storageOption: string) => 
+          laptop.specs.storage.toLowerCase().includes(storageOption.toLowerCase().replace(' ssd', ''))
+        );
+      });
+    }
+    
+    // Filter by price range
+    if (filters.priceRanges.length > 0) {
+      results = results.filter(laptop => {
+        // Trích xuất giá từ chuỗi và chuyển đổi thành số
+        const price = parseInt(laptop.price?.replace(/[^0-9]/g, '') || '0');
+        
+        // Kiểm tra xem giá có nằm trong một trong các khoảng giá được chọn không
+        return filters.priceRanges.some((range: { min: number; max: number }) => 
+          price >= range.min && price <= range.max
+        );
+      });
+    }
+    
+    // Filter by display size
+    if (filters.displaySizes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.displaySizes.some((size: string) => 
+          laptop.specs.display.includes(size)
+        );
+      });
+    }
+    
+    // Filter by battery life
+    if (filters.batteryLife.length > 0) {
+      results = results.filter(laptop => {
+        if (!laptop.benchmarks?.batteryLifeCasual) return false;
+        
+        const batteryHours = parseInt(laptop.benchmarks.batteryLifeCasual);
+        
+        return filters.batteryLife.some((range: string) => {
+          if (range === '<6 giờ') return batteryHours < 6;
+          if (range === '6-10 giờ') return batteryHours >= 6 && batteryHours <= 10;
+          if (range === '> 10 giờ') return batteryHours > 10;
+          return false;
+        });
+      });
+    }
+    
+    // Feature filters would require more detailed data, can be expanded later
+    
+    setFilteredLaptops(results);
+    setCurrentPage(1); // Reset to first page when filters change
+  }, [allLaptops, searchQuery, filters]);
+  
+  // Handle filter changes from FilterPanel
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("user")
     setUser(null)
@@ -176,7 +294,7 @@ export default function AllLaptopsPage() {
         <div className="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-4">
           {/* Filter Panel - hidden on mobile unless toggled */}
           <div className={`lg:col-span-1 ${showFilters ? 'block' : 'hidden'} lg:block`}>
-            <FilterPanel />
+            <FilterPanel onFilter={handleFilterChange} allLaptops={allLaptops} />
           </div>
           
           {/* Laptop grid */}

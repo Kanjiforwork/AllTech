@@ -7,7 +7,7 @@ import { SearchIcon, Heart } from "lucide-react"
 import { laptopData } from "@/data/laptops"
 import { useSearchParams } from "next/navigation"
 
-import FilterPanel from "@/components/filter-panel"
+import FilterPanel, { FilterState } from "@/components/filter-panel"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
 import NotificationBell from "@/components/notification-bell"
 import ComparisonStickyBar from "@/components/comparison/comparison-sticky-bar"
@@ -27,6 +27,18 @@ export default function CompareSelectPage() {
   const [quickViewLaptop, setQuickViewLaptop] = useState<number | string | null>(null)
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
   const searchParams = useSearchParams()
+  
+  // State cho bộ lọc
+  const [filters, setFilters] = useState<FilterState>({
+    brands: [],
+    cpuTypes: [],
+    ramSizes: [],
+    storageOptions: [],
+    priceRanges: [],
+    displaySizes: [],
+    batteryLife: [],
+    features: [],
+  })
 
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
@@ -83,6 +95,76 @@ export default function CompareSelectPage() {
     setDataSort(newListData)
   }
 
+  // Áp dụng bộ lọc
+  useEffect(() => {
+    if (filters.brands.length === 0 && 
+        filters.cpuTypes.length === 0 && 
+        filters.ramSizes.length === 0 && 
+        filters.storageOptions.length === 0 && 
+        filters.priceRanges.length === 0 && 
+        filters.displaySizes.length === 0 && 
+        filters.batteryLife.length === 0 && 
+        filters.features.length === 0) {
+      setDataSort(laptopData);
+      return;
+    }
+    
+    let results = [...laptopData];
+    
+    // Filter by brand
+    if (filters.brands.length > 0) {
+      results = results.filter(laptop => {
+        const laptopBrands = filters.brands.map((brand: string) => brand.toLowerCase());
+        const laptopBrand = laptop.name.split(' ')[0].toLowerCase();
+        return laptopBrands.includes(laptopBrand);
+      });
+    }
+    
+    // Filter by CPU
+    if (filters.cpuTypes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.cpuTypes.some((cpuType: string) => 
+          laptop.specs.includes(cpuType)
+        );
+      });
+    }
+    
+    // Filter by RAM
+    if (filters.ramSizes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.ramSizes.some((ramSize: string) => 
+          laptop.specs.includes(ramSize)
+        );
+      });
+    }
+    
+    // Filter by Storage
+    if (filters.storageOptions.length > 0) {
+      results = results.filter(laptop => {
+        return filters.storageOptions.some((storageOption: string) => 
+          laptop.specs.includes(storageOption.replace(' SSD', ''))
+        );
+      });
+    }
+    
+    // Filter by price range
+    if (filters.priceRanges.length > 0) {
+      results = results.filter(laptop => {
+        return filters.priceRanges.some((range: { min: number; max: number }) => 
+          laptop.salePrice >= range.min && laptop.salePrice <= range.max
+        );
+      });
+    }
+    
+    // Set filtered data
+    setDataSort(results);
+  }, [filters]);
+
+  // Handle filter changes
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
+  };
+
   const toggleLaptopSelection = (laptopId: number | string) => {
     if (selectedLaptops.includes(laptopId)) {
       // Remove from selection
@@ -131,7 +213,7 @@ export default function CompareSelectPage() {
         {/* Filter and Results */}
         <div className="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <FilterPanel />
+            <FilterPanel onFilter={handleFilterChange} />
           </div>
           <div className="lg:col-span-3">
             <div className="flex items-center justify-between mb-6">

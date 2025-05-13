@@ -2,7 +2,22 @@
 
 import { useState, useRef, useEffect } from "react"
 import { ChevronDown, ChevronUp, ArrowDownWideNarrow, ArrowUpWideNarrow } from "lucide-react"
-import { Laptop } from "@/data/laptops"
+
+// Định nghĩa lại kiểu dữ liệu phù hợp với trang chính
+interface Laptop {
+  id: string | number;
+  name: string;
+  specs: string;
+  rating: number;
+  reviews: number;
+  salePrice: number;
+  originalPrice: string | null;
+  saveAmount: string | null;
+  onSale: boolean;
+  greatDeal: boolean;
+  image: string;
+  detailLink: string;
+}
 
 interface BrowseLaptopsHeaderProps {
   laptopData: Laptop[];
