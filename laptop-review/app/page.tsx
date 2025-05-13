@@ -97,10 +97,12 @@ export default function Home() {
     // Filter by brand
     if (filters.brands.length > 0) {
       results = results.filter(laptop => {
-        // Extract brand from laptop name
-        const laptopBrands = filters.brands.map((brand: string) => brand.toLowerCase());
-        const laptopBrand = laptop.name.split(' ')[0].toLowerCase();
-        return laptopBrands.includes(laptopBrand);
+        // Kiểm tra brand trong tên laptop
+        const laptopName = laptop.name.toLowerCase();
+        return filters.brands.some(brand => {
+          const brandLower = brand.toLowerCase();
+          return laptopName.includes(brandLower);
+        });
       });
     }
     
@@ -137,6 +139,16 @@ export default function Home() {
         return filters.priceRanges.some((range: { min: number; max: number }) => 
           laptop.salePrice >= range.min && laptop.salePrice <= range.max
         );
+      });
+    }
+    
+    // Filter by display size
+    if (filters.displaySizes.length > 0) {
+      results = results.filter(laptop => {
+        // Kiểm tra kích thước màn hình dựa trên thông số specs
+        return filters.displaySizes.some(size => {
+          return laptop.specs.toLowerCase().includes(size.toLowerCase().replace('"', ''));
+        });
       });
     }
     

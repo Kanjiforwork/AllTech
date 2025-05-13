@@ -161,10 +161,16 @@ export default function AllLaptopsPage() {
     // Filter by brand
     if (filters.brands.length > 0) {
       results = results.filter(laptop => {
-        // Extract brand from laptop name
-        const laptopBrands = filters.brands.map((brand: string) => brand.toLowerCase());
-        const laptopBrand = laptop.name.split(' ')[0].toLowerCase();
-        return laptopBrands.includes(laptopBrand);
+        // Kiểm tra brand trong tên laptop
+        const laptopName = laptop.name.toLowerCase();
+        return filters.brands.some(brand => {
+          const brandLower = brand.toLowerCase();
+          // Đặc biệt xử lý Macbook để bao gồm cả các từ như "MacBook Pro", "MacBook Air"
+          if (brandLower === "macbook") {
+            return laptopName.includes("macbook");
+          }
+          return laptopName.includes(brandLower);
+        });
       });
     }
     
@@ -211,23 +217,46 @@ export default function AllLaptopsPage() {
     // Filter by display size
     if (filters.displaySizes.length > 0) {
       results = results.filter(laptop => {
-        return filters.displaySizes.some((size: string) => 
-          laptop.specs.display.includes(size)
-        );
+        return filters.displaySizes.some(size => {
+          const displayText = laptop.specs.display.toLowerCase();
+          // Cải thiện logic lọc kích thước màn hình bằng cách so sánh chính xác hơn
+          // Loại bỏ dấu ngoặc kép khi so sánh
+          const sizeValue = size.replace('"', '').toLowerCase();
+          return displayText.includes(sizeValue + '"') || displayText.includes(sizeValue + ' inch');
+        });
       });
     }
     
-    // Filter by battery life
+    // Filter by battery capacity (Wh)
     if (filters.batteryLife.length > 0) {
       results = results.filter(laptop => {
-        if (!laptop.benchmarks?.batteryLifeCasual) return false;
+        // Kiểm tra nếu có thông tin pin
+        if (!laptop.specs.battery) return false;
         
-        const batteryHours = parseInt(laptop.benchmarks.batteryLifeCasual);
+        const batteryText = laptop.specs.battery.toLowerCase();
         
-        return filters.batteryLife.some((range: string) => {
-          if (range === '<6 giờ') return batteryHours < 6;
-          if (range === '6-10 giờ') return batteryHours >= 6 && batteryHours <= 10;
-          if (range === '> 10 giờ') return batteryHours > 10;
+        return filters.batteryLife.some((capacity: string) => {
+          // So sánh dung lượng pin theo Wh
+          if (capacity === "< 50Wh") {
+            // Tìm các giá trị nhỏ hơn 50Wh
+            const match = batteryText.match(/(\d+)\s*wh/);
+            return match && parseInt(match[1]) < 50;
+          }
+          else if (capacity === "50-70Wh") {
+            // Tìm các giá trị từ 50-70Wh
+            const match = batteryText.match(/(\d+)\s*wh/);
+            return match && parseInt(match[1]) >= 50 && parseInt(match[1]) <= 70;
+          }
+          else if (capacity === "70-100Wh") {
+            // Tìm các giá trị từ 70-100Wh
+            const match = batteryText.match(/(\d+)\s*wh/);
+            return match && parseInt(match[1]) > 70 && parseInt(match[1]) <= 100;
+          }
+          else if (capacity === "> 100Wh") {
+            // Tìm các giá trị lớn hơn 100Wh
+            const match = batteryText.match(/(\d+)\s*wh/);
+            return match && parseInt(match[1]) > 100;
+          }
           return false;
         });
       });

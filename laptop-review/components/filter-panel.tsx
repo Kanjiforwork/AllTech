@@ -12,7 +12,7 @@ import {
   Battery, 
   Sliders, 
   X,
-  BadgeCheck
+  Plus
 } from "lucide-react"
 import { Laptop as LaptopType } from "@/types/laptop"
 
@@ -50,7 +50,6 @@ interface ExpandedState {
   price: boolean;
   display: boolean;
   battery: boolean;
-  features: boolean;
   [key: string]: boolean; // Index signature for dynamic access
 }
 
@@ -63,7 +62,6 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
     price: true,
     display: false,
     battery: false,
-    features: false,
   })
 
   const [filters, setFilters] = useState<FilterState>({
@@ -77,26 +75,26 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
     features: [],
   })
 
-  // Mảng các thương hiệu phổ biến
-  const brands = ["Apple", "Dell", "HP", "Lenovo", "ASUS", "Acer", "MSI", "Microsoft", "Samsung", "Razer", "Gigabyte"]
+  // State cho RAM tùy chỉnh
+  const [customRam, setCustomRam] = useState<string>('')
 
-  // Mảng các loại CPU
-  const cpuTypes = ["Intel Core i3", "Intel Core i5", "Intel Core i7", "Intel Core i9", "AMD Ryzen 3", "AMD Ryzen 5", "AMD Ryzen 7", "AMD Ryzen 9", "Apple M1", "Apple M2", "Apple M3"]
+  // Mảng các thương hiệu phổ biến - Đã thay Apple thành Macbook
+  const brands = ["Macbook", "Dell", "HP", "Lenovo", "ASUS", "Acer", "MSI", "Microsoft", "Samsung", "Razer", "Gigabyte"]
+
+  // Mảng các loại CPU - Đã thêm Apple M4
+  const cpuTypes = ["Intel Core i3", "Intel Core i5", "Intel Core i7", "Intel Core i9", "AMD Ryzen 3", "AMD Ryzen 5", "AMD Ryzen 7", "AMD Ryzen 9", "Apple M1", "Apple M2", "Apple M3", "Apple M4"]
 
   // Mảng các kích thước RAM
-  const ramSizes = ["8GB", "16GB", "32GB", "64GB"]
+  const ramSizes = ["8GB", "16GB", "18GB", "32GB", "36GB", "64GB"]
 
   // Mảng các tùy chọn lưu trữ
   const storageOptions = ["256GB SSD", "512GB SSD", "1TB SSD", "2TB SSD"]
 
   // Mảng kích thước màn hình
-  const displaySizes = ['13"', '14"', '15"', '16"', '17"']
+  const displaySizes = ['13"', '13.3"', '13.6"', '14"', '14.2"', '15"', '15.6"', '16"', '16.2"', '17"']
 
-  // Mảng thời lượng pin
-  const batteryLife = ["<6 giờ", "6-10 giờ", "> 10 giờ"]
-
-  // Mảng tính năng đặc biệt
-  const features = ["Màn hình cảm ứng", "Bàn phím RGB", "USB-C", "Thunderbolt", "Webcam HD", "Bảo mật vân tay", "Windows Hello"]
+  // Mảng dung lượng pin (thay thành Wh)
+  const batteryCapacities = ["< 50Wh", "50-70Wh", "70-100Wh", "> 100Wh"]
 
   const toggleSection = (section: keyof ExpandedState) => {
     setExpanded((prev) => ({
@@ -134,6 +132,17 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
       return newFilters
     })
   }, [])
+
+  // Hàm xử lý thêm RAM tùy chỉnh
+  const handleAddCustomRam = () => {
+    if (customRam && !filters.ramSizes.includes(customRam)) {
+      setFilters(prev => ({
+        ...prev,
+        ramSizes: [...prev.ramSizes, customRam]
+      }))
+      setCustomRam('')
+    }
+  }
 
   // Khi filters thay đổi, truyền lên component cha
   useEffect(() => {
@@ -274,6 +283,24 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                 </label>
               </div>
             ))}
+            
+            {/* RAM tùy chỉnh */}
+            <div className="mt-3 flex items-center">
+              <input
+                type="text"
+                value={customRam}
+                onChange={(e) => setCustomRam(e.target.value)}
+                placeholder="Nhập dung lượng RAM"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              />
+              <button
+                onClick={handleAddCustomRam}
+                className="flex items-center justify-center p-1 text-white bg-blue-600 rounded-r-md hover:bg-blue-700 border border-transparent"
+                title="Thêm RAM"
+              >
+                <Plus className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -377,7 +404,7 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
         )}
       </div>
 
-      {/* Battery Life Filter */}
+      {/* Battery Capacity Filter - Đã đổi từ thời lượng pin thành dung lượng Wh */}
       <div className="mb-4 border-b pb-2">
         <button
           className="flex items-center justify-between w-full mb-2 text-left"
@@ -385,68 +412,30 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
         >
           <span className="font-medium flex items-center">
             <Battery className="w-4 h-4 mr-2 text-blue-600" />
-            Thời lượng pin
+            Dung lượng pin
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${expanded.battery ? "rotate-180" : ""}`} />
         </button>
 
         {expanded.battery && (
           <div className="space-y-2 mt-2">
-            {batteryLife.map((option) => (
-              <div key={option} className="flex items-center">
+            {batteryCapacities.map((capacity) => (
+              <div key={capacity} className="flex items-center">
                 <input
                   type="checkbox"
-                  id={`battery-${option}`}
-                  checked={filters.batteryLife.includes(option)}
-                  onChange={() => handleFilterChange('batteryLife', option)}
+                  id={`battery-${capacity}`}
+                  checked={filters.batteryLife.includes(capacity)}
+                  onChange={() => handleFilterChange('batteryLife', capacity)}
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <label htmlFor={`battery-${option}`} className="ml-2 text-sm text-gray-700">
-                  {option}
+                <label htmlFor={`battery-${capacity}`} className="ml-2 text-sm text-gray-700">
+                  {capacity}
                 </label>
               </div>
             ))}
           </div>
         )}
       </div>
-
-      {/* Special Features Filter */}
-      <div className="mb-4 border-b pb-2">
-        <button
-          className="flex items-center justify-between w-full mb-2 text-left"
-          onClick={() => toggleSection("features")}
-        >
-          <span className="font-medium flex items-center">
-            <BadgeCheck className="w-4 h-4 mr-2 text-blue-600" />
-            Tính năng
-          </span>
-          <ChevronDown className={`w-4 h-4 transition-transform ${expanded.features ? "rotate-180" : ""}`} />
-        </button>
-
-        {expanded.features && (
-          <div className="space-y-2 mt-2 max-h-48 overflow-y-auto custom-scrollbar">
-            {features.map((feature) => (
-              <div key={feature} className="flex items-center">
-                <input
-                  type="checkbox"
-                  id={`feature-${feature}`}
-                  checked={filters.features.includes(feature)}
-                  onChange={() => handleFilterChange('features', feature)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label htmlFor={`feature-${feature}`} className="ml-2 text-sm text-gray-700">
-                  {feature}
-                </label>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <button className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
-        <Sliders className="w-4 h-4 mr-2" />
-        Áp dụng bộ lọc
-      </button>
     </div>
   )
 }
