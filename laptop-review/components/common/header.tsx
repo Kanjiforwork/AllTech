@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useState, useEffect } from "react"
 import { Heart } from "lucide-react"
 import NotificationBell from "@/components/notification-bell"
-import SearchBar from './search-bar'
+import SearchBar from '@/components/common/search-bar'
 
 export default function Header() {
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
