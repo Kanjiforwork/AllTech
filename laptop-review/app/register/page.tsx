@@ -8,6 +8,7 @@ import { auth, db, googleProvider, User, createUserAccount, signInUser, signInWi
 import Link from "next/link";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
+import { useToast } from "@/hooks/use-toast";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -15,6 +16,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [hydrated, setHydrated] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     setHydrated(true);
@@ -42,12 +44,20 @@ export default function RegisterPage() {
       }));
       
       console.log("User registered:", user);
-      alert("Registration successful!");
+      toast({
+        title: "Đăng ký thành công",
+        description: "Chào mừng bạn đến với hệ thống!",
+        variant: "default",
+      });
       
       router.push("/");
     } catch (error: any) {
       console.error("Error registering user:", error.message);
-      alert(error.message);
+      toast({
+        title: "Đăng ký thất bại",
+        description: error.message || "Có lỗi xảy ra trong quá trình đăng ký",
+        variant: "destructive",
+      });
     }
   };
 
@@ -69,12 +79,20 @@ export default function RegisterPage() {
       }));
   
       console.log("User signed in with Google:", user);
-      alert("Google Sign-Up successful!");
+      toast({
+        title: "Đăng ký thành công",
+        description: "Đã đăng ký bằng tài khoản Google",
+        variant: "default",
+      });
   
       router.push("/");
     } catch (error: any) {
       console.error("Error signing in with Google:", error.message);
-      alert(error.message || "Google Sign-Up failed!");
+      toast({
+        title: "Đăng ký thất bại",
+        description: error.message || "Không thể đăng ký bằng Google",
+        variant: "destructive",
+      });
     }
   };
 

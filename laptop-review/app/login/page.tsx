@@ -6,12 +6,14 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, db, googleProvider, User, createUserAccount, signInUser, signInWithGoogle } from "@/lib/firebase";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
+import { useToast } from "@/hooks/use-toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hydrated, setHydrated] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     setHydrated(true);
@@ -40,11 +42,19 @@ export default function LoginPage() {
       }));
   
       console.log("User logged in:", user);
-      alert("Login successful!");
+      toast({
+        title: "Đăng nhập thành công",
+        description: "Chào mừng bạn đã quay trở lại!",
+        variant: "default",
+      });
       router.push("/");
     } catch (error: any) {
       console.error("Error logging in:", error.message);
-      alert("Invalid email or password!");
+      toast({
+        title: "Đăng nhập thất bại",
+        description: "Email hoặc mật khẩu không chính xác",
+        variant: "destructive",
+      });
     }
   };
 
@@ -63,25 +73,45 @@ export default function LoginPage() {
       }));
 
       console.log("User signed in with Google:", user);
-      alert("Google Login successful!");
+      toast({
+        title: "Đăng nhập thành công",
+        description: "Đã đăng nhập bằng tài khoản Google",
+        variant: "default",
+      });
       router.push("/");
     } catch (error: any) {
       console.error("Error signing in with Google:", error.message);
-      alert("Google Login failed!");
+      toast({
+        title: "Đăng nhập thất bại",
+        description: "Không thể đăng nhập bằng Google",
+        variant: "destructive",
+      });
     }
   };
 
   const handleForgotPassword = async () => {
     if (!email) {
-      alert("Please enter your email to reset your password.");
+      toast({
+        title: "Thiếu thông tin",
+        description: "Vui lòng nhập email để khôi phục mật khẩu",
+        variant: "destructive",
+      });
       return;
     }
     try {
       await sendPasswordResetEmail(auth, email);
-      alert("Password reset email sent! Please check your inbox.");
+      toast({
+        title: "Email đã gửi",
+        description: "Email khôi phục mật khẩu đã được gửi đến hộp thư của bạn",
+        variant: "default",
+      });
     } catch (error: any) {
       console.error("Error sending password reset email:", error.message);
-      alert("Failed to send password reset email. Please try again.");
+      toast({
+        title: "Gửi email thất bại",
+        description: "Không thể gửi email khôi phục mật khẩu",
+        variant: "destructive",
+      });
     }
   };
 

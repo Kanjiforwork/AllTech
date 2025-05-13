@@ -4,6 +4,7 @@ import type React from "react"
 import { Inter } from "next/font/google"
 import { useState, useEffect } from "react"
 import InitialLoadingScreen from "@/components/initial-loading-screen"
+import { Toaster } from "@/components/ui/toaster"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -34,6 +35,7 @@ export default function RootLayout({
         <div className={loading ? 'invisible' : 'visible'}>
           {children}
         </div>
+        <Toaster />
       </body>
     </html>
   )

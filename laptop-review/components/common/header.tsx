@@ -4,10 +4,12 @@ import { useState, useEffect } from "react"
 import { Heart } from "lucide-react"
 import NotificationBell from "@/components/notification-bell"
 import SearchBar from '@/components/common/search-bar'
+import { useToast } from "@/hooks/use-toast"
 
 export default function Header() {
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -19,7 +21,11 @@ export default function Header() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    alert("Logged out successfully!");
+    toast({
+      title: "Đăng xuất thành công",
+      description: "Hẹn gặp lại bạn lần sau!",
+      variant: "default",
+    });
   };
   
   return (
