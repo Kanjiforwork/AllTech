@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
 import TabPanel from "@/components/common/tab-panel";
 import Overview from "./sections/Overview";
 import Specifications from "./sections/Specifications";
@@ -54,6 +55,8 @@ export default function LaptopDetailPage({ laptop, similarLaptops = [] }: Laptop
 
       {/* Floating Comparison Button */}
       <ComparisonButton currentLaptopId={laptop.id} />
+      
+      <Footer />
     </div>
   );
 }

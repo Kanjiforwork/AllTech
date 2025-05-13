@@ -14,6 +14,7 @@ import ComparisonStickyBar from "@/components/comparison/comparison-sticky-bar"
 import LaptopCardSelectable from "@/components/comparison/laptop-card-selectable"
 import QuickViewModal from "@/components/comparison/quick-view-modal"
 import Header from "@/components/common/header"
+import Footer from "@/components/common/footer"
 
 export default function CompareSelectPage() {
   // State to track which laptop cards are visible
@@ -279,85 +280,7 @@ export default function CompareSelectPage() {
         isCompareDisabled={selectedLaptops.length >= 2}
       />
 
-      <footer className="py-8 text-white bg-gray-900">
-        <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            <div>
-              <h3 className="mb-4 text-lg font-bold">TechReview</h3>
-              <p className="text-sm text-gray-400">
-                Your trusted source for laptop reviews and comparisons since 2023.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Categories</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Gaming Laptops
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Ultrabooks
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Budget Laptops
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Business Laptops
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Company</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Subscribe</h4>
-              <p className="mb-4 text-sm text-gray-400">Stay updated with the latest reviews and news.</p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="w-full px-3 py-2 text-sm text-black bg-white rounded-l-md focus:outline-none"
-                />
-                <button className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-r-md hover:bg-gray-600">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="pt-8 mt-8 text-sm text-center text-gray-400 border-t border-gray-800">
-            &copy; {new Date().getFullYear()} TechReview. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 } 

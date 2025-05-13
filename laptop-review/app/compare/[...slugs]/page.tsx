@@ -7,6 +7,7 @@ import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import { getLaptopById } from "@/mock_data/data"
 import Header from "@/components/common/header"
+import Footer from "@/components/common/footer"
 import RatingBar from "@/components/common/rating-bar"
 import ComparisonOverview from "@/components/comparison/ComparisonOverview"
 import ImportanceAdjuster from "@/components/comparison/ImportanceAdjuster"
@@ -241,83 +242,7 @@ export default function ComparisonPage() {
         </div>
       </main>
 
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-bold mb-4">AllTech</h3>
-              <p className="text-gray-400">
-                Your trusted source for laptop reviews, comparisons, and the best deals online.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Categories</h4>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Gaming Laptops
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Business Laptops
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Student Laptops
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Budget Laptops
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Terms of Service
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Newsletter</h4>
-              <p className="text-gray-400 mb-2">Subscribe for the latest deals and reviews</p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="px-3 py-2 text-gray-900 rounded-l focus:outline-none"
-                />
-                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r">Subscribe</button>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2023 AllTech. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

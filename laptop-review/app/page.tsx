@@ -16,6 +16,7 @@ import RecommendedSection from "@/components/recommended-section"
 import NotificationBell from "@/components/notification-bell"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
 import Header from "@/components/common/header"
+import Footer from "@/components/common/footer"
 
 export default function Home() {
   // State to track which laptop cards are visible
@@ -327,11 +328,7 @@ export default function Home() {
         </section> */}
       </main>
 
-      <footer className="bg-gray-900 text-white py-5">
-        <div className="text-sm text-gray-400 text-center">
-          &copy; {new Date().getFullYear()} LapInsight. Made by 4Sheep.
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
