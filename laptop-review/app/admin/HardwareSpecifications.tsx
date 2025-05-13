@@ -102,19 +102,34 @@ export default function HardwareSpecifications({ formData, handleChange }) {
             </div>
 
 
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
-            <Feature
-                identity={"screen"}
-                clasNameForInput={"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"}
-                classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
-                type="text"
-                value={formData.cpu}
-                onChange={handleChange}
-                placeholder="e.g. 15.6-inch FHD (1920 x 1080) 144Hz IPS"
-            >
+                <Feature
+                    identity={"screen"}
+                    clasNameForInput={"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"}
+                    classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
+                    type="text"
+                    value={formData.cpu}
+                    onChange={handleChange}
+                    placeholder="e.g. 15.6-inch FHD (1920 x 1080) 144Hz IPS"
+                >
 
-                Screen / Display
-            </Feature>
+                    Screen / Display
+                </Feature>
+
+                <Feature
+                    identity={"colorGamut"}
+                    clasNameForInput={"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"}
+                    classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
+                    type="text"
+                    value={formData.cpu}
+                    onChange={handleChange}
+                    placeholder="100% SRGB"
+                >
+
+                    Color Gamut
+                </Feature>
+            </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
