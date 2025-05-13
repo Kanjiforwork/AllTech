@@ -2,15 +2,19 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { SearchIcon, Heart, ChevronLeft, Filter, ChevronRight } from "lucide-react"
-import { laptops } from "@/mock_data/data"
+import { laptopService } from "@/services/firebaseServices"
+import { Laptop } from "@/types/laptop"
 
 import FilterPanel from "@/components/filter-panel"
 import NotificationBell from "@/components/notification-bell"
+import FavoriteButton from '@/components/common/FavoriteButton'
+import Header from "@/components/common/header"
 
 export default function AllLaptopsPage() {
   // State for animation of laptop cards
-  const [visibleCards, setVisibleCards] = useState<boolean[]>(Array(laptops.length).fill(false))
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([])
   // Reference for the laptop grid container
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null)
@@ -21,14 +25,31 @@ export default function AllLaptopsPage() {
   const [itemsPerPage, setItemsPerPage] = useState(12)
   const [sortOption, setSortOption] = useState('relevance')
   
-  const [filteredLaptops, setFilteredLaptops] = useState(laptops)
-  const [displayedLaptops, setDisplayedLaptops] = useState<typeof laptops>([])
+  // State để lưu trữ dữ liệu laptop từ Firestore
+  const [allLaptops, setAllLaptops] = useState<Laptop[]>([])
+  const [filteredLaptops, setFilteredLaptops] = useState<Laptop[]>([])
+  const [displayedLaptops, setDisplayedLaptops] = useState<Laptop[]>([])
+  const [loading, setLoading] = useState(true)
   
   // Total number of pages for pagination
   const totalPages = Math.ceil(filteredLaptops.length / itemsPerPage)
   
-  // Animation for laptop cards and load user data
+  // Fetch laptop data from Firestore
   useEffect(() => {
+    const fetchLaptops = async () => {
+      try {
+        const laptops = await laptopService.getAll();
+        setAllLaptops(laptops as Laptop[]);
+        setFilteredLaptops(laptops as Laptop[]);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching laptops:", error);
+        setLoading(false);
+      }
+    };
+    
+    fetchLaptops();
+    
     const storedUser = localStorage.getItem("user")
     if (storedUser) {
       setUser(JSON.parse(storedUser))
@@ -37,20 +58,22 @@ export default function AllLaptopsPage() {
   
   // Sort and filter laptops
   useEffect(() => {
+    if (filteredLaptops.length === 0) return;
+    
     let sorted = [...filteredLaptops]
     
     // Apply sorting
     switch (sortOption) {
       case 'price-low':
         sorted.sort((a, b) => 
-          parseInt(a.price.replace(/[^0-9]/g, '')) - 
-          parseInt(b.price.replace(/[^0-9]/g, ''))
+          parseInt(a.price?.replace(/[^0-9]/g, '') || '0') - 
+          parseInt(b.price?.replace(/[^0-9]/g, '') || '0')
         )
         break
       case 'price-high':
         sorted.sort((a, b) => 
-          parseInt(b.price.replace(/[^0-9]/g, '')) - 
-          parseInt(a.price.replace(/[^0-9]/g, ''))
+          parseInt(b.price?.replace(/[^0-9]/g, '') || '0') - 
+          parseInt(a.price?.replace(/[^0-9]/g, '') || '0')
         )
         break
       case 'rating':
@@ -87,10 +110,10 @@ export default function AllLaptopsPage() {
   // Handle search query
   useEffect(() => {
     if (searchQuery.trim() === "") {
-      setFilteredLaptops(laptops)
+      setFilteredLaptops(allLaptops)
     } else {
       const query = searchQuery.toLowerCase()
-      const results = laptops.filter(
+      const results = allLaptops.filter(
         laptop => 
           laptop.name.toLowerCase().includes(query) ||
           laptop.specs.cpu.toLowerCase().includes(query) ||
@@ -101,7 +124,7 @@ export default function AllLaptopsPage() {
       setFilteredLaptops(results)
       setCurrentPage(1) // Reset to first page when search changes
     }
-  }, [searchQuery])
+  }, [searchQuery, allLaptops])
 
   const handleLogout = () => {
     localStorage.removeItem("user")
@@ -119,83 +142,7 @@ export default function AllLaptopsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
-        <div className="container flex items-center h-16 px-4 mx-auto">
-          {/* Logo và Danh mục */}
-          <div className="flex items-center space-x-8 mr-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <img src="/placeholder.svg" alt="TechReview Logo" width={40} height={40} className="rounded" />
-              <span className="text-xl font-bold">TechReview</span>
-            </Link>
-
-            <Link href="/#categories" className="flex items-center text-sm font-bold hover:text-gray-700">
-              Danh mục
-            </Link>
-          </div>
-
-          {/* Search box */}
-          <div className="relative hidden md:block flex-1 max-w-md mx-4">
-            <input
-              type="text"
-              placeholder="Search laptops..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-10 pr-4 text-sm bg-gray-100 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-            />
-            <SearchIcon className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
-          </div>
-
-          {/* Navigation links */}
-          <div className="flex items-center ml-auto space-x-8">
-            <Link href="/compare-select" className="flex items-center text-sm font-bold hover:text-gray-700">
-              So sánh
-            </Link>
-            <Link href="/#favorites" className="flex items-center text-sm font-bold hover:text-gray-700">
-              <Heart className="w-5 h-5 mr-1" />
-              <span>Yêu thích</span>
-            </Link>
-
-            <NotificationBell/>
-           {/* User avatar or login button */}
-           {user ? (
-              <div className="relative">
-                <button
-                  onClick={() => setMenuOpen((prev) => !prev)}
-                  className="flex items-center focus:outline-none"
-                >
-                  <img
-                    src={user.avatar || "/user-circle.svg"}
-                    alt="User Avatar"
-                    className="w-8 h-8 rounded-full"
-                  />
-                </button>
-                {menuOpen && (
-                  <div className="absolute right-0 w-48 mt-2 bg-white border rounded-lg shadow-lg">
-                    <div className="px-4 py-2 text-sm text-gray-700">
-                      <p>{user.username}</p>
-                      <p className="text-xs text-gray-500">{user.email}</p>
-                    </div>
-                    <hr />
-                    <button
-                      onClick={handleLogout}
-                      className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-gray-100"
-                    >
-                      Log out
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                href="/login"
-                className="px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800"
-              >
-                Login / Register
-              </Link>
-            )}
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="container px-4 py-8 mx-auto">
         {/* Page Header */}
@@ -211,7 +158,9 @@ export default function AllLaptopsPage() {
               </Link>
             </div>
             <h1 className="text-2xl font-bold">All Laptops</h1>
-            <p className="text-gray-600">Showing {filteredLaptops.length} laptops</p>
+            <p className="text-gray-600">
+              {loading ? 'Đang tải dữ liệu...' : `Showing ${filteredLaptops.length} laptops`}
+            </p>
           </div>
           
           <button 
@@ -288,6 +237,15 @@ export default function AllLaptopsPage() {
                     ${visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} 
                     hover:shadow-md hover:-translate-y-1 relative`}
                 >
+                  {/* Nút yêu thích */}
+                  <div className="absolute top-2 right-2 z-10">
+                    <FavoriteButton
+                      laptopId={laptop.id}
+                      size={20}
+                      className="p-1.5 bg-white rounded-full shadow-sm"
+                    />
+                  </div>
+                  
                   <div className="p-4">
                     <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md">
                       <div className="absolute inset-0 flex items-center justify-center text-gray-500">
@@ -302,7 +260,7 @@ export default function AllLaptopsPage() {
                         </svg>
                       ))}
                       <span className="ml-2 text-sm text-gray-600">
-                        {laptop.benchmarks?.overall.toFixed(1) || "N/A"}
+                        {laptop.benchmarks?.overall ? laptop.benchmarks.overall.toFixed(1) : "N/A"}
                       </span>
                     </div>
                     
@@ -321,7 +279,7 @@ export default function AllLaptopsPage() {
                             On Sale
                           </span>
                         )}
-                        {laptop.benchmarks?.value > 8.5 && (
+                        {(laptop.benchmarks?.value !== undefined && laptop.benchmarks.value > 8.5) && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
                             Great Value
                           </span>

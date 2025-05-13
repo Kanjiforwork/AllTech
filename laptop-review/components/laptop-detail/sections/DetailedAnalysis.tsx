@@ -39,7 +39,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.cpu?.benchmarks?.geekbench6Single && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.cpu.benchmarks.geekbench6Single / 30)}%` }}></div>
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.cpu.benchmarks.geekbench6Single / 30), 100)}%` }}></div>
               </div>
             )}
 
@@ -51,7 +51,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.cpu?.benchmarks?.geekbench6Multi && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.cpu.benchmarks.geekbench6Multi / 150)}%` }}></div>
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.cpu.benchmarks.geekbench6Multi / 150), 100)}%` }}></div>
               </div>
             )}
 
@@ -63,7 +63,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.cpu?.benchmarks?.cinebenchR23Single && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.cpu.benchmarks.cinebenchR23Single / 18)}%` }}></div>
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.cpu.benchmarks.cinebenchR23Single / 18), 100)}%` }}></div>
               </div>
             )}
 
@@ -75,7 +75,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.cpu?.benchmarks?.cinebenchR23Multi && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.cpu.benchmarks.cinebenchR23Multi / 150)}%` }}></div>
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.cpu.benchmarks.cinebenchR23Multi / 150), 100)}%` }}></div>
               </div>
             )}
           </div>
@@ -99,7 +99,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             )}
             {laptop.detailedSpecs?.gpu?.benchmarks?.wildlifeExtreme && (
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-green-500 h-2 rounded-full" style={{ width: `${Math.min(laptop.detailedSpecs.gpu.benchmarks.wildlifeExtreme / 100)}%` }}></div>
+                <div className="bg-green-500 h-2 rounded-full" style={{ width: `${Math.min((laptop.detailedSpecs.gpu.benchmarks.wildlifeExtreme / 100), 100)}%` }}></div>
               </div>
             )}
 
@@ -202,7 +202,9 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold">2. Battery</h3>
-              <div className="bg-blue-600 text-white px-3 py-1 rounded-full font-bold">8.7/10</div>
+              <div className="bg-blue-600 text-white px-3 py-1 rounded-full font-bold">
+                {laptop.benchmarks?.battery ? laptop.benchmarks.battery.toFixed(1) : "8.7"}/10
+              </div>
             </div>
 
             {/* <div className="mb-4">
@@ -213,56 +215,113 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
 
             {/* <h4 className="font-semibold mb-4">Battery Life</h4> */}
             <div className="space-y-6 mb-6">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-medium">Casual Use</span>
-                  <span className="font-medium">12.5 hours</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-4">
-                  <div
-                    className="h-4 rounded-full bg-green-500 flex items-center justify-end px-2"
-                    style={{ width: "83%" }}
-                  >
-                    <span className="text-xs text-white font-medium">12.5h</span>
+              {laptop.benchmarks?.batteryLifeCasual ? (
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium">Casual Use</span>
+                    <span className="font-medium">{laptop.benchmarks.batteryLifeCasual}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-4">
+                    <div
+                      className="h-4 rounded-full bg-green-500 flex items-center justify-end px-2"
+                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeCasual.replace(' hours', '').replace(' hour', '')) / 20 * 100, 100)}%` }}
+                    >
+                      <span className="text-xs text-white font-medium">
+                        {laptop.benchmarks.batteryLifeCasual.replace(' hours', 'h').replace(' hour', 'h')}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium">Casual Use</span>
+                    <span className="font-medium">8 hours</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-4">
+                    <div
+                      className="h-4 rounded-full bg-green-500 flex items-center justify-end px-2"
+                      style={{ width: "40%" }}
+                    >
+                      <span className="text-xs text-white font-medium">8h</span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-medium">Watching Online Video</span>
-                  <span className="font-medium">10.2 hours</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-4">
-                  <div
-                    className="h-4 rounded-full bg-blue-500 flex items-center justify-end px-2"
-                    style={{ width: "68%" }}
-                  >
-                    <span className="text-xs text-white font-medium">10.2h</span>
+              {laptop.benchmarks?.batteryLifeVideo ? (
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium">Watching Online Video</span>
+                    <span className="font-medium">{laptop.benchmarks.batteryLifeVideo}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-4">
+                    <div
+                      className="h-4 rounded-full bg-blue-500 flex items-center justify-end px-2"
+                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeVideo.replace(' hours', '').replace(' hour', '')) / 25 * 100, 100)}%` }}
+                    >
+                      <span className="text-xs text-white font-medium">
+                        {laptop.benchmarks.batteryLifeVideo.replace(' hours', 'h').replace(' hour', 'h')}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium">Watching Online Video</span>
+                    <span className="font-medium">10.5 hours</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-4">
+                    <div
+                      className="h-4 rounded-full bg-blue-500 flex items-center justify-end px-2"
+                      style={{ width: "42%" }}
+                    >
+                      <span className="text-xs text-white font-medium">10.5h</span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-medium">Extreme Use (Gaming/Rendering)</span>
-                  <span className="font-medium">3.8 hours</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-4">
-                  <div
-                    className="h-4 rounded-full bg-yellow-500 flex items-center justify-end px-2"
-                    style={{ width: "25%" }}
-                  >
-                    <span className="text-xs text-white font-medium">3.8h</span>
+              {laptop.benchmarks?.batteryLifeHeavy ? (
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium">Extreme Use (Gaming/Rendering)</span>
+                    <span className="font-medium">{laptop.benchmarks.batteryLifeHeavy}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-4">
+                    <div
+                      className="h-4 rounded-full bg-yellow-500 flex items-center justify-end px-2"
+                      style={{ width: `${Math.min(parseFloat(laptop.benchmarks.batteryLifeHeavy.replace(' hours', '').replace(' hour', '')) / 7 * 100, 100)}%` }}
+                    >
+                      <span className="text-xs text-white font-medium">
+                        {laptop.benchmarks.batteryLifeHeavy.replace(' hours', 'h').replace(' hour', 'h')}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium">Extreme Use (Gaming/Rendering)</span>
+                    <span className="font-medium">2.2 hours</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-4">
+                    <div
+                      className="h-4 rounded-full bg-yellow-500 flex items-center justify-end px-2"
+                      style={{ width: "31%" }}
+                    >
+                      <span className="text-xs text-white font-medium">2.2h</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
         <p className="text-gray-700">
           The {laptop.detailedSpecs?.battery?.capacity}Wh battery delivers impressive runtime for a laptop with these specs. 
-          In our testing, it lasted about 8 hours of general productivity work and web browsing at 150 nits brightness. 
-          Video playback extends to around 10 hours, while gaming will drain it in under 2 hours. 
+          In our testing, it lasted about {laptop.benchmarks?.batteryLifeCasual ? laptop.benchmarks.batteryLifeCasual.replace(' hours', '').replace(' hour', '') : '8'} hours of general productivity work and web browsing at 150 nits brightness. 
+          Video playback extends to around {laptop.benchmarks?.batteryLifeVideo ? laptop.benchmarks.batteryLifeVideo.replace(' hours', '').replace(' hour', '') : '10'} hours, while gaming will drain it in under {laptop.benchmarks?.batteryLifeHeavy ? laptop.benchmarks.batteryLifeHeavy.replace(' hours', '').replace(' hour', '') : '2'} hours. 
           The {laptop.detailedSpecs?.battery?.chargerWattage} {laptop.detailedSpecs?.battery?.fastCharging ? "fast charger" : "charger"} can replenish to 60% in just 45 minutes, which is convenient for quick top-ups.
         </p>
       </div>

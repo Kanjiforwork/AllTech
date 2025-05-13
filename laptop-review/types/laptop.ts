@@ -82,6 +82,7 @@ export interface SpecData {
     portsLeft?: string[];
     portsRight?: string[];
     deals?: Deal[];
+    similarLaptopIds?: string[];
     
     performanceAnalysis?: string;
     batteryAnalysis?: string;
