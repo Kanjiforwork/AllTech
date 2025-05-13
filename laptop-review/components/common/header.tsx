@@ -45,7 +45,6 @@ export default function Header() {
 
           {/* Right-side buttons */}
           <div className="flex items-center space-x-8">
-            <Link href="/news" className="flex items-center text-sm font-bold hover:text-gray-700">News</Link>
             <Link href="/compare-select" className="flex items-center text-sm font-bold hover:text-gray-700">
               So sánh
             </Link>
