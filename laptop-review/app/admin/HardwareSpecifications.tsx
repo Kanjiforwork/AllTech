@@ -135,16 +135,16 @@ export default function HardwareSpecifications({ formData, handleChange }) {
 
 
                 <Feature
-                    identity={"ports"}
+                    identity={"Charging"}
                     clasNameForInput={"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"}
                     classNameForLabel={"block mb-1 text-sm font-medium text-gray-700"}
                     type="text"
                     value={formData.cpu}
                     onChange={handleChange}
-                    placeholder="e.g. 2x USB-C, 2x USB-A, HDMI, SD card"
+                    placeholder="95W USB-C PD 3.0"
                 >
 
-                    Ports
+                    Charging
                 </Feature>
             </div>
         </div>
