@@ -16,7 +16,7 @@ export default function AdminProtection({ children }: { children: ReactNode }) {
       const userFromStorage = localStorage.getItem('user');
       
       if (!userFromStorage) {
-        router.push('/login');
+        router.push('/unauthorized');
         return;
       }
       
@@ -25,7 +25,7 @@ export default function AdminProtection({ children }: { children: ReactNode }) {
         const userObj = await User.getFromFirestore(userData.uid);
         
         if (!userObj || !userObj.isAdmin()) {
-          router.push('/');
+          router.push('/unauthorized');
           return;
         }
         
@@ -33,7 +33,7 @@ export default function AdminProtection({ children }: { children: ReactNode }) {
         setLoading(false);
       } catch (error) {
         console.error("Lỗi khi kiểm tra quyền admin:", error);
-        router.push('/');
+        router.push('/unauthorized');
       }
     };
     
