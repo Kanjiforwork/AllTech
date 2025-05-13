@@ -1,12 +1,30 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { ChevronDown, ChevronUp } from "lucide-react"
-import { Laptop } from "@/data/laptops"
+import { ChevronDown, ChevronUp, ArrowDownWideNarrow, ArrowUpWideNarrow } from "lucide-react"
 
+// Định nghĩa lại kiểu dữ liệu phù hợp với trang chính
+interface Laptop {
+  id: string | number;
+  name: string;
+  specs: string;
+  rating: number;
+  reviews: number;
+  salePrice: number;
+  originalPrice: string | null;
+  saveAmount: string | null;
+  onSale: boolean;
+  greatDeal: boolean;
+  image: string;
+  detailLink: string;
+}
 
+interface BrowseLaptopsHeaderProps {
+  laptopData: Laptop[];
+  handle: (newList: Laptop[]) => void;
+}
 
-export default function BrowseLaptopsHeader({laptopData, handle}) {
+export default function BrowseLaptopsHeader({ laptopData, handle }: BrowseLaptopsHeaderProps) {
     const [priceDropdownOpen, setPriceDropdownOpen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const headerRef = useRef<HTMLDivElement>(null)
@@ -57,40 +75,29 @@ export default function BrowseLaptopsHeader({laptopData, handle}) {
         >
             <h2 className="text-3xl font-bold mb-5 sm:mb-0">Browse Laptops</h2>
 
-            <div className="flex gap-4"> {/* flex-wrap is still removed */}
+            <div className="flex gap-4">
                 <button
-                    className="px-6 py-3 bg-white border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-50 shadow-sm transition-all whitespace-nowrap" // Changed text-base to text-sm and added whitespace-nowrap
-                >
-                    Huge Sale
-                </button>
-
-                <button
-                    className="px-6 py-3 bg-white border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-50 shadow-sm transition-all whitespace-nowrap" // Changed text-base to text-sm and added whitespace-nowrap
-                >
-                    Most Views
-                </button>
-                <button
-                    className="px-6 py-3 bg-white border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-50 shadow-sm transition-all flex items-center whitespace-nowrap" // Changed text-base to text-sm and added whitespace-nowrap
+                    className="px-5 py-3 bg-white border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 shadow-sm transition-all flex items-center whitespace-nowrap bg-gradient-to-r from-gray-50 to-white hover:from-white hover:to-gray-50"
                     onClick={()=> {
                         const cloneLaptopData = laptopData.slice()
-                        const newList = cloneLaptopData.sort((a,b)=>  b.salePrice - a.salePrice)
+                        const newList = cloneLaptopData.sort((a: Laptop, b: Laptop) => b.salePrice - a.salePrice)
                          handle(newList)
                     }}
                 >
-                    Price: High to Low
-                    <ChevronDown className="w-4 h-4 ml-2" />
+                    <ArrowDownWideNarrow className="w-4 h-4 mr-2 text-blue-600" />
+                    Giá cao đến thấp
                 </button>
 
                 <button
-                    className="px-6 py-3 bg-white border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-50 shadow-sm transition-all flex items-center whitespace-nowrap" // Changed text-base to text-sm and added whitespace-nowrap
+                    className="px-5 py-3 bg-white border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 shadow-sm transition-all flex items-center whitespace-nowrap bg-gradient-to-r from-gray-50 to-white hover:from-white hover:to-gray-50"
                     onClick={()=> {
                         const cloneLaptopData = laptopData.slice()
-                        const newList = cloneLaptopData.sort((a,b)=> a.salePrice - b.salePrice)
+                        const newList = cloneLaptopData.sort((a: Laptop, b: Laptop) => a.salePrice - b.salePrice)
                          handle(newList)
                     }}
                 >
-                    Price: Low to High
-                    <ChevronUp className="w-4 h-4 ml-2" />
+                    <ArrowUpWideNarrow className="w-4 h-4 mr-2 text-blue-600" />
+                    Giá thấp đến cao
                 </button>
             </div>
         </div>

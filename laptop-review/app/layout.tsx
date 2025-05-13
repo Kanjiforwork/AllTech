@@ -5,7 +5,6 @@ import { Inter } from "next/font/google"
 import { useState, useEffect } from "react"
 import InitialLoadingScreen from "@/components/initial-loading-screen"
 import "./globals.css"
-import '@/styles/news.css';
 
 const inter = Inter({ subsets: ["latin"] })
 

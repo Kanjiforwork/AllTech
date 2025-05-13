@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from "react"
-import { SearchIcon, Heart } from "lucide-react"
+import { Heart } from "lucide-react"
 import NotificationBell from "@/components/notification-bell"
+import SearchBar from '@/components/common/search-bar'
 
 export default function Header() {
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
@@ -34,18 +35,12 @@ export default function Header() {
           </div>
 
           {/* Search bar */}
-          <div className="relative flex-1 max-w-lg">
-            <input
-              type="text"
-              placeholder="Search laptops..."
-              className="w-full h-10 pl-10 pr-4 text-sm bg-gray-100 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-            />
-            <SearchIcon className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+          <div className="flex-1 max-w-lg">
+            <SearchBar />
           </div>
 
           {/* Right-side buttons */}
           <div className="flex items-center space-x-8">
-            <Link href="/news" className="flex items-center text-sm font-bold hover:text-gray-700">News</Link>
             <Link href="/compare-select" className="flex items-center text-sm font-bold hover:text-gray-700">
               So sánh
             </Link>
