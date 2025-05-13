@@ -25,9 +25,9 @@ export default function LaptopCardSelectable({
 
   return (
     <div 
-      className={`overflow-hidden bg-white border rounded-lg shadow-sm transition-all duration-500 ease-in-out 
+      className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out 
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
-        ${isSelected ? 'border-blue-400 ring-2 ring-blue-100' : 'hover:shadow-md hover:-translate-y-1'} 
+        ${isSelected ? 'border-blue-400 ring-2 ring-blue-100 dark:ring-blue-800' : 'hover:shadow-md hover:-translate-y-1'} 
         relative group`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -40,7 +40,7 @@ export default function LaptopCardSelectable({
           checked={isSelected}
           onChange={() => onToggleSelect(laptop.id)}
           disabled={isSelectionDisabled && !isSelected}
-          className="w-5 h-5 text-blue-600 border-gray-300 rounded shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          className="w-5 h-5 text-blue-600 border-gray-300 rounded shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-gray-400 dark:bg-gray-600 dark:checked:bg-blue-500 dark:focus:ring-blue-400"
         />
         <label 
           htmlFor={`compare-${laptop.id}`} 
@@ -55,7 +55,7 @@ export default function LaptopCardSelectable({
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 transition-opacity z-[5]">
           <button 
             onClick={() => onQuickView(laptop.id)}
-            className="px-4 py-2 flex items-center gap-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none transition-colors"
+            className="px-4 py-2 flex items-center gap-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none transition-colors dark:bg-blue-700 dark:hover:bg-blue-800"
           >
             <Eye size={16} />
             Xem nhanh
@@ -64,22 +64,22 @@ export default function LaptopCardSelectable({
       )}
 
       <div className="p-4">
-        <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md">
-          <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+        <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md">
+          <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300">
             {laptop.name}
           </div>
         </div>
 
         <div className="flex items-center mb-2">
           {Array.from({ length: 5 }).map((_, j) => (
-            <svg key={j} className={`w-4 h-4 ${j < Math.floor(laptop.rating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 20 20">
+            <svg key={j} className={`w-4 h-4 ${j < Math.floor(laptop.rating) ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`} fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
             </svg>
           ))}
-          <span className="ml-2 text-sm text-gray-600">{laptop.rating} ({laptop.reviews} reviews)</span>
+          <span className="ml-2 text-sm text-gray-600 dark:text-gray-300">{laptop.rating} ({laptop.reviews} reviews)</span>
         </div>
-        <h3 className="mb-1 font-semibold">{laptop.name}</h3>
-        <p className="mb-2 text-sm text-gray-600">{laptop.specs}</p>
+        <h3 className="mb-1 font-semibold dark:text-white">{laptop.name}</h3>
+        <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">{laptop.specs}</p>
 
         {/* Price section */}
         <div className="mt-2">
@@ -99,12 +99,12 @@ export default function LaptopCardSelectable({
 
           {/* Price display */}
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold">${laptop.salePrice}</span>
+            <span className="text-xl font-bold dark:text-white">${laptop.salePrice}</span>
             {laptop.originalPrice && (
-              <span className="text-sm text-gray-500 line-through">${laptop.originalPrice}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400 line-through">${laptop.originalPrice}</span>
             )}
             {laptop.saveAmount && (
-              <span className="text-sm font-medium text-green-600">Save ${laptop.saveAmount}</span>
+              <span className="text-sm font-medium text-green-600 dark:text-green-400">Save ${laptop.saveAmount}</span>
             )}
           </div>
         </div>

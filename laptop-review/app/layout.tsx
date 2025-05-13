@@ -5,6 +5,7 @@ import { Inter } from "next/font/google"
 import { useState, useEffect } from "react"
 import InitialLoadingScreen from "@/components/initial-loading-screen"
 import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/context/theme-provider"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -29,13 +30,15 @@ export default function RootLayout({
   }, [])
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        {mounted && <InitialLoadingScreen onLoadingComplete={() => setLoading(false)} />}
-        <div className={loading ? 'invisible' : 'visible'}>
-          {children}
-        </div>
-        <Toaster />
+        <ThemeProvider defaultTheme="system" storageKey="lapinsight-theme">
+          {mounted && <InitialLoadingScreen onLoadingComplete={() => setLoading(false)} />}
+          <div className={loading ? 'invisible' : 'visible'}>
+            {children}
+          </div>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )

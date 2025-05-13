@@ -116,11 +116,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
       <div className="flex items-center justify-center min-h-[calc(100vh-64px)]">
-        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg dark:bg-gray-800">
           <div className="flex justify-center mb-6">
             <img
               src="/logo.png"
@@ -128,10 +128,10 @@ export default function LoginPage() {
               className="w-16 h-16"
             />
           </div>
-          <h1 className="mb-6 text-3xl font-bold text-center text-gray-800">Login</h1>
+          <h1 className="mb-6 text-3xl font-bold text-center text-gray-800 dark:text-white">Login</h1>
           <form onSubmit={handleLogin}>
             <div className="mb-4">
-              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 Email
               </label>
               <input
@@ -140,11 +140,11 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-gray-500"
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                 Password
               </label>
               <input
@@ -153,19 +153,19 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-gray-500"
               />
             </div>
             <button
               type="submit"
-              className="w-full px-4 py-2 mb-4 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition duration-300"
+              className="w-full px-4 py-2 mb-4 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition duration-300 dark:bg-gray-700 dark:hover:bg-gray-600"
             >
               Login
             </button>
           </form>
           <button
             onClick={handleGoogleLogin}
-            className="flex items-center justify-center w-full px-4 py-2 mb-4 text-sm font-medium text-gray-700 bg-white border rounded-lg hover:bg-gray-100 transition duration-300"
+            className="flex items-center justify-center w-full px-4 py-2 mb-4 text-sm font-medium text-gray-700 bg-white border rounded-lg hover:bg-gray-100 transition duration-300 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600"
           >
             <img
               src="/google-icon.svg"
@@ -177,14 +177,14 @@ export default function LoginPage() {
           <p className="text-sm text-center">
             <button
               onClick={handleForgotPassword}
-              className="text-black hover:underline"
+              className="text-black hover:underline dark:text-gray-300"
             >
               Forgot your password?
             </button>
           </p>
-          <p className="mt-4 text-sm text-center">
+          <p className="mt-4 text-sm text-center dark:text-gray-300">
             Don't have an account?{" "}
-            <a href="/register" className="text-black hover:underline">
+            <a href="/register" className="text-black hover:underline dark:text-gray-100">
               Register here
             </a>
           </p>

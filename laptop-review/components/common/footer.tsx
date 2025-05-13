@@ -29,7 +29,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="py-8 text-white bg-gray-900">
+      <footer className="py-8 text-white bg-gray-900 dark:bg-gray-950">
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
             <div>
@@ -95,9 +95,9 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="w-full px-3 py-2 text-sm text-black bg-white rounded-l-md focus:outline-none"
+                  className="w-full px-3 py-2 text-sm text-black bg-white rounded-l-md focus:outline-none dark:bg-gray-800 dark:text-white"
                 />
-                <button className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-r-md hover:bg-gray-600">
+                <button className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-r-md hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-500">
                   Subscribe
                 </button>
               </div>
@@ -113,7 +113,7 @@ export default function Footer() {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed p-3 text-white bg-gray-800 rounded-full shadow-lg bottom-6 right-6 hover:bg-gray-700 transition-all duration-300"
+          className="fixed p-3 text-white bg-gray-800 rounded-full shadow-lg bottom-6 right-6 hover:bg-gray-700 transition-all duration-300 dark:bg-gray-700 dark:hover:bg-gray-600"
           aria-label="Quay lại đầu trang"
         >
           <ChevronUp size={24} />

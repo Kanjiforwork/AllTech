@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { SearchIcon, Heart } from "lucide-react"
 import { laptopData } from "@/data/laptops"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 
 import FilterPanel, { FilterState } from "@/components/filter-panel"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
@@ -27,6 +27,7 @@ export default function CompareSelectPage() {
   const [dataSort, setDataSort] = useState(laptopData)
   const [quickViewLaptop, setQuickViewLaptop] = useState<number | string | null>(null)
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
+  const router = useRouter()
   const searchParams = useSearchParams()
   
   // State cho bộ lọc
@@ -200,15 +201,15 @@ export default function CompareSelectPage() {
     : null
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <Header />
 
       <main className="container px-4 py-8 mx-auto">
         {/* Page Header */}
         <div className="mb-10 text-center">
-          <h1 className="mb-2 text-3xl font-bold">Chọn Laptop để So sánh</h1>
-          <p className="text-gray-600">Chọn tối đa 2 sản phẩm để so sánh chi tiết</p>
+          <h1 className="mb-2 text-3xl font-bold dark:text-white">Chọn Laptop để So sánh</h1>
+          <p className="text-gray-600 dark:text-gray-300">Chọn tối đa 2 sản phẩm để so sánh chi tiết</p>
         </div>
 
         {/* Filter and Results */}
@@ -223,7 +224,7 @@ export default function CompareSelectPage() {
                 handle={(newList: typeof laptopData) => handleSort(newList)}
               />
               
-              <div className="px-4 py-2 ml-4 text-sm font-medium bg-gray-100 rounded-lg">
+              <div className="px-4 py-2 ml-4 text-sm font-medium bg-gray-100 dark:bg-gray-800 dark:text-white rounded-lg">
                 Đã chọn: {selectedLaptops.length}/2 sản phẩm
               </div>
             </div>
@@ -246,40 +247,46 @@ export default function CompareSelectPage() {
               ))}
             </div>
 
-            {/* Nút Load More */}
-            <div className="flex justify-center mt-10 mb-6">
-              <Link
-                href="/all-laptops"
-                className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1"
+            {/* Nút Compare */}
+            <div className="mt-10 text-center">
+              <button 
+                onClick={() => {
+                  if (selectedLaptops.length === 2) {
+                    // Chuyển đến trang so sánh
+                    const ids = selectedLaptops.join('-vs-')
+                    router.push(`/compare/${ids}`)
+                  }
+                }}
+                disabled={selectedLaptops.length < 2} 
+                className={`flex items-center justify-center px-6 py-3 mx-auto space-x-2 text-base font-medium ${
+                  selectedLaptops.length === 2 
+                    ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800" 
+                    : "bg-gray-300 text-gray-600 cursor-not-allowed dark:bg-gray-700 dark:text-gray-400"
+                } rounded-lg transition-colors`}
               >
-                Load More
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <span>So sánh sản phẩm</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Quick View Modal */}
+        {currentQuickViewLaptop && (
+          <QuickViewModal
+            laptop={currentQuickViewLaptop}
+            isOpen={isQuickViewOpen}
+            onClose={closeQuickView}
+            onAddToCompare={toggleLaptopSelection}
+            isInCompareList={selectedLaptops.includes(currentQuickViewLaptop.id)}
+            isCompareDisabled={selectedLaptops.length >= 2}
+          />
+        )}
       </main>
 
-      {/* Sticky bottom bar for selected laptops */}
-      <ComparisonStickyBar
-        selectedIds={selectedLaptops}
-        laptopData={laptopData}
-        onRemove={toggleLaptopSelection}
-        onClearAll={clearSelection}
-      />
-
-      {/* Quick View Modal */}
-      <QuickViewModal
-        laptop={currentQuickViewLaptop}
-        isOpen={isQuickViewOpen}
-        onClose={closeQuickView}
-        onAddToCompare={toggleLaptopSelection}
-        isInCompareList={quickViewLaptop !== null ? selectedLaptops.includes(quickViewLaptop) : false}
-        isCompareDisabled={selectedLaptops.length >= 2}
-      />
-
+      {/* Footer */}
       <Footer />
     </div>
   )

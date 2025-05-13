@@ -316,7 +316,7 @@ export default function AllLaptopsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <Header />
 
@@ -327,21 +327,21 @@ export default function AllLaptopsPage() {
             <div className="flex items-center mb-2">
               <Link
                 href="/compare-select"
-                className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 mr-2"
+                className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 mr-2 dark:text-gray-300 dark:hover:text-white"
               >
                 <ChevronLeft className="w-4 h-4 mr-1" />
                 Back to Compare
               </Link>
             </div>
-            <h1 className="text-2xl font-bold">All Laptops</h1>
-            <p className="text-gray-600">
+            <h1 className="text-2xl font-bold dark:text-white">All Laptops</h1>
+            <p className="text-gray-600 dark:text-gray-300">
               {loading ? 'Đang tải dữ liệu...' : `Showing ${filteredLaptops.length} laptops`}
             </p>
           </div>
           
           <button 
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center px-4 py-2 text-sm font-medium bg-white border border-gray-300 rounded-lg md:hidden"
+            className="flex items-center px-4 py-2 text-sm font-medium bg-white border border-gray-300 rounded-lg md:hidden dark:bg-gray-800 dark:text-white dark:border-gray-600"
           >
             <Filter className="w-4 h-4 mr-2" />
             Filters
@@ -350,41 +350,55 @@ export default function AllLaptopsPage() {
 
         {/* Filter and Results */}
         <div className="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-4">
-          {/* Filter Panel - hidden on mobile unless toggled */}
-          <div className={`lg:col-span-1 ${showFilters ? 'block' : 'hidden'} lg:block`}>
-            <FilterPanel onFilter={handleFilterChange} allLaptops={allLaptops} />
+          {/* Filter Panel - Visible on desktop, toggleable on mobile */}
+          <div className={`lg:block ${showFilters ? 'block' : 'hidden'} lg:col-span-1`}>
+            <div className="sticky top-20">
+              <FilterPanel onFilter={handleFilterChange} />
+            </div>
           </div>
           
-          {/* Laptop grid */}
+          {/* Products Grid */}
           <div className="lg:col-span-3">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 space-y-4 md:space-y-0">
-              <div className="w-full md:w-auto">
-                <select 
-                  className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  value={sortOption}
-                  onChange={(e) => setSortOption(e.target.value)}
-                >
-                  <option value="relevance">Sort by Relevance</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                  <option value="rating">Rating: High to Low</option>
-                </select>
-              </div>
-              
-              <div className="flex md:items-center space-x-4">
-                <div className="block md:hidden w-full">
+            {/* Sort and Search Controls */}
+            <div className="mb-6">
+              <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Sort by:</span>
+                  <select
+                    className="px-2 py-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                    value={sortOption}
+                    onChange={(e) => {
+                      const option = e.target.value;
+                      setSortOption(option);
+                      
+                      // Hiển thị theo trình tự mới mà không thay đổi filteredLaptops
+                      setCurrentPage(1); // Đặt lại trang về 1 khi thay đổi sắp xếp
+                    }}
+                  >
+                    <option value="relevance">Relevance</option>
+                    <option value="priceLowToHigh">Price: Low to High</option>
+                    <option value="priceHighToLow">Price: High to Low</option>
+                    <option value="rating">Rating</option>
+                    <option value="newest">Newest</option>
+                  </select>
+                </div>
+                
+                <div className="relative flex-1 max-w-sm">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <SearchIcon className="w-4 h-4 text-gray-400" />
+                  </div>
                   <input
                     type="text"
                     placeholder="Search laptops..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-gray-600"
                   />
                 </div>
                 <div className="hidden md:flex items-center space-x-2">
-                  <span className="text-sm text-gray-600">Show:</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Show:</span>
                   <select
-                    className="px-2 py-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    className="px-2 py-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     value={itemsPerPage}
                     onChange={(e) => {
                       setItemsPerPage(Number(e.target.value))
@@ -409,7 +423,7 @@ export default function AllLaptopsPage() {
                 <Link 
                   href={`/laptops/${laptop.id}`} 
                   key={laptop.id}
-                  className={`overflow-hidden bg-white border rounded-lg shadow-sm transition-all duration-500 ease-in-out 
+                  className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out 
                     ${visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} 
                     hover:shadow-md hover:-translate-y-1 relative`}
                 >
@@ -418,31 +432,31 @@ export default function AllLaptopsPage() {
                     <FavoriteButton
                       laptopId={laptop.id}
                       size={20}
-                      className="p-1.5 bg-white rounded-full shadow-sm"
+                      className="p-1.5 bg-white dark:bg-gray-700 rounded-full shadow-sm"
                     />
                   </div>
                   
                   <div className="p-4">
-                    <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md">
-                      <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+                    <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md">
+                      <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300">
                         {laptop.name}
                       </div>
                     </div>
 
                     <div className="flex items-center mb-2">
                       {Array.from({ length: 5 }).map((_, j) => (
-                        <svg key={j} className={`w-4 h-4 ${j < Math.floor(laptop.benchmarks?.overall || 0) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 20 20">
+                        <svg key={j} className={`w-4 h-4 ${j < Math.floor(laptop.benchmarks?.overall || 0) ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`} fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                       ))}
-                      <span className="ml-2 text-sm text-gray-600">
+                      <span className="ml-2 text-sm text-gray-600 dark:text-gray-300">
                         {laptop.benchmarks?.overall ? laptop.benchmarks.overall.toFixed(1) : "N/A"}
                       </span>
                     </div>
                     
-                    <h3 className="mb-1 font-semibold line-clamp-2">{laptop.name}</h3>
+                    <h3 className="mb-1 font-semibold line-clamp-2 dark:text-white">{laptop.name}</h3>
                     
-                    <p className="mb-2 text-sm text-gray-600 line-clamp-2">
+                    <p className="mb-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
                       {laptop.specs.cpu}, {laptop.specs.ram}, {laptop.specs.storage}
                     </p>
 
@@ -464,9 +478,9 @@ export default function AllLaptopsPage() {
 
                       {/* Price display */}
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold">{laptop.price}</span>
+                        <span className="text-xl font-bold dark:text-white">{laptop.price}</span>
                         {laptop.originalPrice && laptop.price !== laptop.originalPrice && (
-                          <span className="text-sm text-gray-500 line-through">{laptop.originalPrice}</span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400 line-through">{laptop.originalPrice}</span>
                         )}
                       </div>
                     </div>
@@ -483,8 +497,8 @@ export default function AllLaptopsPage() {
                   disabled={currentPage === 1}
                   className={`p-2 rounded-md ${
                     currentPage === 1 
-                      ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'text-gray-400 cursor-not-allowed dark:text-gray-600' 
+                      : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                   }`}
                   aria-label="Previous page"
                 >
@@ -508,8 +522,8 @@ export default function AllLaptopsPage() {
                           onClick={() => changePage(pageNumber)}
                           className={`w-8 h-8 text-sm font-medium rounded-md ${
                             currentPage === pageNumber
-                              ? 'bg-gray-900 text-white'
-                              : 'text-gray-700 hover:bg-gray-100'
+                              ? 'bg-gray-900 text-white dark:bg-gray-600'
+                              : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                           }`}
                         >
                           {pageNumber}
@@ -522,7 +536,7 @@ export default function AllLaptopsPage() {
                       (pageNumber === 2 && currentPage > 3) || 
                       (pageNumber === totalPages - 1 && currentPage < totalPages - 2)
                     ) {
-                      return <span key={pageNumber} className="text-gray-500">...</span>
+                      return <span key={pageNumber} className="text-gray-500 dark:text-gray-400">...</span>
                     }
                     
                     return null
@@ -534,8 +548,8 @@ export default function AllLaptopsPage() {
                   disabled={currentPage === totalPages}
                   className={`p-2 rounded-md ${
                     currentPage === totalPages 
-                      ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'text-gray-400 cursor-not-allowed dark:text-gray-600' 
+                      : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                   }`}
                   aria-label="Next page"
                 >
@@ -552,8 +566,8 @@ export default function AllLaptopsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="mb-1 text-lg font-medium">No laptops found</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-1 text-lg font-medium dark:text-white">No laptops found</h3>
+                <p className="text-gray-600 dark:text-gray-300">
                   Try adjusting your search or filter criteria
                 </p>
                 <button 
