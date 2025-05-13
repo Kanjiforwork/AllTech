@@ -5,7 +5,7 @@ export default function Rating({formData, handleRatingChange, renderRatingStars}
             <h3 className="text-lg font-medium">Ratings & Reviews</h3>
             <p className="text-sm text-gray-500">Rate each category from 1 to 10 and provide a brief description</p>
           </div>
-``
+
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {Object.entries(formData.ratings).map(([key, value]) => (
               <div key={key} className="p-4 border rounded-md">

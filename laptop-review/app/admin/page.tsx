@@ -2,17 +2,14 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Save, ArrowLeft, Upload, Star, StarHalf } from "lucide-react"
+import { Save, ArrowLeft, Star, StarHalf } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
 import Rating from "./Rating"
 import BatertyLife from "./BateryLife"
-import Feature from "./Feature"
 import AdditionalFeautures from "./AdditionalFeatures"
 import BasicInformation from "./BasicInfomation"
 import HardwareSpecifications from "./HardwareSpecifications"
-
-
+import ProsConsSection from "./ProsConsSection"
 
 type RatingCategory = {
   name: string
@@ -50,6 +47,8 @@ type LaptopFormData = {
     webcam: RatingCategory
     ports: RatingCategory
   }
+  pros: string[]
+  cons: string[]
 }
 
 export default function LaptopForm() {
@@ -86,10 +85,26 @@ export default function LaptopForm() {
       webcam: { name: "Webcam", rating: 5, description: "" },
       ports: { name: "Ports", rating: 5, description: "" },
     },
+    pros: [""],
+    cons: [""],
   })
 
-  const brands = ["Select Brand", "Apple", "Dell", "HP", "Lenovo", "ASUS", "Acer", "MSI", "Microsoft", "Samsung", "Razer", "LG", "Xiaomi", "Others"];
-
+  const brands = [
+    "Select Brand",
+    "Apple",
+    "Dell",
+    "HP",
+    "Lenovo",
+    "ASUS",
+    "Acer",
+    "MSI",
+    "Microsoft",
+    "Samsung",
+    "Razer",
+    "LG",
+    "Xiaomi",
+    "Others",
+  ]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -110,6 +125,13 @@ export default function LaptopForm() {
           [field]: field === "rating" ? Number(value) : value,
         },
       },
+    }))
+  }
+
+  const handleProsConsChange = (type: "pros" | "cons", value: string[]) => {
+    setFormData((prev) => ({
+      ...prev,
+      [type]: value,
     }))
   }
 
@@ -179,21 +201,28 @@ export default function LaptopForm() {
         </div>
       </header>
 
-
-
-
       <form onSubmit={handleSubmit} className="p-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          <BasicInformation formData={formData} handleChange={handleChange} handleImageChange={handleImageChange} brands={brands}></BasicInformation>
+          <BasicInformation
+            formData={formData}
+            handleChange={handleChange}
+            handleImageChange={handleImageChange}
+            brands={brands}
+          ></BasicInformation>
           <HardwareSpecifications formData={formData} handleChange={handleChange}></HardwareSpecifications>
         </div>
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
           <AdditionalFeautures formData={formData} handleChange={handleChange}></AdditionalFeautures>
           <BatertyLife formData={formData} handleChange={handleChange}></BatertyLife>
         </div>
-        <Rating formData={formData} handleRatingChange={handleRatingChange} renderRatingStars={renderRatingStars}></Rating>
+        <Rating
+          formData={formData}
+          handleRatingChange={handleRatingChange}
+          renderRatingStars={renderRatingStars}
+        ></Rating>
 
-
+        {/* Add the Pros & Cons section here */}
+        <ProsConsSection formData={formData} handleProsConsChange={handleProsConsChange} />
 
         <div className="mt-8 flex justify-end">
           <button
