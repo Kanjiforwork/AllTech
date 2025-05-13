@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, User as FirebaseUser } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, User as FirebaseUser, updatePassword } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -124,6 +124,20 @@ export class User {
   getFavorites(): string[] {
     return this.favoriteItems;
   }
+  
+  // Update user profile
+  async updateProfile(newDisplayName: string): Promise<boolean> {
+    try {
+      this.displayName = newDisplayName;
+      await updateDoc(doc(db, "users", this.uid), {
+        displayName: newDisplayName
+      });
+      return true;
+    } catch (error) {
+      console.error("Lỗi khi cập nhật thông tin người dùng:", error);
+      return false;
+    }
+  }
 }
 
 // Authentication helper functions
@@ -190,5 +204,16 @@ export const setUserAsAdmin = async (uid: string): Promise<boolean> => {
   } catch (error) {
     console.error("Lỗi khi đặt người dùng thành admin:", error);
     return false;
+  }
+};
+
+// Hàm đổi mật khẩu
+export const changeUserPassword = async (user: FirebaseUser, newPassword: string): Promise<boolean> => {
+  try {
+    await updatePassword(user, newPassword);
+    return true;
+  } catch (error) {
+    console.error("Lỗi khi đổi mật khẩu:", error);
+    throw error;
   }
 };

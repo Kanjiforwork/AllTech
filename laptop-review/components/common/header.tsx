@@ -79,11 +79,17 @@ export default function Header() {
                       <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
                     </div>
                     <hr className="dark:border-gray-700" />
+                    <Link
+                      href="/profile"
+                      className="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                    >
+                      Trang cá nhân
+                    </Link>
                     <button
                       onClick={handleLogout}
                       className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                      Log out
+                      Đăng xuất
                     </button>
                   </div>
                 )}
