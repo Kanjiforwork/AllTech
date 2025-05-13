@@ -8,8 +8,7 @@ import { ChevronLeft, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
-
-
+import AdminProtection from "@/components/auth/AdminProtection"
 import BasicInformation from "./basic-information"
 import HardwareSpecifications from "./hardware-specifications"
 import AdditionalFeatures from "./additional-features"
@@ -19,7 +18,7 @@ import ProsCons from "./pros-cons"
 import DetailedAnalysis from "./detailed-analysis"
 
 
-export default function LaptopForm() {
+function LaptopForm() {
   const router = useRouter()
   const [formErrors, setFormErrors] = useState<string[]>([])
 
@@ -83,5 +82,14 @@ export default function LaptopForm() {
         </div>
       </form>
     </div>
+  )
+}
+
+// Bọc component bằng AdminProtection để bảo vệ truy cập
+export default function ProtectedAdminPage() {
+  return (
+    <AdminProtection>
+      <LaptopForm />
+    </AdminProtection>
   )
 }
