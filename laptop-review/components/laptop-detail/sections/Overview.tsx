@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Youtube, ChevronDown } from "lucide-react";
+import { Youtube, ChevronDown, Heart } from "lucide-react";
 import SpecItem from "@/components/common/spec-item";
 import { Cpu, CpuIcon as Gpu, MemoryStickIcon as Memory, HardDrive, Monitor, Battery } from "lucide-react";
 import FavoriteButton from "@/components/common/FavoriteButton";
@@ -80,12 +80,15 @@ export default function Overview({ laptop, detailed = false }: OverviewProps) {
               </div>
             </div>
             
-            <div className="mb-5 flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Thêm vào danh sách yêu thích</span>
+            <div className="mb-5 flex items-center">
+              <span className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                <Heart className="w-4 h-4 mr-2 text-red-500" />
+                Thêm vào danh sách yêu thích
+              </span>
               <FavoriteButton
                 laptopId={laptop.id}
                 size={24}
-                className="ml-2"
+                className="ml-3"
               />
             </div>
             
