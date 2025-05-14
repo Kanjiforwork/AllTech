@@ -25,7 +25,11 @@ export default function Home() {
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  
+  const [scrollCount, setScrollCount] = useState(0);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const maxScrollsAllowed = 5; // Maximum scrolls before login prompt
+  const scrollThrottleRef = useRef(false);
+  const hasShownPromptRef = useRef(false);
   // State cho bộ lọc
   const [filters, setFilters] = useState<FilterState>({
     brands: [],
@@ -40,7 +44,7 @@ export default function Home() {
 
   const [dataSort, setDataSort] = useState(laptopData)
   const [filteredData, setFilteredData] = useState(laptopData)
-  
+  const isLoggedIn = !!user;
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -89,7 +93,47 @@ export default function Home() {
   function handleSort(newListData: typeof laptopData) {
     setDataSort(newListData)
   }
+   useEffect(() => {
+    // Skip if user is logged in or prompt already shown in this session
+    if (isLoggedIn || hasShownPromptRef.current) return;
+    
+    const handleScroll = () => {
+      // Throttle scroll events
+      if (scrollThrottleRef.current) return;
+      
+      scrollThrottleRef.current = true;
+      setTimeout(() => {
+        scrollThrottleRef.current = false;
+      }, 1000); // Don't count scrolls more than once per second
+      
+      setScrollCount(prev => {
+        const newCount = prev + 1;
+        
+        // Show login prompt after max scrolls
+        if (newCount >= maxScrollsAllowed && !hasShownPromptRef.current) {
+          setShowLoginPrompt(true);
+          hasShownPromptRef.current = true;
+        }
+        
+        return newCount;
+      });
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isLoggedIn]);
+
+  // Reset when user logs in
+  useEffect(() => {
+    if (isLoggedIn) {
+      setShowLoginPrompt(false);
+    }
+  }, [isLoggedIn]);
   
+  // Handle login prompt close
+  const handleCloseLoginPrompt = () => {
+    setShowLoginPrompt(false);
+  };
   // Áp dụng bộ lọc
   useEffect(() => {
     let results = [...laptopData];
@@ -167,9 +211,47 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <Header />
-
+ {showLoginPrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="w-full max-w-md p-6 mx-4 bg-white rounded-lg shadow-xl dark:bg-gray-800">
+            <div className="text-center">
+              <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Continue Reading with LapInsight</h3>
+              
+              {/* Progress bar showing scrolls used */}
+              <div className="w-full h-2 mb-4 bg-gray-200 rounded-full">
+                <div 
+                  className="h-2 bg-blue-500 rounded-full" 
+                  style={{ width: `${(scrollCount / maxScrollsAllowed) * 100}%` }}
+                />
+              </div>
+              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                You've used {scrollCount}/{maxScrollsAllowed} free scrolls
+              </p>
+              
+              <p className="mb-6 text-gray-700 dark:text-gray-300">
+                Create a free account to get unlimited access to laptop reviews, comparison tools, and expert recommendations.
+              </p>
+              
+              <div className="flex flex-col gap-3">
+                <Link href="/login" className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                  Sign In
+                </Link>
+                <Link href="/register" className="w-full px-4 py-2 text-blue-600 bg-white border border-blue-600 rounded-md hover:bg-blue-50">
+                  Create Account
+                </Link>
+                <button 
+                  onClick={handleCloseLoginPrompt} 
+                  className="w-full px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                >
+                  Maybe Later
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* phần này đã đổi thành News */}
-      <main className="container px-4 py-8 mx-auto">
+       <main className={`container px-4 py-8 mx-auto transition-all ${showLoginPrompt ? 'filter blur-sm' : ''}`}>
         {/* Featured Section */}
         <section className="mb-12">
           <h2 className="mb-6 text-2xl font-bold dark:text-white"></h2>
@@ -305,6 +387,7 @@ export default function Home() {
             </svg>
           </button>
         </div>
+        
       </main>
 
       <Footer />
