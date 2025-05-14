@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useRef, useEffect } from "react"
@@ -162,7 +161,7 @@ export default function RecommendedSection() {
 
   return (
     <div 
-      className="bg-white border rounded-lg shadow-sm p-6"
+      className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm p-6"
       ref={sliderRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -179,7 +178,7 @@ export default function RecommendedSection() {
         >
           {categories.map((category) => (
             <div key={category.id} className="w-full flex-shrink-0">
-              <div className="bg-white rounded-lg">
+              <div className="bg-white dark:bg-gray-800 rounded-lg">
                 <div className="flex flex-col gap-6 md:flex-row">
                   <div className="relative w-full h-48 overflow-hidden rounded-lg md:w-1/3">
                     <Image src={category.image || "/placeholder.svg"} alt={category.name} fill className="object-cover" />
@@ -189,11 +188,11 @@ export default function RecommendedSection() {
                   </div>
 
                   <div className="md:w-2/3">
-                    <p className="mb-4 text-gray-600">{category.description}</p>
+                    <p className="mb-4 text-gray-600 dark:text-gray-300">{category.description}</p>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                       {category.laptops.map((laptop) => (
                         <Link key={laptop.id} href={`/laptops/${laptop.id}`} className="group">
-                          <div className="overflow-hidden transition-all duration-200 bg-gray-50 border rounded-lg group-hover:shadow-md">
+                          <div className="overflow-hidden transition-all duration-200 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg group-hover:shadow-md">
                             <div className="relative h-32">
                               <Image
                                 src={laptop.image || "/placeholder.svg"}
@@ -203,8 +202,8 @@ export default function RecommendedSection() {
                               />
                             </div>
                             <div className="p-3">
-                              <h4 className="text-sm font-medium">{laptop.name}</h4>
-                              <p className="text-sm font-bold text-gray-900">{laptop.price}</p>
+                              <h4 className="text-sm font-medium dark:text-white">{laptop.name}</h4>
+                              <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{laptop.price}</p>
                             </div>
                           </div>
                         </Link>
@@ -224,7 +223,11 @@ export default function RecommendedSection() {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 ${currentSlide === index ? "bg-gray-800" : "bg-gray-300"}`}
+            className={`h-3 w-3 rounded-full transition-all duration-300 ${
+              currentSlide === index 
+                ? "bg-gray-800 dark:bg-gray-200" 
+                : "bg-gray-300 dark:bg-gray-600"
+            }`}
           />
         ))}
       </div>

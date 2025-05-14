@@ -1,4 +1,5 @@
 import ComparisonBarChart, { type ComparisonItem } from "./ComparisonBarChart"
+import { useTheme } from "next-themes"
 
 export interface BatteryComparisonItem {
   id: string
@@ -22,6 +23,8 @@ export default function BatteryComparisonChart({
   items,
   enableSorting = true,
 }: BatteryComparisonChartProps) {
+  const { resolvedTheme } = useTheme()
+  
   // Transform the data for the generic comparison chart
   const transformedItems: ComparisonItem[] = items.map((item) => {
     const totalMinutes = item.batteryLife.hours * 60 + item.batteryLife.minutes
@@ -73,7 +76,7 @@ export default function BatteryComparisonChart({
         defaultMetric: "batteryLife",
         defaultOrder: "desc",
       }}
-      theme="light" // Added light theme
+      theme={resolvedTheme as "dark" | "light"}
     />
   )
 }

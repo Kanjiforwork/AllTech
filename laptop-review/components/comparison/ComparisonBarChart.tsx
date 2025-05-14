@@ -60,7 +60,7 @@ export default function ComparisonBarChart({
 
   // Get background color based on theme
   const getBgColor = () => {
-    return theme === "dark" ? "bg-gray-900" : "bg-white"
+    return theme === "dark" ? "bg-gray-800" : "bg-white"
   }
 
   // Get text color based on theme
@@ -80,16 +80,21 @@ export default function ComparisonBarChart({
 
   // Get button background color based on theme
   const getButtonBgColor = () => {
-    return theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+    return theme === "dark" ? "bg-gray-700" : "bg-gray-100"
   }
 
   // Get button hover background color based on theme
   const getButtonHoverBgColor = () => {
-    return theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"
+    return theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"
+  }
+  
+  // Get progress background color based on theme
+  const getProgressBgColor = () => {
+    return theme === "dark" ? "bg-gray-600" : "bg-gray-200"
   }
 
   return (
-    <div className={`rounded-lg shadow-sm p-6 ${getBgColor()}`}>
+    <div className={`rounded-lg shadow-sm border ${getBorderColor()} p-6 ${getBgColor()}`}>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <h2 className={`text-2xl font-bold ${getTextColor()}`}>{title}</h2>
 
@@ -101,7 +106,7 @@ export default function ComparisonBarChart({
                 onClick={() => setSortOrder("asc")}
                 className={`px-3 py-1 text-sm rounded-l ${
                   sortOrder === "asc"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-blue-600 dark:bg-blue-500 text-white"
                     : `${getButtonBgColor()} ${getTextColor()} ${getButtonHoverBgColor()}`
                 }`}
               >
@@ -111,7 +116,7 @@ export default function ComparisonBarChart({
                 onClick={() => setSortOrder("desc")}
                 className={`px-3 py-1 text-sm rounded-r ${
                   sortOrder === "desc"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-blue-600 dark:bg-blue-500 text-white"
                     : `${getButtonBgColor()} ${getTextColor()} ${getButtonHoverBgColor()}`
                 }`}
               >
@@ -147,7 +152,7 @@ export default function ComparisonBarChart({
 
               return (
                 <div key={metric.id} className="space-y-1">
-                  <div className="relative h-8 bg-gray-200 rounded-full overflow-hidden">
+                  <div className={`relative h-8 ${getProgressBgColor()} rounded-full overflow-hidden`}>
                     <div
                       className="h-full rounded-full flex items-center justify-end px-3"
                       style={{

@@ -171,16 +171,16 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
   }, 0)
 
   return (
-    <div className="p-4 bg-white border rounded-lg shadow-sm">
+    <div className="p-4 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold flex items-center">
-          <Sliders className="w-5 h-5 mr-2 text-blue-600" />
+        <h3 className="text-lg font-bold flex items-center dark:text-white">
+          <Sliders className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
           Bộ lọc
         </h3>
         {activeFilterCount > 0 && (
           <button
             onClick={clearAllFilters}
-            className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center"
+            className="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
           >
             <X className="w-4 h-4 mr-1" />
             Xóa tất cả ({activeFilterCount})
@@ -189,13 +189,13 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
       </div>
 
       {/* Brand Filter */}
-      <div className="mb-4 border-b pb-2">
+      <div className="mb-4 border-b dark:border-gray-700 pb-2">
         <button
-          className="flex items-center justify-between w-full mb-2 text-left"
+          className="flex items-center justify-between w-full mb-2 text-left dark:text-white"
           onClick={() => toggleSection("brand")}
         >
           <span className="font-medium flex items-center">
-            <Laptop className="w-4 h-4 mr-2 text-blue-600" />
+            <Laptop className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
             Thương hiệu
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${expanded.brand ? "rotate-180" : ""}`} />
@@ -210,9 +210,9 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                   id={`brand-${brand}`}
                   checked={filters.brands.includes(brand)}
                   onChange={() => handleFilterChange('brands', brand)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <label htmlFor={`brand-${brand}`} className="ml-2 text-sm text-gray-700">
+                <label htmlFor={`brand-${brand}`} className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                   {brand}
                 </label>
               </div>
@@ -222,13 +222,13 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
       </div>
 
       {/* CPU Filter */}
-      <div className="mb-4 border-b pb-2">
+      <div className="mb-4 border-b dark:border-gray-700 pb-2">
         <button
-          className="flex items-center justify-between w-full mb-2 text-left"
+          className="flex items-center justify-between w-full mb-2 text-left dark:text-white"
           onClick={() => toggleSection("cpu")}
         >
           <span className="font-medium flex items-center">
-            <Cpu className="w-4 h-4 mr-2 text-blue-600" />
+            <Cpu className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
             CPU
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${expanded.cpu ? "rotate-180" : ""}`} />
@@ -243,9 +243,9 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                   id={`cpu-${cpu}`}
                   checked={filters.cpuTypes.includes(cpu)}
                   onChange={() => handleFilterChange('cpuTypes', cpu)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <label htmlFor={`cpu-${cpu}`} className="ml-2 text-sm text-gray-700">
+                <label htmlFor={`cpu-${cpu}`} className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                   {cpu}
                 </label>
               </div>
@@ -255,13 +255,13 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
       </div>
 
       {/* RAM Filter */}
-      <div className="mb-4 border-b pb-2">
+      <div className="mb-4 border-b dark:border-gray-700 pb-2">
         <button
-          className="flex items-center justify-between w-full mb-2 text-left"
+          className="flex items-center justify-between w-full mb-2 text-left dark:text-white"
           onClick={() => toggleSection("ram")}
         >
           <span className="font-medium flex items-center">
-            <Database className="w-4 h-4 mr-2 text-blue-600" />
+            <Database className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
             RAM
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${expanded.ram ? "rotate-180" : ""}`} />
@@ -276,9 +276,9 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                   id={`ram-${ram}`}
                   checked={filters.ramSizes.includes(ram)}
                   onChange={() => handleFilterChange('ramSizes', ram)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <label htmlFor={`ram-${ram}`} className="ml-2 text-sm text-gray-700">
+                <label htmlFor={`ram-${ram}`} className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                   {ram}
                 </label>
               </div>
@@ -291,11 +291,11 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                 value={customRam}
                 onChange={(e) => setCustomRam(e.target.value)}
                 placeholder="Nhập dung lượng RAM"
-                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
               />
               <button
                 onClick={handleAddCustomRam}
-                className="flex items-center justify-center p-1 text-white bg-blue-600 rounded-r-md hover:bg-blue-700 border border-transparent"
+                className="flex items-center justify-center p-1 text-white bg-blue-600 rounded-r-md hover:bg-blue-700 border border-transparent dark:bg-blue-700 dark:hover:bg-blue-600"
                 title="Thêm RAM"
               >
                 <Plus className="w-5 h-5" />
@@ -306,13 +306,13 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
       </div>
 
       {/* Storage Filter */}
-      <div className="mb-4 border-b pb-2">
+      <div className="mb-4 border-b dark:border-gray-700 pb-2">
         <button
-          className="flex items-center justify-between w-full mb-2 text-left"
+          className="flex items-center justify-between w-full mb-2 text-left dark:text-white"
           onClick={() => toggleSection("storage")}
         >
           <span className="font-medium flex items-center">
-            <HardDrive className="w-4 h-4 mr-2 text-blue-600" />
+            <HardDrive className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
             Bộ nhớ
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${expanded.storage ? "rotate-180" : ""}`} />
@@ -327,9 +327,9 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                   id={`storage-${storage}`}
                   checked={filters.storageOptions.includes(storage)}
                   onChange={() => handleFilterChange('storageOptions', storage)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <label htmlFor={`storage-${storage}`} className="ml-2 text-sm text-gray-700">
+                <label htmlFor={`storage-${storage}`} className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                   {storage}
                 </label>
               </div>
@@ -339,13 +339,13 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
       </div>
 
       {/* Price Range Filter */}
-      <div className="mb-4 border-b pb-2">
+      <div className="mb-4 border-b dark:border-gray-700 pb-2">
         <button
-          className="flex items-center justify-between w-full mb-2 text-left"
+          className="flex items-center justify-between w-full mb-2 text-left dark:text-white"
           onClick={() => toggleSection("price")}
         >
           <span className="font-medium flex items-center">
-            <DollarSign className="w-4 h-4 mr-2 text-blue-600" />
+            <DollarSign className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
             Khoảng giá
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${expanded.price ? "rotate-180" : ""}`} />
@@ -360,9 +360,9 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                   id={`price-${range.label}`}
                   checked={filters.priceRanges.some(r => r.min === range.min && r.max === range.max)}
                   onChange={() => handleFilterChange('priceRanges', range)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <label htmlFor={`price-${range.label}`} className="ml-2 text-sm text-gray-700">
+                <label htmlFor={`price-${range.label}`} className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                   {range.label}
                 </label>
               </div>
@@ -372,13 +372,13 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
       </div>
 
       {/* Display Size Filter */}
-      <div className="mb-4 border-b pb-2">
+      <div className="mb-4 border-b dark:border-gray-700 pb-2">
         <button
-          className="flex items-center justify-between w-full mb-2 text-left"
+          className="flex items-center justify-between w-full mb-2 text-left dark:text-white"
           onClick={() => toggleSection("display")}
         >
           <span className="font-medium flex items-center">
-            <Monitor className="w-4 h-4 mr-2 text-blue-600" />
+            <Monitor className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
             Kích thước màn hình
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${expanded.display ? "rotate-180" : ""}`} />
@@ -393,9 +393,9 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                   id={`display-${size}`}
                   checked={filters.displaySizes.includes(size)}
                   onChange={() => handleFilterChange('displaySizes', size)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <label htmlFor={`display-${size}`} className="ml-2 text-sm text-gray-700">
+                <label htmlFor={`display-${size}`} className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                   {size}
                 </label>
               </div>
@@ -405,13 +405,13 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
       </div>
 
       {/* Battery Capacity Filter - Đã đổi từ thời lượng pin thành dung lượng Wh */}
-      <div className="mb-4 border-b pb-2">
+      <div className="mb-4 border-b dark:border-gray-700 pb-2">
         <button
-          className="flex items-center justify-between w-full mb-2 text-left"
+          className="flex items-center justify-between w-full mb-2 text-left dark:text-white"
           onClick={() => toggleSection("battery")}
         >
           <span className="font-medium flex items-center">
-            <Battery className="w-4 h-4 mr-2 text-blue-600" />
+            <Battery className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
             Dung lượng pin
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${expanded.battery ? "rotate-180" : ""}`} />
@@ -426,9 +426,9 @@ export default function FilterPanel({ onFilter, allLaptops }: FilterPanelProps) 
                   id={`battery-${capacity}`}
                   checked={filters.batteryLife.includes(capacity)}
                   onChange={() => handleFilterChange('batteryLife', capacity)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <label htmlFor={`battery-${capacity}`} className="ml-2 text-sm text-gray-700">
+                <label htmlFor={`battery-${capacity}`} className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                   {capacity}
                 </label>
               </div>

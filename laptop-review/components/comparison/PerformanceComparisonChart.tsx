@@ -1,4 +1,5 @@
 import ComparisonBarChart, { type ComparisonItem } from "./ComparisonBarChart"
+import { useTheme } from "next-themes"
 
 export interface PerformanceComparisonItem {
   id: string
@@ -23,6 +24,8 @@ export default function PerformanceComparisonChart({
   maxCpuScore = 20000,
   maxGpuScore = 15000,
 }: PerformanceComparisonChartProps) {
+  const { resolvedTheme } = useTheme()
+
   // Transform the data for the generic comparison chart
   const transformedItems: ComparisonItem[] = items.map((item) => {
     return {
@@ -71,7 +74,7 @@ export default function PerformanceComparisonChart({
         defaultMetric: "cpuScore",
         defaultOrder: "desc",
       }}
-      theme="light" // Added light theme
+      theme={resolvedTheme as "dark" | "light"}
     />
   )
 }
