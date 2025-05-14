@@ -3,7 +3,7 @@ import { db } from "@/lib/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 // Mật khẩu bí mật để xác thực quyền đặt admin (nên đặt trong biến môi trường)
-const ADMIN_SECRET = "SecretKey";
+const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
 export async function POST(request: Request) {
   try {
