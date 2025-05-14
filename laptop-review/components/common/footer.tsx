@@ -33,9 +33,9 @@ export default function Footer() {
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
             <div>
-              <h3 className="mb-4 text-lg font-bold">TechReview</h3>
+              <h3 className="mb-4 text-lg font-bold">LapInsight</h3>
               <p className="text-sm text-gray-400">
-                Your trusted source for laptop reviews and comparisons since 2023.
+                Your trusted source for laptop reviews and comparisons since 2025.
               </p>
             </div>
             <div>
@@ -104,7 +104,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="pt-8 mt-8 text-sm text-center text-gray-400 border-t border-gray-800">
-            &copy; {new Date().getFullYear()} TechReview. All rights reserved.
+            &copy; {new Date().getFullYear()} LapInsight. All rights reserved.
           </div>
         </div>
       </footer>

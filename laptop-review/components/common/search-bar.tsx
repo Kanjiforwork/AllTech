@@ -93,14 +93,14 @@ export default function SearchBar() {
             placeholder="Tìm kiếm laptop..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full h-10 pl-10 pr-10 text-sm bg-gray-100 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+            className="w-full h-10 pl-10 pr-10 text-sm bg-gray-100 dark:bg-gray-700 dark:text-white text-gray-900 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600"
           />
-          <SearchIcon className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+          <SearchIcon className="absolute w-4 h-4 text-gray-400 dark:text-gray-300 transform -translate-y-1/2 left-3 top-1/2" />
           {searchTerm && (
             <button 
               type="button"
               onClick={clearSearch}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100"
             >
               <X className="w-4 h-4" />
             </button>
@@ -110,10 +110,10 @@ export default function SearchBar() {
       
       {/* Kết quả tìm kiếm */}
       {showResults && (
-        <div className="absolute w-full mt-1 bg-white border rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
+        <div className="absolute w-full mt-1 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
           {isSearching ? (
-            <div className="p-4 text-center text-gray-500">
-              <div className="inline-block h-6 w-6 border-t-2 border-b-2 border-gray-500 rounded-full animate-spin"></div>
+            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
+              <div className="inline-block h-6 w-6 border-t-2 border-b-2 border-gray-500 dark:border-gray-400 rounded-full animate-spin"></div>
               <p className="mt-2">Đang tìm kiếm...</p>
             </div>
           ) : searchResults.length > 0 ? (
@@ -121,11 +121,11 @@ export default function SearchBar() {
               {searchResults.map((laptop) => (
                 <div 
                   key={laptop.id}
-                  className="flex items-center p-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                  className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0"
                   onClick={() => handleSearchItemClick(laptop.id)}
                 >
                   {laptop.image && (
-                    <div className="w-10 h-10 mr-3 bg-gray-200 rounded-md overflow-hidden relative flex-shrink-0">
+                    <div className="w-10 h-10 mr-3 bg-gray-200 dark:bg-gray-600 rounded-md overflow-hidden relative flex-shrink-0">
                       <Image 
                         src={laptop.image} 
                         alt={laptop.name}
@@ -136,8 +136,8 @@ export default function SearchBar() {
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-gray-900 truncate">{laptop.name}</h4>
-                    <p className="text-xs text-gray-500 truncate">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate">{laptop.name}</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                       {typeof laptop.specs === 'string' 
                         ? laptop.specs 
                         : `${laptop.specs.cpu}, ${laptop.specs.ram}, ${laptop.specs.storage}`}
@@ -147,7 +147,7 @@ export default function SearchBar() {
               ))}
             </div>
           ) : (
-            <div className="p-4 text-center text-gray-500">
+            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               <p>Không tìm thấy laptop nào phù hợp!</p>
             </div>
           )}
