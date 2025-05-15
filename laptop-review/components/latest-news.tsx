@@ -176,16 +176,16 @@ export default function LatestNews() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64 bg-gray-100 rounded-xl animate-pulse">
-        <p className="text-gray-500">Loading news...</p>
+      <div className="flex items-center justify-center h-64 bg-gray-100 dark:bg-gray-800 rounded-xl animate-pulse">
+        <p className="text-gray-500 dark:text-gray-400">Loading news...</p>
       </div>
     );
   }
 
   if (newsItems.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 bg-gray-100 rounded-xl">
-        <p className="text-gray-500">No news available at the moment.</p>
+      <div className="flex items-center justify-center h-64 bg-gray-100 dark:bg-gray-800 rounded-xl">
+        <p className="text-gray-500 dark:text-gray-400">No news available at the moment.</p>
       </div>
     );
   }
@@ -203,7 +203,7 @@ export default function LatestNews() {
             e.stopPropagation();
             prevSlide();
           }}
-          className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white transition-opacity duration-300 ${
+          className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 dark:bg-gray-800/80 shadow-md hover:bg-white dark:hover:bg-gray-700 transition-opacity duration-300 ${
             showControls ? 'opacity-80' : 'opacity-0'
           }`}
           aria-label="Previous slide"
@@ -217,7 +217,7 @@ export default function LatestNews() {
             e.stopPropagation();
             nextSlide();
           }}
-          className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white transition-opacity duration-300 ${
+          className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 dark:bg-gray-800/80 shadow-md hover:bg-white dark:hover:bg-gray-700 transition-opacity duration-300 ${
             showControls ? 'opacity-80' : 'opacity-0'
           }`}
           aria-label="Next slide"
@@ -271,7 +271,7 @@ export default function LatestNews() {
                         e.stopPropagation();
                         openNewsModal(item);
                       }}
-                      className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition-all duration-300 hover:scale-105"
+                      className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-800 dark:bg-gray-700 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-105"
                     >
                       Read More
                     </button>

@@ -10,8 +10,8 @@ export default function TrendingArticles() {
   const trendingArticles = getTrendingArticles()
 
   return (
-    <div className="bg-white p-5 rounded-lg shadow-md">
-      <h3 className="text-lg font-bold mb-4">Trending Articles</h3>
+    <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md">
+      <h3 className="text-lg font-bold mb-4 dark:text-white">Trending Articles</h3>
       
       <div className="space-y-4">
         {trendingArticles.map((article) => (
@@ -35,10 +35,10 @@ export default function TrendingArticles() {
             </div>
             
             <div className="ml-3 flex-1">
-              <h4 className="text-sm font-medium line-clamp-2 group-hover:text-blue-600 transition-colors">
+              <h4 className="text-sm font-medium line-clamp-2 group-hover:text-blue-600 dark:text-gray-200 dark:group-hover:text-blue-400 transition-colors">
                 {article.title}
               </h4>
-              <p className="text-xs text-gray-500 mt-1">{article.views} views</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{article.views} views</p>
             </div>
           </Link>
         ))}
@@ -46,7 +46,7 @@ export default function TrendingArticles() {
       
       <Link 
         href="/news/trending" 
-        className="mt-4 inline-block text-sm text-blue-600 hover:text-blue-800 hover:underline"
+        className="mt-4 inline-block text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline"
       >
         View all trending
       </Link>

@@ -16,7 +16,7 @@ export default function ArticleGrid({ selectedCategory, onArticleClick }: Articl
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-6">
+      <h2 className="text-xl font-semibold mb-6 dark:text-white">
         {selectedCategory === "all" ? "All Articles" : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Articles`}
       </h2>
       
@@ -26,7 +26,7 @@ export default function ArticleGrid({ selectedCategory, onArticleClick }: Articl
             <div 
               key={article.id}
               onClick={() => onArticleClick(article.id)}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
               <div className="relative h-48 w-full">
                 <Image 
@@ -43,14 +43,14 @@ export default function ArticleGrid({ selectedCategory, onArticleClick }: Articl
               </div>
               
               <div className="p-4">
-                <span className="inline-block px-2 py-1 text-xs bg-gray-100 rounded-full mb-2">
+                <span className="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-full mb-2">
                   {article.category.charAt(0).toUpperCase() + article.category.slice(1)}
                 </span>
                 
-                <h3 className="text-lg font-bold mb-2 line-clamp-2">{article.title}</h3>
-                <p className="text-gray-600 mb-3 line-clamp-2">{article.excerpt}</p>
+                <h3 className="text-lg font-bold mb-2 line-clamp-2 dark:text-white">{article.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">{article.excerpt}</p>
                 
-                <div className="flex items-center text-xs text-gray-500">
+                <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
                   <div className="flex items-center mr-3">
                     <User className="w-3 h-3 mr-1" />
                     <span>{article.author}</span>
@@ -68,7 +68,7 @@ export default function ArticleGrid({ selectedCategory, onArticleClick }: Articl
             </div>
           ))
         ) : (
-          <div className="col-span-full py-8 text-center text-gray-500">
+          <div className="col-span-full py-8 text-center text-gray-500 dark:text-gray-400">
             No articles found in this category.
           </div>
         )}

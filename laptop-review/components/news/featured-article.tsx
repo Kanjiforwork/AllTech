@@ -15,7 +15,7 @@ export default function FeaturedArticle() {
   }
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
+    <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="relative h-[400px] w-full">
         <Image 
           src={featuredArticle.image} 
