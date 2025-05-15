@@ -63,7 +63,7 @@ interface SkeletonProps {
   
   export function ArticleSkeleton() {
     return (
-      <div className="overflow-hidden transition-all duration-200 bg-white border rounded-lg shadow-sm">
+      <div className="overflow-hidden transition-all duration-200 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm">
         <Skeleton variant="rectangle" height={192} />
         <div className="p-4">
           <Skeleton variant="text" width="30%" className="mb-2" />
