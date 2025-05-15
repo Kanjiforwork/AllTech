@@ -1,3 +1,4 @@
+"use client"
 import BasicInformation from "./basic-information"
 import HardwareSpecifications from "./hardware-specifications"
 import AdditionalFeatures from "./additional-features"
@@ -6,7 +7,6 @@ import RatingsReviews from "./ratings-reviews"
 import ProsCons from "./pros-cons"
 import DetailedAnalysis from "./detailed-analysis"
 
-"use client"
 
 import type React from "react"
 
@@ -183,7 +183,11 @@ export default function LaptopForm() {
             showValidation={showValidation}
           />
           <HardwareSpecifications
-
+            formData={formData}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            fieldErrors={fieldErrors}
+            showValidation={showValidation}
           />
         </div>
 
