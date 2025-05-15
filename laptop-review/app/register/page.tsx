@@ -105,7 +105,7 @@ export default function RegisterPage() {
           {/* Logo Section */}
           <div className="flex justify-center mb-6">
             <img
-              src="/logo.png"
+              src="/LapInsight_Logo.png"
               alt="Logo"
               className="w-16 h-16"
             />
