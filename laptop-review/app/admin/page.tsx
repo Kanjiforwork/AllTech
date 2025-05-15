@@ -16,8 +16,6 @@ import { ChevronLeft, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
-
-
 export default function LaptopForm() {
   const router = useRouter()
 
@@ -194,11 +192,7 @@ export default function LaptopForm() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <AdditionalFeatures
-           formData={formData}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            fieldErrors={fieldErrors}
-            showValidation={showValidation}
+
           />
           <BatteryLife
 
@@ -229,14 +223,5 @@ export default function LaptopForm() {
         </div>
       </form>
     </div>
-  )
-}
-
-// Bọc component bằng AdminProtection để bảo vệ truy cập
-export default function ProtectedAdminPage() {
-  return (
-    <AdminProtection>
-      <LaptopForm />
-    </AdminProtection>
   )
 }
