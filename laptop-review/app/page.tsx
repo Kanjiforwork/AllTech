@@ -8,7 +8,7 @@ import { laptopData } from "@/data/laptops";
 
 import LatestNews from "@/components/latest-news"
 import ArticleHighlights from "@/components/article-highlights"
-import FilterPanel from "@/components/filter-panel"
+import FilterPanel, { FilterState } from "@/components/filter-panel"
 //import ComparisonTool from "@/components/comparison-tool"
 import RecommendedSection from "@/components/recommended-section"
 //import FavoritesSection from "@/components/favorites-section"
@@ -16,6 +16,7 @@ import RecommendedSection from "@/components/recommended-section"
 import NotificationBell from "@/components/notification-bell"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
 import Header from "@/components/common/header"
+import Footer from "@/components/common/footer"
 
 export default function Home() {
   // State to track which laptop cards are visible
@@ -24,6 +25,26 @@ export default function Home() {
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrollCount, setScrollCount] = useState(0);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const maxScrollsAllowed = 5; // Maximum scrolls before login prompt
+  const scrollThrottleRef = useRef(false);
+  const hasShownPromptRef = useRef(false);
+  // State cho bộ lọc
+  const [filters, setFilters] = useState<FilterState>({
+    brands: [],
+    cpuTypes: [],
+    ramSizes: [],
+    storageOptions: [],
+    priceRanges: [],
+    displaySizes: [],
+    batteryLife: [],
+    features: [],
+  })
+
+  const [dataSort, setDataSort] = useState(laptopData)
+  const [filteredData, setFilteredData] = useState(laptopData)
+  const isLoggedIn = !!user;
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -60,6 +81,7 @@ export default function Home() {
     }
     
   }, [])
+  
   const handleLogout = () => {
     // Xóa thông tin người dùng khỏi localStorage và cập nhật trạng thái
     localStorage.removeItem("user");
@@ -67,39 +89,188 @@ export default function Home() {
     alert("Logged out successfully!");
   };
 
-  const [dataSort, setDataSort] = useState(laptopData)
-  
+  // Xử lý sắp xếp theo giá
   function handleSort(newListData: typeof laptopData) {
-    console.log(dataSort)
     setDataSort(newListData)
   }
+   useEffect(() => {
+    // Skip if user is logged in or prompt already shown in this session
+    if (isLoggedIn || hasShownPromptRef.current) return;
+    
+    const handleScroll = () => {
+      // Throttle scroll events
+      if (scrollThrottleRef.current) return;
+      
+      scrollThrottleRef.current = true;
+      setTimeout(() => {
+        scrollThrottleRef.current = false;
+      }, 1000); // Don't count scrolls more than once per second
+      
+      setScrollCount(prev => {
+        const newCount = prev + 1;
+        
+        // Show login prompt after max scrolls
+        if (newCount >= maxScrollsAllowed && !hasShownPromptRef.current) {
+          setShowLoginPrompt(true);
+          hasShownPromptRef.current = true;
+        }
+        
+        return newCount;
+      });
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isLoggedIn]);
+
+  // Reset when user logs in
+  useEffect(() => {
+    if (isLoggedIn) {
+      setShowLoginPrompt(false);
+    }
+  }, [isLoggedIn]);
+  
+  // Handle login prompt close
+  const handleCloseLoginPrompt = () => {
+    setShowLoginPrompt(false);
+  };
+  // Áp dụng bộ lọc
+  useEffect(() => {
+    let results = [...laptopData];
+    
+    // Áp dụng các bộ lọc
+    // Filter by brand
+    if (filters.brands.length > 0) {
+      results = results.filter(laptop => {
+        // Kiểm tra brand trong tên laptop
+        const laptopName = laptop.name.toLowerCase();
+        return filters.brands.some(brand => {
+          const brandLower = brand.toLowerCase();
+          return laptopName.includes(brandLower);
+        });
+      });
+    }
+    
+    // Filter by CPU
+    if (filters.cpuTypes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.cpuTypes.some((cpuType: string) => 
+          laptop.specs.includes(cpuType)
+        );
+      });
+    }
+    
+    // Filter by RAM
+    if (filters.ramSizes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.ramSizes.some((ramSize: string) => 
+          laptop.specs.includes(ramSize)
+        );
+      });
+    }
+    
+    // Filter by Storage
+    if (filters.storageOptions.length > 0) {
+      results = results.filter(laptop => {
+        return filters.storageOptions.some((storageOption: string) => 
+          laptop.specs.includes(storageOption.replace(' SSD', ''))
+        );
+      });
+    }
+    
+    // Filter by price range
+    if (filters.priceRanges.length > 0) {
+      results = results.filter(laptop => {
+        return filters.priceRanges.some((range: { min: number; max: number }) => 
+          laptop.salePrice >= range.min && laptop.salePrice <= range.max
+        );
+      });
+    }
+    
+    // Filter by display size
+    if (filters.displaySizes.length > 0) {
+      results = results.filter(laptop => {
+        // Kiểm tra kích thước màn hình dựa trên thông số specs
+        return filters.displaySizes.some(size => {
+          return laptop.specs.toLowerCase().includes(size.toLowerCase().replace('"', ''));
+        });
+      });
+    }
+    
+    // Set filtered data
+    setFilteredData(results);
+    setDataSort(results);
+  }, [filters]);
+  
+  // Handle filter changes from FilterPanel
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <Header />
-
+ {showLoginPrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="w-full max-w-md p-6 mx-4 bg-white rounded-lg shadow-xl dark:bg-gray-800">
+            <div className="text-center">
+              <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Continue Reading with LapInsight</h3>
+              
+              {/* Progress bar showing scrolls used */}
+              <div className="w-full h-2 mb-4 bg-gray-200 rounded-full">
+                <div 
+                  className="h-2 bg-blue-500 rounded-full" 
+                  style={{ width: `${(scrollCount / maxScrollsAllowed) * 100}%` }}
+                />
+              </div>
+              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                You've used {scrollCount}/{maxScrollsAllowed} free scrolls
+              </p>
+              
+              <p className="mb-6 text-gray-700 dark:text-gray-300">
+                Create a free account to get unlimited access to laptop reviews, comparison tools, and expert recommendations.
+              </p>
+              
+              <div className="flex flex-col gap-3">
+                <Link href="/login" className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                  Sign In
+                </Link>
+                <Link href="/register" className="w-full px-4 py-2 text-blue-600 bg-white border border-blue-600 rounded-md hover:bg-blue-50">
+                  Create Account
+                </Link>
+                <button 
+                  onClick={handleCloseLoginPrompt} 
+                  className="w-full px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                >
+                  Maybe Later
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* phần này đã đổi thành News */}
-      <main className="container px-4 py-8 mx-auto">
+       <main className={`container px-4 py-8 mx-auto transition-all ${showLoginPrompt ? 'filter blur-sm' : ''}`}>
         {/* Featured Section */}
         <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold"></h2>
+          <h2 className="mb-6 text-2xl font-bold dark:text-white"></h2>
           <LatestNews />
         </section>
 
         {/* Recommended Section */}
         <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Recommended For You</h2>
+          <h2 className="mb-6 text-2xl font-bold dark:text-white">Recommended For You</h2>
           <RecommendedSection />
         </section>
 
         {/* Filter and Results */}
         <div className="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <FilterPanel />
+            <FilterPanel onFilter={handleFilterChange} />
           </div>
           <div className="lg:col-span-3 relative z-0">
-            <BrowseLaptopsHeader laptopData={laptopData} handle={(newList: typeof laptopData) => handleSort(newList)}/>
+            <BrowseLaptopsHeader laptopData={laptopData} handle={handleSort} />
             {/* Laptop Grid with animation */}
           
             <div 
@@ -109,13 +280,13 @@ export default function Home() {
               {dataSort.map((laptop, index) => (
                 <div 
                   key={laptop.id} 
-                  className={`overflow-hidden bg-white border rounded-lg shadow-sm transition-all duration-500 ease-in-out ${
+                  className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out ${
                     visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                   } hover:shadow-md hover:-translate-y-1`}
                 >
                   <div className="p-4">
                     <Link href={laptop.detailLink}>
-                      <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 rounded-md relative">
+                      <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md relative">
                         <Image 
                           src={laptop.image || "/placeholder.svg?height=600&width=600"} 
                           alt={laptop.name || "Laptop image"}
@@ -132,13 +303,13 @@ export default function Home() {
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                       ))}
-                      <span className="ml-2 text-sm text-gray-600">{laptop.rating} ({laptop.reviews} reviews)</span>
+                      <span className="ml-2 text-sm text-gray-600 dark:text-gray-300">{laptop.rating} ({laptop.reviews} reviews)</span>
                     </div>
                     
                     <Link href={laptop.detailLink}>
-                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600">{laptop.name}</h3>
+                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600 dark:text-white dark:hover:text-blue-400">{laptop.name}</h3>
                     </Link>
-                    <p className="mb-2 text-sm text-gray-600">{laptop.specs}</p>
+                    <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">{laptop.specs}</p>
 
                     {/* Phần hiển thị giá */}
                     <div className="mt-2">
@@ -158,24 +329,24 @@ export default function Home() {
 
                       {/* Giá */}
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold">${laptop.salePrice}</span>
+                        <span className="text-xl font-bold dark:text-white">${laptop.salePrice}</span>
                         {laptop.originalPrice && (
-                          <span className="text-sm text-gray-500 line-through">${laptop.originalPrice}</span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400 line-through">${laptop.originalPrice}</span>
                         )}
                         {laptop.saveAmount && (
-                          <span className="text-sm font-medium text-green-600">Save ${laptop.saveAmount}</span>
+                          <span className="text-sm font-medium text-green-600 dark:text-green-400">Save ${laptop.saveAmount}</span>
                         )}
                       </div>
 
                       {/* Nút mua và so sánh */}
                       <div className="grid grid-cols-2 gap-2 mt-2">
-                        <Link href={`/compare-select?id=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
+                        <Link href={`/compare-select?id=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                           Compare
                         </Link>
-                        <Link href={laptop.detailLink} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
+                        <Link href={laptop.detailLink} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
@@ -192,7 +363,7 @@ export default function Home() {
             <div className="flex justify-center mt-10 mb-6">
               <Link
                 href="/all-laptops"
-                className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1"
+                className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
               >
                 Load More
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -203,47 +374,23 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Comparison Tool */}
-        {/* <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Compare Laptops</h2>
-          <ComparisonTool />
-        </section> */}
-
-
-
-        {/* Favorites Section */}
-        {/* <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Your Favorites</h2>
-          <FavoritesSection />
-        </section> */}
-
-
         {/* Article Highlights */}
         <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Latest Articles</h2>
+          <h2 className="mb-6 text-2xl font-bold dark:text-white">Latest Articles</h2>
           <ArticleHighlights />
         </section>
         <div className="flex justify-center mt-10 mb-6">
-          <button className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1">
+          <button className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700">
             View All Articles
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
         </div>
-
-        {/* Reviews Section */}
-        {/* <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Latest Reviews</h2>
-          <ReviewsSection />
-        </section> */}
+        
       </main>
 
-      <footer className="bg-gray-900 text-white py-5">
-        <div className="text-sm text-gray-400 text-center">
-          &copy; {new Date().getFullYear()} LapInsight. Made by 4Sheep.
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

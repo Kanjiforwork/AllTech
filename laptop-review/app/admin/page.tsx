@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
 
+
 export default function LaptopForm() {
   const router = useRouter()
 
@@ -224,5 +225,14 @@ export default function LaptopForm() {
         </div>
       </form>
     </div>
+  )
+}
+
+// Bọc component bằng AdminProtection để bảo vệ truy cập
+export default function ProtectedAdminPage() {
+  return (
+    <AdminProtection>
+      <LaptopForm />
+    </AdminProtection>
   )
 }

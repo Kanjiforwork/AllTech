@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, User as FirebaseUser } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, User as FirebaseUser, updatePassword } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -30,13 +30,20 @@ export class User {
   email: string;
   displayName: string;
   favoriteItems: string[];
+  role: string;
 
-  constructor(uid: string, email: string, displayName: string = '', favoriteItems: string[] = []) {
+  constructor(uid: string, email: string, displayName: string = '', favoriteItems: string[] = [], role: string = 'user') {
     this.uid = uid;
     this.email = email;
     this.displayName = displayName;
     this.favoriteItems = favoriteItems;
+    this.role = role;
   }
+
+    // Phương thức kiểm tra admin
+    isAdmin(): boolean {
+      return this.role === 'admin';
+    }
 
   // Save user to Firestore
   async saveToFirestore(): Promise<boolean> {
@@ -46,6 +53,7 @@ export class User {
         displayName: this.displayName,
         favoriteItems: this.favoriteItems,
         createdAt: new Date(),
+        role: this.role,
       }, { merge: true });
       return true;
     } catch (error) {
@@ -66,7 +74,8 @@ export class User {
           uid,
           data.email,
           data.displayName || '',
-          data.favoriteItems || []
+          data.favoriteItems || [],
+          data.role || 'user'
         );
       } else {
         console.log("No user document found!");
@@ -115,13 +124,27 @@ export class User {
   getFavorites(): string[] {
     return this.favoriteItems;
   }
+  
+  // Update user profile
+  async updateProfile(newDisplayName: string): Promise<boolean> {
+    try {
+      this.displayName = newDisplayName;
+      await updateDoc(doc(db, "users", this.uid), {
+        displayName: newDisplayName
+      });
+      return true;
+    } catch (error) {
+      console.error("Lỗi khi cập nhật thông tin người dùng:", error);
+      return false;
+    }
+  }
 }
 
 // Authentication helper functions
 export const createUserAccount = async (email: string, password: string): Promise<User> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const newUser = new User(userCredential.user.uid, email);
+    const newUser = new User(userCredential.user.uid, email, '', [], 'user');
     await newUser.saveToFirestore();
     return newUser;
   } catch (error) {
@@ -150,13 +173,47 @@ export const signInWithGoogle = async (): Promise<User | null> => {
     
     // If not, create a new user document
     if (!userObj) {
-      userObj = new User(user.uid, user.email || '', user.displayName || '');
+      userObj = new User(user.uid, user.email || '', user.displayName || '', [], 'user');
       await userObj.saveToFirestore();
     }
     
     return userObj;
   } catch (error) {
     console.error("Error signing in with Google:", error);
+    throw error;
+  }
+};
+
+// Hàm để đặt người dùng thành admin
+export const setUserAsAdmin = async (uid: string): Promise<boolean> => {
+  try {
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
+    
+    if (!userSnap.exists()) {
+      console.error("Không tìm thấy người dùng với ID:", uid);
+      return false;
+    }
+    
+    await updateDoc(userRef, {
+      role: "admin"
+    });
+    
+    console.log("Đã đặt người dùng thành admin:", uid);
+    return true;
+  } catch (error) {
+    console.error("Lỗi khi đặt người dùng thành admin:", error);
+    return false;
+  }
+};
+
+// Hàm đổi mật khẩu
+export const changeUserPassword = async (user: FirebaseUser, newPassword: string): Promise<boolean> => {
+  try {
+    await updatePassword(user, newPassword);
+    return true;
+  } catch (error) {
+    console.error("Lỗi khi đổi mật khẩu:", error);
     throw error;
   }
 };

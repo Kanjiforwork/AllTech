@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
 import TabPanel from "@/components/common/tab-panel";
 import Overview from "./sections/Overview";
 import Specifications from "./sections/Specifications";
@@ -16,14 +17,14 @@ type LaptopDetailPageProps = {
 
 export default function LaptopDetailPage({ laptop, similarLaptops = [] }: LaptopDetailPageProps) {
   return (
-    <div className="min-h-screen bg-gray-50 relative">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 relative">
       <Header />
       <main className="container mx-auto px-4 py-8">
         {/* Overview Section */}
         <Overview laptop={laptop} />
         
         {/* Tabs Section */}
-        <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-800 p-4 sm:p-6 mb-8">
           <TabPanel>
             <TabPanel.Tab label="Specifications">
               <Specifications laptop={laptop} />
@@ -54,6 +55,8 @@ export default function LaptopDetailPage({ laptop, similarLaptops = [] }: Laptop
 
       {/* Floating Comparison Button */}
       <ComparisonButton currentLaptopId={laptop.id} />
+      
+      <Footer />
     </div>
   );
 }

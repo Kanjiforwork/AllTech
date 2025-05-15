@@ -7,6 +7,7 @@ import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import { getLaptopById } from "@/mock_data/data"
 import Header from "@/components/common/header"
+import Footer from "@/components/common/footer"
 import RatingBar from "@/components/common/rating-bar"
 import ComparisonOverview from "@/components/comparison/ComparisonOverview"
 import ImportanceAdjuster from "@/components/comparison/ImportanceAdjuster"
@@ -60,22 +61,22 @@ export default function ComparisonPage() {
 
   if (laptops.length < 2) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Header />
         <main className="container mx-auto px-4 py-8">
           <div className="text-center py-12">
-            <h1 className="text-2xl font-bold mb-4">Unable to Compare Laptops</h1>
-            <p className="mb-4">Please make sure you're using the correct URL format:</p>
-            <code className="block bg-gray-100 p-2 rounded mb-4">/compare/laptop-id-1-vs-laptop-id-2</code>
-            <p className="mb-4">Available laptops for comparison:</p>
-            <ul className="space-y-2 mb-4">
+            <h1 className="text-2xl font-bold mb-4 dark:text-white">Unable to Compare Laptops</h1>
+            <p className="mb-4 dark:text-gray-300">Please make sure you're using the correct URL format:</p>
+            <code className="block bg-gray-100 dark:bg-gray-800 p-2 rounded mb-4 dark:text-gray-300">/compare/laptop-id-1-vs-laptop-id-2</code>
+            <p className="mb-4 dark:text-gray-300">Available laptops for comparison:</p>
+            <ul className="space-y-2 mb-4 dark:text-gray-300">
               <li>lenovo-ideapad-5-pro-16</li>
               <li>asus-rog-zephyrus-g14</li>
               <li>dell-xps-15</li>
               <li>hp-spectre-x360</li>
               <li>acer-nitro-5</li>
             </ul>
-            <Link href="/" className="text-blue-600 hover:underline mt-4 inline-block">
+            <Link href="/" className="text-blue-600 dark:text-blue-400 hover:underline mt-4 inline-block">
               Return to home
             </Link>
           </div>
@@ -128,17 +129,17 @@ export default function ComparisonPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       <main className="container mx-auto px-4 py-8">
         <div className="mb-6">
-          <Link href="/" className="inline-flex items-center text-blue-600 hover:underline">
+          <Link href="/" className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
             <ChevronLeft className="w-4 h-4 mr-1" />
             Back to Home
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold mb-8 text-center">Laptop Comparison</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center dark:text-white">Laptop Comparison</h1>
 
         {/* Overview Section */}
         <ComparisonOverview laptops={laptops} />
@@ -146,8 +147,8 @@ export default function ComparisonPage() {
         {/* Key Differences */}
         <KeyDifferences laptops={laptops} keyDifferences={keyDifferences} />
 
-                {/* Battery Comparison Chart */}
-                <div className="mb-8">
+        {/* Battery Comparison Chart */}
+        <div className="mb-8">
           <BatteryComparisonChart 
             items={laptops.map(laptop => ({
               id: laptop.id,
@@ -175,22 +176,19 @@ export default function ComparisonPage() {
           />
         </div>
 
-
         {/* Adjust Importance section */}
         <ImportanceAdjuster laptops={laptops} weights={weights} setWeights={setWeights} />
 
-        
-
         {/* Value for Money */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-6">Value for Money</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+          <h2 className="text-2xl font-bold mb-6 dark:text-white">Value for Money</h2>
 
           <div className="grid grid-cols-2 gap-8">
             {laptops.map((laptop, index) => (
               <div key={laptop.id} className="text-center">
-                <div className="text-2xl font-bold mb-2">{laptop.price}</div>
-                <div className="text-lg mb-4">
-                  <span className="font-medium">
+                <div className="text-2xl font-bold mb-2 dark:text-white">{laptop.price}</div>
+                <div className="text-lg mb-4 dark:text-gray-300">
+                  <span className="font-medium dark:text-gray-200">
                     ${(Number.parseInt(laptop.price.replace("$", "").replace(",", "")) / 10).toFixed(2)}
                   </span>{" "}
                   per point
@@ -202,8 +200,8 @@ export default function ComparisonPage() {
         </div>
 
         {/* Detailed Comparison */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-6">Detailed Comparison</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+          <h2 className="text-2xl font-bold mb-6 dark:text-white">Detailed Comparison</h2>
 
           <ComparisonTable laptops={laptops} title="Case" specs={caseSpecs} />
           <ComparisonTable laptops={laptops} title="Display" specs={displaySpecs} />
@@ -214,17 +212,17 @@ export default function ComparisonPage() {
         </div>
 
         {/* User Voting */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-6">Which one would you choose?</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+          <h2 className="text-2xl font-bold mb-6 dark:text-white">Which one would you choose?</h2>
 
           <div className="grid grid-cols-2 gap-8">
             {laptops.map((laptop) => (
               <div key={laptop.id} className="text-center">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg w-full">
+                <button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg w-full">
                   Vote for {laptop.name}
                 </button>
-                <div className="mt-2 text-sm text-gray-500">
-                  <span className="font-medium">1,245</span> users voted for this laptop
+                <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-medium dark:text-gray-300">1,245</span> users voted for this laptop
                 </div>
               </div>
             ))}
@@ -234,90 +232,14 @@ export default function ComparisonPage() {
         <div className="text-center mb-8">
           <Link
             href="/"
-            className="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-6 rounded"
+            className="inline-block bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-2 px-6 rounded"
           >
             Back to Home
           </Link>
         </div>
       </main>
 
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-bold mb-4">AllTech</h3>
-              <p className="text-gray-400">
-                Your trusted source for laptop reviews, comparisons, and the best deals online.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Categories</h4>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Gaming Laptops
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Business Laptops
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Student Laptops
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Budget Laptops
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Terms of Service
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Newsletter</h4>
-              <p className="text-gray-400 mb-2">Subscribe for the latest deals and reviews</p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="px-3 py-2 text-gray-900 rounded-l focus:outline-none"
-                />
-                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r">Subscribe</button>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2023 AllTech. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
