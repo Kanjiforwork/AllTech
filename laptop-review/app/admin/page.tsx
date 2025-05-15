@@ -192,7 +192,11 @@ export default function LaptopForm() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <AdditionalFeatures
-
+            formData={formData}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            fieldErrors={fieldErrors}
+            showValidation={showValidation}
           />
           <BatteryLife
 
