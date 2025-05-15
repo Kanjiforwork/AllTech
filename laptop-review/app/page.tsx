@@ -30,6 +30,7 @@ export default function Home() {
   const maxScrollsAllowed = 5; // Maximum scrolls before login prompt
   const scrollThrottleRef = useRef(false);
   const hasShownPromptRef = useRef(false);
+  
   // State cho bộ lọc
   const [filters, setFilters] = useState<FilterState>({
     brands: [],

@@ -123,7 +123,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg dark:bg-gray-800">
           <div className="flex justify-center mb-6">
             <img
-              src="/logo.png"
+              src="/LapInsight_Logo.png"
               alt="Logo"
               className="w-16 h-16"
             />
