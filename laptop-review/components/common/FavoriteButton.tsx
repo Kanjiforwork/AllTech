@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Heart } from 'lucide-react'
 import { User } from '@/lib/firebase'
+import { useToast } from "@/hooks/use-toast"
 
 interface FavoriteButtonProps {
   laptopId: string | number
@@ -20,71 +21,105 @@ export default function FavoriteButton({
   onToggleFavorite
 }: FavoriteButtonProps) {
   const [isFavorite, setIsFavorite] = useState(initialFavorite)
+  const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
+  const [userObj, setUserObj] = useState<User | null>(null)
+  const { toast } = useToast()
 
   // Lấy thông tin người dùng từ localStorage khi component được render
   useEffect(() => {
     const userFromStorage = localStorage.getItem('user')
     if (userFromStorage) {
-      setUser(JSON.parse(userFromStorage))
-    }
-
-    // Kiểm tra xem laptop đã được yêu thích chưa
-    const checkFavoriteStatus = async () => {
-      if (!userFromStorage) return
-      
       const userData = JSON.parse(userFromStorage)
-      try {
-        const userObj = await User.getFromFirestore(userData.uid)
-        if (userObj) {
-          const isFav = userObj.isFavorite(String(laptopId))
-          setIsFavorite(isFav)
-        }
-      } catch (error) {
-        console.error("Lỗi khi kiểm tra trạng thái yêu thích:", error)
-      }
-    }
+      setUser(userData)
 
-    checkFavoriteStatus()
+      // Khởi tạo đối tượng User từ dữ liệu local
+      const initUserObj = async () => {
+        try {
+          const userFromFirestore = await User.getFromFirestore(userData.uid)
+          if (userFromFirestore) {
+            setUserObj(userFromFirestore)
+            const isFav = userFromFirestore.isFavorite(String(laptopId))
+            setIsFavorite(isFav)
+          }
+        } catch (error) {
+          console.error("Lỗi khi lấy thông tin người dùng:", error)
+        }
+      }
+
+      initUserObj()
+    }
   }, [laptopId])
 
   const toggleFavorite = async () => {
     if (!user) {
-      alert('Vui lòng đăng nhập để sử dụng tính năng yêu thích!')
+      toast({
+        title: "Cần đăng nhập",
+        description: "Vui lòng đăng nhập để sử dụng tính năng yêu thích!",
+        variant: "destructive",
+      })
       return
     }
 
+    if (isLoading) return // Ngăn người dùng click nhanh nhiều lần
+    setIsLoading(true)
+
     try {
-      const userObj = await User.getFromFirestore(user.uid)
-      if (!userObj) return
-
-      const newFavoriteState = !isFavorite
-
-      if (newFavoriteState) {
-        await userObj.addFavoriteItem(String(laptopId))
-      } else {
-        await userObj.removeFavoriteItem(String(laptopId))
+      // Sử dụng userObj từ state nếu đã có, nếu không thì lấy từ Firestore
+      let currentUserObj = userObj
+      if (!currentUserObj) {
+        currentUserObj = await User.getFromFirestore(user.uid)
+        setUserObj(currentUserObj)
       }
 
-      // Cập nhật trạng thái hiển thị
+      if (!currentUserObj) {
+        setIsLoading(false)
+        return
+      }
+
+      // Cập nhật UI trước để tăng trải nghiệm người dùng
+      const newFavoriteState = !isFavorite
       setIsFavorite(newFavoriteState)
+
+      // Cập nhật dữ liệu Firestore
+      if (newFavoriteState) {
+        await currentUserObj.addFavoriteItem(String(laptopId))
+      } else {
+        await currentUserObj.removeFavoriteItem(String(laptopId))
+      }
       
       // Gọi callback nếu được cung cấp
       if (onToggleFavorite) {
         onToggleFavorite(newFavoriteState)
       }
       
-      // Cập nhật trang favorite (nếu người dùng đang ở trang favorite)
-      // và thông báo cho người dùng biết
+      // Hiển thị toast thông báo
+      toast({
+        title: newFavoriteState ? "Đã thêm vào yêu thích" : "Đã xóa khỏi yêu thích",
+        description: newFavoriteState 
+          ? "Sản phẩm đã được thêm vào danh sách yêu thích" 
+          : "Sản phẩm đã được xóa khỏi danh sách yêu thích",
+        variant: "default",
+      })
+
+      // Refresh trang favorite nếu đang ở đó và đã xóa item
       if (window.location.pathname.includes('/favorite') && !newFavoriteState) {
+        // Thay vì reload toàn bộ trang, có thể sử dụng context/state để cập nhật
+        // Nhưng hiện tại sẽ dùng reload để đảm bảo tương thích
         window.location.reload()
-      } else if (newFavoriteState) {
-        alert('Đã thêm vào danh sách yêu thích')
-      } else {
-        alert('Đã xóa khỏi danh sách yêu thích')
       }
     } catch (error) {
       console.error("Lỗi khi cập nhật trạng thái yêu thích:", error)
+      // Phục hồi trạng thái UI nếu xảy ra lỗi
+      setIsFavorite(isFavorite)
+      
+      toast({
+        title: "Lỗi cập nhật",
+        description: "Không thể cập nhật trạng thái yêu thích. Vui lòng thử lại sau.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -95,8 +130,9 @@ export default function FavoriteButton({
         e.stopPropagation()
         toggleFavorite()
       }}
-      className={`transition-colors duration-300 ${className}`}
+      className={`transition-colors duration-300 ${className} ${isLoading ? 'opacity-50 cursor-wait' : ''}`}
       aria-label={isFavorite ? "Xóa khỏi mục yêu thích" : "Thêm vào yêu thích"}
+      disabled={isLoading}
     >
       <Heart 
         size={size} 

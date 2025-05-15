@@ -10,18 +10,18 @@ interface AnalysisSectionProps {
 
 export default function AnalysisSection({ title, score, image, children }: AnalysisSectionProps) {
   return (
-    <div className="bg-white rounded-lg shadow p-5">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-700 p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
+        <h3 className="text-xl font-semibold text-gray-800 dark:text-white">{title}</h3>
         {score && (
-          <div className="text-white text-xs px-2.5 py-1 rounded-full font-bold bg-blue-600">
+          <div className="text-white text-xs px-2.5 py-1 rounded-full font-bold bg-blue-600 dark:bg-blue-500">
             {score.toFixed(1)}/10
           </div>
         )}
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-4">
+        <div className="space-y-4 text-gray-800 dark:text-gray-300">
           {children}
         </div>
         

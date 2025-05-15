@@ -1,4 +1,5 @@
 import { Skeleton, CardSkeleton, ArticleSkeleton } from "@/components/skeleton";
+import Footer from "@/components/common/footer";
 
 export default function Loading() {
   return (
@@ -113,25 +114,7 @@ export default function Loading() {
         </div>
       </main>
 
-      {/* Footer Skeleton */}
-      <footer className="py-8 bg-gray-900">
-        <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i}>
-                <Skeleton variant="text" width={120} className="mb-4 bg-gray-700" />
-                <Skeleton variant="text" className="mb-2 bg-gray-700" />
-                <Skeleton variant="text" width="80%" className="mb-2 bg-gray-700" />
-                <Skeleton variant="text" width="90%" className="mb-2 bg-gray-700" />
-                <Skeleton variant="text" width="70%" className="bg-gray-700" />
-              </div>
-            ))}
-          </div>
-          <div className="pt-8 mt-8 border-t border-gray-800">
-            <Skeleton variant="text" width={200} className="mx-auto bg-gray-700" />
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

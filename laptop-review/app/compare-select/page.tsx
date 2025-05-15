@@ -5,15 +5,16 @@ import Link from "next/link"
 import Image from "next/image"
 import { SearchIcon, Heart } from "lucide-react"
 import { laptopData } from "@/data/laptops"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 
-import FilterPanel from "@/components/filter-panel"
+import FilterPanel, { FilterState } from "@/components/filter-panel"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
 import NotificationBell from "@/components/notification-bell"
 import ComparisonStickyBar from "@/components/comparison/comparison-sticky-bar"
 import LaptopCardSelectable from "@/components/comparison/laptop-card-selectable"
 import QuickViewModal from "@/components/comparison/quick-view-modal"
 import Header from "@/components/common/header"
+import Footer from "@/components/common/footer"
 
 export default function CompareSelectPage() {
   // State to track which laptop cards are visible
@@ -26,7 +27,20 @@ export default function CompareSelectPage() {
   const [dataSort, setDataSort] = useState(laptopData)
   const [quickViewLaptop, setQuickViewLaptop] = useState<number | string | null>(null)
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
+  const router = useRouter()
   const searchParams = useSearchParams()
+  
+  // State cho bộ lọc
+  const [filters, setFilters] = useState<FilterState>({
+    brands: [],
+    cpuTypes: [],
+    ramSizes: [],
+    storageOptions: [],
+    priceRanges: [],
+    displaySizes: [],
+    batteryLife: [],
+    features: [],
+  })
 
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
@@ -83,6 +97,76 @@ export default function CompareSelectPage() {
     setDataSort(newListData)
   }
 
+  // Áp dụng bộ lọc
+  useEffect(() => {
+    if (filters.brands.length === 0 && 
+        filters.cpuTypes.length === 0 && 
+        filters.ramSizes.length === 0 && 
+        filters.storageOptions.length === 0 && 
+        filters.priceRanges.length === 0 && 
+        filters.displaySizes.length === 0 && 
+        filters.batteryLife.length === 0 && 
+        filters.features.length === 0) {
+      setDataSort(laptopData);
+      return;
+    }
+    
+    let results = [...laptopData];
+    
+    // Filter by brand
+    if (filters.brands.length > 0) {
+      results = results.filter(laptop => {
+        const laptopBrands = filters.brands.map((brand: string) => brand.toLowerCase());
+        const laptopBrand = laptop.name.split(' ')[0].toLowerCase();
+        return laptopBrands.includes(laptopBrand);
+      });
+    }
+    
+    // Filter by CPU
+    if (filters.cpuTypes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.cpuTypes.some((cpuType: string) => 
+          laptop.specs.includes(cpuType)
+        );
+      });
+    }
+    
+    // Filter by RAM
+    if (filters.ramSizes.length > 0) {
+      results = results.filter(laptop => {
+        return filters.ramSizes.some((ramSize: string) => 
+          laptop.specs.includes(ramSize)
+        );
+      });
+    }
+    
+    // Filter by Storage
+    if (filters.storageOptions.length > 0) {
+      results = results.filter(laptop => {
+        return filters.storageOptions.some((storageOption: string) => 
+          laptop.specs.includes(storageOption.replace(' SSD', ''))
+        );
+      });
+    }
+    
+    // Filter by price range
+    if (filters.priceRanges.length > 0) {
+      results = results.filter(laptop => {
+        return filters.priceRanges.some((range: { min: number; max: number }) => 
+          laptop.salePrice >= range.min && laptop.salePrice <= range.max
+        );
+      });
+    }
+    
+    // Set filtered data
+    setDataSort(results);
+  }, [filters]);
+
+  // Handle filter changes
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
+  };
+
   const toggleLaptopSelection = (laptopId: number | string) => {
     if (selectedLaptops.includes(laptopId)) {
       // Remove from selection
@@ -117,21 +201,21 @@ export default function CompareSelectPage() {
     : null
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <Header />
 
       <main className="container px-4 py-8 mx-auto">
         {/* Page Header */}
         <div className="mb-10 text-center">
-          <h1 className="mb-2 text-3xl font-bold">Chọn Laptop để So sánh</h1>
-          <p className="text-gray-600">Chọn tối đa 2 sản phẩm để so sánh chi tiết</p>
+          <h1 className="mb-2 text-3xl font-bold dark:text-white">Chọn Laptop để So sánh</h1>
+          <p className="text-gray-600 dark:text-gray-300">Chọn tối đa 2 sản phẩm để so sánh chi tiết</p>
         </div>
 
         {/* Filter and Results */}
         <div className="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <FilterPanel />
+            <FilterPanel onFilter={handleFilterChange} />
           </div>
           <div className="lg:col-span-3">
             <div className="flex items-center justify-between mb-6">
@@ -140,7 +224,7 @@ export default function CompareSelectPage() {
                 handle={(newList: typeof laptopData) => handleSort(newList)}
               />
               
-              <div className="px-4 py-2 ml-4 text-sm font-medium bg-gray-100 rounded-lg">
+              <div className="px-4 py-2 ml-4 text-sm font-medium bg-gray-100 dark:bg-gray-800 dark:text-white rounded-lg">
                 Đã chọn: {selectedLaptops.length}/2 sản phẩm
               </div>
             </div>
@@ -163,119 +247,57 @@ export default function CompareSelectPage() {
               ))}
             </div>
 
-            {/* Nút Load More */}
-            <div className="flex justify-center mt-10 mb-6">
-              <Link
-                href="/all-laptops"
-                className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1"
+            {/* Nút Compare */}
+            <div className="mt-10 text-center">
+              <button 
+                onClick={() => {
+                  if (selectedLaptops.length === 2) {
+                    // Chuyển đến trang so sánh
+                    const ids = selectedLaptops.join('-vs-')
+                    router.push(`/compare/${ids}`)
+                  }
+                }}
+                disabled={selectedLaptops.length < 2} 
+                className={`flex items-center justify-center px-6 py-3 mx-auto space-x-2 text-base font-medium ${
+                  selectedLaptops.length === 2 
+                    ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800" 
+                    : "bg-gray-300 text-gray-600 cursor-not-allowed dark:bg-gray-700 dark:text-gray-400"
+                } rounded-lg transition-colors`}
               >
-                Load More
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <span>So sánh sản phẩm</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Quick View Modal */}
+        {currentQuickViewLaptop && (
+          <QuickViewModal
+            laptop={currentQuickViewLaptop}
+            isOpen={isQuickViewOpen}
+            onClose={closeQuickView}
+            onAddToCompare={toggleLaptopSelection}
+            isInCompareList={selectedLaptops.includes(currentQuickViewLaptop.id)}
+            isCompareDisabled={selectedLaptops.length >= 2}
+          />
+        )}
       </main>
 
-      {/* Sticky bottom bar for selected laptops */}
-      <ComparisonStickyBar
-        selectedIds={selectedLaptops}
-        laptopData={laptopData}
-        onRemove={toggleLaptopSelection}
-        onClearAll={clearSelection}
-      />
+      {/* Comparison Sticky Bar */}
+      {selectedLaptops.length > 0 && (
+        <ComparisonStickyBar
+          selectedIds={selectedLaptops}
+          laptopData={laptopData}
+          onRemove={toggleLaptopSelection}
+          onClearAll={clearSelection}
+          maxSelections={2}
+        />
+      )}
 
-      {/* Quick View Modal */}
-      <QuickViewModal
-        laptop={currentQuickViewLaptop}
-        isOpen={isQuickViewOpen}
-        onClose={closeQuickView}
-        onAddToCompare={toggleLaptopSelection}
-        isInCompareList={quickViewLaptop !== null ? selectedLaptops.includes(quickViewLaptop) : false}
-        isCompareDisabled={selectedLaptops.length >= 2}
-      />
-
-      <footer className="py-8 text-white bg-gray-900">
-        <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            <div>
-              <h3 className="mb-4 text-lg font-bold">TechReview</h3>
-              <p className="text-sm text-gray-400">
-                Your trusted source for laptop reviews and comparisons since 2023.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Categories</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Gaming Laptops
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Ultrabooks
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Budget Laptops
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Business Laptops
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Company</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase">Subscribe</h4>
-              <p className="mb-4 text-sm text-gray-400">Stay updated with the latest reviews and news.</p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="w-full px-3 py-2 text-sm text-black bg-white rounded-l-md focus:outline-none"
-                />
-                <button className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-r-md hover:bg-gray-600">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="pt-8 mt-8 text-sm text-center text-gray-400 border-t border-gray-800">
-            &copy; {new Date().getFullYear()} TechReview. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 } 

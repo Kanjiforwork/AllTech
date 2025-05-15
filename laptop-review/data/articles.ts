@@ -143,6 +143,7 @@ export const articles: Article[] = [
   }
 ];
 
+
 export const getFeaturedArticle = (): Article | undefined => {
   return articles.find(article => article.isFeatured);
 };
