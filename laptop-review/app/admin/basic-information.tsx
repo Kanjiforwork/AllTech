@@ -9,7 +9,27 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 
-export default function BasicInformation() {
+interface BasicInformationProps {
+  formData: {
+    laptopName: string
+    brand: string
+    operatingSystem: string
+    weight: string
+    dimensions: string
+  }
+  onChange: (field: string, value: string) => void
+  onFocus: (field: string) => void
+  fieldErrors: Record<string, boolean>
+  showValidation: boolean
+}
+
+export default function BasicInformation({
+  formData,
+  onChange,
+  onFocus,
+  fieldErrors,
+  showValidation,
+}: BasicInformationProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,16 +44,32 @@ export default function BasicInformation() {
       <h2 className="text-xl font-semibold">Basic Information</h2>
       <div className="space-y-4">
         <div>
-          <Label htmlFor="laptop-name">Laptop Name</Label>
-          <Input id="laptop-name" placeholder="e.g. MacBook Pro 16" />
+          <Label htmlFor="laptop-name" className="flex items-center gap-1">
+            Laptop Name <span className="text-red-500">*</span>
+          </Label>
+          <Input
+            id="laptop-name"
+            placeholder="e.g. MacBook Pro 16"
+            value={formData.laptopName}
+            onChange={(e) => onChange("laptopName", e.target.value)}
+            onFocus={() => onFocus("laptopName")}
+            className={showValidation && fieldErrors.laptopName ? "border-red-500" : ""}
+          />
+          {showValidation && fieldErrors.laptopName && (
+            <p className="text-sm text-red-500 mt-1">Laptop name is required</p>
+          )}
         </div>
 
         <div>
           <Label htmlFor="brand" className="flex items-center gap-1">
             Brand <span className="text-red-500">*</span>
           </Label>
-          <Select>
-            <SelectTrigger id="brand">
+          <Select
+            value={formData.brand}
+            onValueChange={(value) => onChange("brand", value)}
+            onOpenChange={() => onFocus("brand")}
+          >
+            <SelectTrigger id="brand" className={showValidation && fieldErrors.brand ? "border-red-500" : ""}>
               <SelectValue placeholder="Select Brand" />
             </SelectTrigger>
             <SelectContent>
@@ -50,21 +86,40 @@ export default function BasicInformation() {
               <SelectItem value="other">Other</SelectItem>
             </SelectContent>
           </Select>
+          {showValidation && fieldErrors.brand && <p className="text-sm text-red-500 mt-1">Brand is required</p>}
         </div>
 
         <div>
           <Label htmlFor="os">Operating System</Label>
-          <Input id="os" placeholder="e.g. Windows 11 Home" />
+          <Input
+            id="os"
+            placeholder="e.g. Windows 11 Home"
+            value={formData.operatingSystem}
+            onChange={(e) => onChange("operatingSystem", e.target.value)}
+            onFocus={() => onFocus("operatingSystem")}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Label htmlFor="weight">Weight</Label>
-            <Input id="weight" placeholder="e.g. 2.1 kg" />
+            <Input
+              id="weight"
+              placeholder="e.g. 2.1 kg"
+              value={formData.weight}
+              onChange={(e) => onChange("weight", e.target.value)}
+              onFocus={() => onFocus("weight")}
+            />
           </div>
           <div>
             <Label htmlFor="dimensions">Dimensions</Label>
-            <Input id="dimensions" placeholder="e.g. 355.7 × 248.1 × 16.8 mm" />
+            <Input
+              id="dimensions"
+              placeholder="e.g. 355.7 × 248.1 × 16.8 mm"
+              value={formData.dimensions}
+              onChange={(e) => onChange("dimensions", e.target.value)}
+              onFocus={() => onFocus("dimensions")}
+            />
           </div>
         </div>
 
