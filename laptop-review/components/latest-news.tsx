@@ -6,6 +6,19 @@ import { Calendar, User, Clock, ChevronLeft, ChevronRight } from "lucide-react"
 import { newsService } from "../services/firebaseServices"
 import NewsModal from "./news-modal"
 
+// Define the FirestoreNewsItem interface
+interface FirestoreNewsItem {
+  id: string;
+  title?: string;
+  image?: string;
+  excerpt?: string;
+  content?: string;
+  author?: string;
+  date?: string;
+  readTime?: string;
+  createdAt?: any; // Firestore timestamp
+}
+
 // Define the NewsItem interface
 interface NewsItem {
   id?: string;
@@ -37,12 +50,19 @@ export default function LatestNews() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const fetchedNews = await newsService.getLatest(3);
+        const fetchedNews = await newsService.getLatest(3) as FirestoreNewsItem[];
         
         // Add a default content if none exists
         const processedNews = fetchedNews.map(news => ({
-          ...news,
-          content: news.content || `<p>${news.excerpt}</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl.</p><p>Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl.</p>`
+          id: news.id,
+          title: news.title || '',
+          image: news.image || '',
+          excerpt: news.excerpt || '',
+          content: news.content || `<p>${news.excerpt || ''}</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl.</p><p>Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquet nisl, nec ultricies nisl nisl nec nisl.</p>`,
+          author: news.author || 'Unknown Author',
+          date: news.date || new Date().toLocaleDateString(),
+          readTime: news.readTime || '5 min read',
+          createdAt: news.createdAt
         }));
         
         setNewsItems(processedNews);
@@ -208,7 +228,7 @@ export default function LatestNews() {
           }`}
           aria-label="Previous slide"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-200" />
         </button>
 
         {/* Right arrow navigation */}
@@ -222,7 +242,7 @@ export default function LatestNews() {
           }`}
           aria-label="Next slide"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-200" />
         </button>
 
         <div 
@@ -244,9 +264,9 @@ export default function LatestNews() {
                 key={item.id} 
                 className="relative w-full flex-shrink-0 cursor-pointer"
               >
-                <div className="relative h-[400px] w-full bg-gray-200">
+                <div className="relative h-[400px] w-full bg-gray-200 dark:bg-gray-700">
                   <Image src={item.image} alt={item.title} fill className="object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent dark:from-black/80" />
                   <div className="absolute bottom-0 left-0 p-6 text-white">
                     <h3 className="mb-3 text-2xl font-bold">{item.title}</h3>
                     <p className="mb-4 text-gray-200 line-clamp-2 max-w-3xl">{item.excerpt}</p>
