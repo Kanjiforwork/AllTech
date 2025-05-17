@@ -186,15 +186,15 @@ export const laptops = [
     battery: "52.6Wh, Up to 18 hours",
   },
   descriptions: {
-    performance: "Chip Apple M3 xử lý mọi tác vụ hàng ngày một cách mượt mà và nhanh chóng. Với 8 nhân CPU và 10 nhân GPU, chiếc máy này dễ dàng đáp ứng nhu cầu làm việc văn phòng, lướt web và chỉnh sửa ảnh cơ bản. Hiệu năng đa nhiệm ấn tượng cho một chiếc laptop siêu mỏng nhẹ không quạt.",
-    battery: "Pin 52.6Wh mang lại thời lượng sử dụng đáng kinh ngạc. Trong thử nghiệm thực tế, máy có thể hoạt động liên tục 15 giờ làm việc thông thường và lướt web. Khi xem video, thời lượng có thể kéo dài đến 16.5 giờ. Ngay cả khi thực hiện các tác vụ nặng, máy vẫn có thể duy trì hoạt động trong hơn 6 giờ.",
-    design: "Thiết kế siêu mỏng nhẹ với khung nhôm nguyên khối sang trọng. Cân nặng chỉ 1.24kg và độ dày 11.3mm giúp MacBook Air trở thành lựa chọn lý tưởng cho người hay di chuyển. Màu Midnight đẹp mắt với lớp phủ chống vân tay hiệu quả.",
-    display: "Màn hình Liquid Retina 13.6 inch với độ phân giải 2560x1664 mang lại hình ảnh sắc nét và màu sắc sống động. Độ phủ màu đạt 100% dải màu DCI-P3, thích hợp cho công việc sáng tạo cơ bản. Độ sáng 500 nit đủ để sử dụng trong nhiều điều kiện ánh sáng, kể cả ngoài trời.",
-    keyboard: "Bàn phím Magic Keyboard cho trải nghiệm gõ thoải mái với hành trình phím hợp lý và phản hồi tốt. Đèn nền đều và sáng, phù hợp để làm việc trong môi trường thiếu sáng. Cảm biến vân tay Touch ID tích hợp mang lại khả năng đăng nhập nhanh chóng và bảo mật.",
-    trackpad: "Trackpad Force Touch rộng rãi với bề mặt kính mịn màng, hỗ trợ đầy đủ các cử chỉ đa điểm của macOS. Cảm giác nhấn chính xác và đều khắp bề mặt, mang lại trải nghiệm điều khiển con trỏ mượt mà và chính xác.",
-    speakers: "Hệ thống bốn loa với hỗ trợ Dolby Atmos mang lại âm thanh phong phú và sâu, ấn tượng cho một thiết bị mỏng nhẹ. Dải âm cân bằng tốt với âm trung rõ ràng, phù hợp để thưởng thức âm nhạc và xem phim.",
-    webcam: "Camera FaceTime HD 1080p cho chất lượng hình ảnh rõ nét trong các cuộc gọi video, với khả năng xử lý tốt trong điều kiện ánh sáng khác nhau. Hệ thống ba microphone với khả năng định hướng và lọc tiếng ồn mang lại chất lượng âm thanh rõ ràng khi gọi.",
-    ports: "Thiết kế tối giản với hai cổng Thunderbolt 4/USB-C đa năng và jack cắm tai nghe 3.5mm. Mặc dù hạn chế về số lượng cổng kết nối, nhưng tốc độ truyền dữ liệu nhanh qua Thunderbolt và khả năng kết nối với các thiết bị ngoại vi thông qua bộ chuyển đổi vẫn đảm bảo tính linh hoạt."
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
   },
   benchmarks: {
     gaming: 6.5,
@@ -680,7 +680,7 @@ export const laptops = [
   ],
 },
 
-
+/// Microsoft Surface Laptop Studio
   {
     id: "microsoft-surface-laptop-studio",
     name: "Microsoft Surface Laptop Studio",
@@ -696,16 +696,16 @@ export const laptops = [
       battery: "58Wh, Up to 18 hours",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 6.8,
       productivity: 8.3,
@@ -849,7 +849,7 @@ export const laptops = [
       "Battery life doesn't match Microsoft's claims",
     ],
   },
-
+ // Acer Swift 5
   {
     id: "acer-swift-5",
     name: "Acer Swift 5",
@@ -865,16 +865,16 @@ export const laptops = [
       battery: "59Wh, Up to 14 hours",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 4.5,
       productivity: 8.5,
@@ -1018,6 +1018,7 @@ export const laptops = [
       "Keyboard feels shallow compared to competitors",
     ],
   },
+  // Lenovo IdeaPad 5 Pro 16
     {
       id: "lenovo-ideapad-5-pro-16",
       name: "Lenovo IdeaPad 5 Pro 16",
@@ -1033,16 +1034,17 @@ export const laptops = [
         battery: "75Wh, Up to 12 hours",
       },
       descriptions: {
-        performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-        battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-        design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-        display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-        keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-        trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-        speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-        webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-        ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-      },
+
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
       benchmarks: {
         gaming: 7.5,
         productivity: 8.2,
@@ -1186,6 +1188,7 @@ export const laptops = [
         "RAM is soldered and not upgradeable",
       ],
     },
+    // ASUS ROG Zephyrus G14
     {
       id: "asus-rog-zephyrus-g14",
       name: "ASUS ROG Zephyrus G14",
@@ -1200,7 +1203,18 @@ export const laptops = [
         display: '14" QHD (2560 x 1440) IPS, 120Hz',
         battery: "76Wh, Up to 10 hours",
       },
+descriptions: {
 
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
       benchmarks: {
         gaming: 8.7,
         productivity: 8.9,
@@ -1339,6 +1353,8 @@ export const laptops = [
       ],
       cons: ["No webcam", "Limited upgradeability", "Can get hot under sustained load", "No G-Sync support"],
     },
+    // Dell XPS 15
+
     {
       id: "dell-xps-15",
       name: "Dell XPS 15",
@@ -1354,16 +1370,16 @@ export const laptops = [
         battery: "86Wh, Up to 8 hours",
       },
       descriptions: {
-        performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-        battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-        design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-        display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-        keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-        trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-        speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-        webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-        ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-      },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
       benchmarks: {
         gaming: 7.0,
         productivity: 9.0,
@@ -1502,6 +1518,8 @@ export const laptops = [
       ],
       cons: ["Expensive", "Limited port selection (no USB-A or HDMI)", "Average battery life", "Gets hot under load"],
     },
+
+    // HP Spectre x360 14
     {
       id: "hp-spectre-x360",
       name: "HP Spectre x360 14",
@@ -1517,16 +1535,16 @@ export const laptops = [
         battery: "66Wh, Up to 14 hours",
       },
       descriptions: {
-        performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-        battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-        design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-        display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-        keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-        trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-        speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-        webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-        ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-      },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
       benchmarks: {
         gaming: 5.0,
         productivity: 8.5,
@@ -1670,6 +1688,8 @@ export const laptops = [
         "Expensive compared to non-convertible laptops",
       ],
     },
+    // Acer Nitro 5
+
     {
       id: "acer-nitro-5",
       name: "Acer Nitro 5",
@@ -1685,16 +1705,17 @@ export const laptops = [
         battery: "57Wh, Up to 8 hours",
       },
       descriptions: {
-        performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-        battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-        design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-        display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-        keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-        trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-        speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-        webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-        ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-      },
+
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
       benchmarks: {
         gaming: 8.5,
         productivity: 7.8,
@@ -1838,6 +1859,8 @@ export const laptops = [
         "Display color accuracy could be better",
       ],
     },
+    // Acer Swift Go 14 SFG14-73-57FZ
+
   {
     id: "acer-swift-go-14-sfg14-73-57fz",
     name: "Acer Swift Go 14 SFG14-73-57FZ",
@@ -1853,16 +1876,16 @@ export const laptops = [
       battery: "56Wh, Up to 10 hours",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 5.5,
       productivity: 9.0,
@@ -2000,6 +2023,8 @@ export const laptops = [
       "Cổng kết nối hạn chế",
     ],
   },
+// Acer Swift X 2021
+
 
   {
     id: "acer-swift-x-2021",
@@ -2016,16 +2041,16 @@ export const laptops = [
       battery: "56Wh, Up to 9 hours",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 7.0,
       productivity: 8.0,
@@ -2166,6 +2191,7 @@ export const laptops = [
     ],
   },
 
+  // Acer Aspire 5 A515-59-50Q3
   {
     id: "acer-aspire-5-a515-59-50q3",
     name: "Acer Aspire 5 A515-59-50Q3",
@@ -2181,16 +2207,16 @@ export const laptops = [
       battery: "48Wh, Up to 6 hours",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 4.0,
       productivity: 6.5,
@@ -2327,6 +2353,7 @@ export const laptops = [
       "Không có đèn nền bàn phím",
     ],
   },
+// Acer Aspire 7 A715-43G
 
   {
     id: "acer-aspire-7-a715-43g",
@@ -2343,16 +2370,16 @@ export const laptops = [
       battery: "48Wh",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 7.0,
       productivity: 7.5,
@@ -2491,6 +2518,7 @@ export const laptops = [
       "Thiết kế hơi dày và nặng",
     ],
   },
+// Acer Predator Helios 300 PH315-58
 
   {
     id: "acer-predator-helios-300-ph315-58",
@@ -2507,16 +2535,16 @@ export const laptops = [
       battery: "58Wh",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 8.5,
       productivity: 8.5,
@@ -2656,6 +2684,8 @@ export const laptops = [
       "Nhiệt độ cao khi chơi game lâu",
     ],
   },
+// Acer Predator Helios Neo 16 PH316-54S
+
 
   {
     id: "acer-predator-helios-neo-16-ph316-54s",
@@ -2672,16 +2702,16 @@ export const laptops = [
       battery: "80Wh",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 9.0,
       productivity: 9.0,
@@ -2821,6 +2851,7 @@ export const laptops = [
       "Nhiệt độ khi tải nặng cao",
     ],
   },
+// Acer Aspire 3 A315-59-50R7
 
   {
     id: "acer-aspire-3-a315-59-50r7",
@@ -2837,16 +2868,16 @@ export const laptops = [
       battery: "36Wh",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 3.5,
       productivity: 6.0,
@@ -2982,6 +3013,7 @@ export const laptops = [
       "Hiệu năng hạn chế",
     ],
   },
+// Acer Swift 3 OLED SF314-71-74X6
 
   {
     id: "acer-swift-3-oled-sf314-71-74x6",
@@ -2998,16 +3030,16 @@ export const laptops = [
       battery: "48Wh",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 5.0,
       productivity: 8.0,
@@ -3144,6 +3176,8 @@ export const laptops = [
       "Webcam chỉ HD",
     ],
   },
+// Acer Aspire 7 A715-76G-50C2
+
 
   {
     id: "acer-aspire-7-a715-76g-50c2",
@@ -3160,16 +3194,16 @@ export const laptops = [
       battery: "48Wh",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 6.5,
       productivity: 7.0,
@@ -3308,6 +3342,7 @@ export const laptops = [
       "Nặng và dày",
     ],
   },
+// Acer Aspire 5 A515-58-50R7
 
   {
     id: "acer-aspire-5-a515-58-50r7",
@@ -3324,16 +3359,16 @@ export const laptops = [
       battery: "48Wh",
     },
     descriptions: {
-      performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
-      battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
-      design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
-      display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
-      keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
-      trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
-      speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
-      webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
-      ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
-    },
+    performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
+    battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
+    design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
+    display: "Màn hình Liquid Retina XDR độ phân giải cao với tỷ lệ 16:10 và tần số quét 120Hz là điểm nổi bật, mang lại văn bản sắc nét và chuyển động mượt mà. Độ sáng đủ để sử dụng trong nhà, và độ phủ màu sRGB tuyệt vời cho các công việc thông thường, mặc dù các chuyên gia có thể cần dải màu rộng hơn.",
+    keyboard: "Bàn phím Magic Keyboard cung cấp trải nghiệm gõ thoải mái với hành trình phím vừa phải và phản hồi tốt, cộng thêm bàn di chuột cảm ứng rộng. Đèn nền có hai mức độ, đủ sáng để sử dụng trong môi trường thiếu ánh sáng.",
+    trackpad: "Bàn di chuột Force Touch rộng và nhạy, hỗ trợ cử chỉ đa điểm tốt. Nhấn chuột cho cảm giác chắc chắn và đều khắp bề mặt. Vị trí đặt chính giữa, tạo sự cân đối và thuận tiện khi sử dụng.",
+    speakers: "Hệ thống sáu loa với loa trầm khử rung mang lại âm thanh rõ ràng, phù hợp cho cuộc gọi và giải trí thông thường. Hỗ trợ Dolby Atmos tạo hiệu ứng âm thanh vòm ấn tượng, mặc dù âm bass còn hơi yếu.",
+    webcam: "Camera FaceTime HD 1080p mang lại hình ảnh chi tiết hơn trong điều kiện ánh sáng tốt. Kèm theo tính năng Center Stage giúp giữ bạn luôn nằm trong khung hình khi di chuyển. Hỗ trợ Face ID để đăng nhập nhanh chóng và an toàn.",
+    ports: "Đa dạng cổng kết nối phù hợp với hầu hết nhu cầu, bao gồm ba cổng USB-C đa năng và đầu đọc thẻ SD. Cổng được phân bổ hợp lý ở cả hai bên, tạo sự thuận tiện khi sử dụng."
+  },
     benchmarks: {
       gaming: 4.5,
       productivity: 7.0,
