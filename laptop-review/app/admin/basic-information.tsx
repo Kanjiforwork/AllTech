@@ -113,7 +113,11 @@ export default function BasicInformation({
               value={formData.weight}
               onChange={(e) => onChange("weight", e.target.value)}
               onFocus={() => onFocus("weight")}
+              className={showValidation && fieldErrors.weight ? "border-red-500" : ""}
             />
+            {showValidation && fieldErrors.weight && (
+            <p className="text-sm text-red-500 mt-1">Weight is required</p>
+          )}
           </div>
           <div>
             <Label htmlFor="dimensions">Dimensions</Label>

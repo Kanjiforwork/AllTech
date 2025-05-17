@@ -68,7 +68,8 @@ export default function LaptopForm() {
     { name: "ram", label: "RAM" },
     { name: "storage", label: "Storage" },
     { name: "display", label: "Display" },
-     { name: "operatingSystem", label: "Operating System" }
+    { name: "operatingSystem", label: "Operating System" },
+    { name: "weight", label: "Weight" },
   ]
 
   const validateForm = () => {
