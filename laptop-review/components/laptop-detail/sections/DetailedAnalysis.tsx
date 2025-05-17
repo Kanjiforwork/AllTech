@@ -191,9 +191,10 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         </div>
 
         <p className="text-gray-700 dark:text-gray-300">
-          The {laptop.detailedSpecs?.cpu?.name} handles multitasking and demanding tasks well. 
-          The {laptop.detailedSpecs?.gpu?.name} allows for enjoyable 1080p gaming and boosts creative apps. 
-          Performance on battery sees a noticeable drop in multi-core tasks (~19%) but remains adequate for lighter workloads.
+          {laptop.descriptions?.performance ||
+          `The ${laptop.detailedSpecs?.cpu?.name} handles multitasking and demanding tasks well. 
+          The ${laptop.detailedSpecs?.gpu?.name} allows for enjoyable 1080p gaming and boosts creative apps. 
+          Performance on battery sees a noticeable drop in multi-core tasks (~19%) but remains adequate for lighter workloads.`}
         </p>
       </div>
 
@@ -318,10 +319,11 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         </div>
 
         <p className="text-gray-700 dark:text-gray-300">
-          The {laptop.detailedSpecs?.battery?.capacity}Wh battery delivers impressive runtime for a laptop with these specs. 
-          In our testing, it lasted about {laptop.benchmarks?.batteryLifeCasual ? laptop.benchmarks.batteryLifeCasual.replace(' hours', '').replace(' hour', '') : '8'} hours of general productivity work and web browsing at 150 nits brightness. 
-          Video playback extends to around {laptop.benchmarks?.batteryLifeVideo ? laptop.benchmarks.batteryLifeVideo.replace(' hours', '').replace(' hour', '') : '10'} hours, while gaming will drain it in under {laptop.benchmarks?.batteryLifeHeavy ? laptop.benchmarks.batteryLifeHeavy.replace(' hours', '').replace(' hour', '') : '2'} hours. 
-          The {laptop.detailedSpecs?.battery?.chargerWattage} {laptop.detailedSpecs?.battery?.fastCharging ? "fast charger" : "charger"} can replenish to 60% in just 45 minutes, which is convenient for quick top-ups.
+          {laptop.descriptions?.battery ||
+          `The ${laptop.detailedSpecs?.battery?.capacity}Wh battery delivers impressive runtime for a laptop with these specs. 
+          In our testing, it lasted about ${laptop.benchmarks?.batteryLifeCasual ? laptop.benchmarks.batteryLifeCasual.replace(' hours', '').replace(' hour', '') : '8'} hours of general productivity work and web browsing at 150 nits brightness. 
+          Video playback extends to around ${laptop.benchmarks?.batteryLifeVideo ? laptop.benchmarks.batteryLifeVideo.replace(' hours', '').replace(' hour', '') : '10'} hours, while gaming will drain it in under ${laptop.benchmarks?.batteryLifeHeavy ? laptop.benchmarks.batteryLifeHeavy.replace(' hours', '').replace(' hour', '') : '2'} hours. 
+          The ${laptop.detailedSpecs?.battery?.chargerWattage} ${laptop.detailedSpecs?.battery?.fastCharging ? "fast charger" : "charger"} can replenish to 60% in just 45 minutes, which is convenient for quick top-ups.`}
         </p>
       </div>
 
@@ -337,9 +339,10 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         </div>
         
         <p className="text-gray-700 dark:text-gray-300">
-          The {laptop.detailedSpecs?.case?.material || "aluminum"} chassis gives a premium feel and solid build. 
-          It's reasonably portable for a {laptop.detailedSpecs?.display?.size || "16"}-inch device. 
-          The minimalist {laptop.detailedSpecs?.case?.color || "Storm Grey"} finish resists fingerprints well.
+          {laptop.descriptions?.design ||
+          `The ${laptop.detailedSpecs?.case?.material || "aluminum"} chassis gives a premium feel and solid build. 
+          It's reasonably portable for a ${laptop.detailedSpecs?.display?.size || "16"}-inch device. 
+          The minimalist ${laptop.detailedSpecs?.case?.color || "Storm Grey"} finish resists fingerprints well.`}
         </p>
       </AnalysisSection>
 
@@ -363,9 +366,10 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         </div>
         
         <p className="text-gray-700 dark:text-gray-300">
-          The high-resolution {laptop.detailedSpecs?.display?.aspectRatio || "16:10"} display with a {laptop.detailedSpecs?.display?.refreshRate} refresh rate is a standout feature, 
+          {laptop.descriptions?.display ||
+          `The high-resolution ${laptop.detailedSpecs?.display?.aspectRatio || "16:10"} display with a ${laptop.detailedSpecs?.display?.refreshRate} refresh rate is a standout feature, 
           offering sharp text and smooth motion. Brightness is sufficient for indoors, and sRGB coverage is excellent for general use, 
-          though professionals might need wider gamuts.
+          though professionals might need wider gamuts.`}
         </p>
       </AnalysisSection>
 
@@ -375,8 +379,9 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         image="/images/laptop-keyboard.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
-          Features a comfortable keyboard with good travel and tactile feedback, plus a numpad. 
-          Backlighting is functional with {laptop.detailedSpecs?.input?.keyboard?.includes("RGB") ? "RGB lighting" : "two levels"}.
+          {laptop.descriptions?.keyboard ||
+          `Features a comfortable keyboard with good travel and tactile feedback, plus a numpad. 
+          Backlighting is functional with ${laptop.detailedSpecs?.input?.keyboard?.includes("RGB") ? "RGB lighting" : "two levels"}.`}
         </p>
       </AnalysisSection>
 
@@ -387,8 +392,9 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         image="/images/laptop-trackpad.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
-          Large and responsive Microsoft Precision trackpad supports gestures well. Clicking is satisfactory. 
-          Slightly off-center placement due to numpad.
+          {laptop.descriptions?.trackpad ||
+          `Large and responsive Microsoft Precision trackpad supports gestures well. Clicking is satisfactory. 
+          Slightly off-center placement due to numpad.`}
         </p>
       </AnalysisSection>
 
@@ -399,8 +405,9 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         image="/images/laptop-speakers.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
-          Downward-firing speakers with {laptop.detailedSpecs?.sound?.dolbyAtmos ? "Dolby Atmos" : "good audio"} provide clear audio, 
-          suitable for calls and casual media consumption. Bass is lacking.
+          {laptop.descriptions?.speakers ||
+          `Downward-firing speakers with ${laptop.detailedSpecs?.sound?.dolbyAtmos ? "Dolby Atmos" : "good audio"} provide clear audio, 
+          suitable for calls and casual media consumption. Bass is lacking.`}
         </p>
       </AnalysisSection>
 
@@ -413,8 +420,9 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         <div>
           <p className="mb-3 dark:text-gray-300">Resolution: {laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p FHD + IR with Privacy Shutter" : laptop.detailedSpecs?.connectivity?.webcam}</p>
           <p className="text-gray-700 dark:text-gray-300">
-            The {laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p" : "720p"} webcam offers better detail than 720p cameras in good light. 
-            Includes a privacy shutter and IR for Windows Hello.
+            {laptop.descriptions?.webcam ||
+            `The ${laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p" : "720p"} webcam offers better detail than 720p cameras in good light. 
+            Includes a privacy shutter and IR for Windows Hello.`}
           </p>
         </div>
       </AnalysisSection>
@@ -447,7 +455,8 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
           </div>
           
           <p className="text-gray-700 dark:text-gray-300">
-            A comprehensive port selection covers most needs, including versatile USB-C ports and an SD reader. Well-distributed on both sides.
+            {laptop.descriptions?.ports ||
+            `A comprehensive port selection covers most needs, including versatile USB-C ports and an SD reader. Well-distributed on both sides.`}
           </p>
         </div>
       </AnalysisSection>
