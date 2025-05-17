@@ -38,7 +38,7 @@ export default function AdditionalFeatures({
             className={showValidation && fieldErrors.webcam ? "border-red-500" : ""}
           />
           {showValidation && fieldErrors.webcam && (
-                  <p className="text-sm text-red-500 mt-1">Color Gamut is required</p>
+                  <p className="text-sm text-red-500 mt-1">Webcam is required</p>
                 )}
         </div>
 

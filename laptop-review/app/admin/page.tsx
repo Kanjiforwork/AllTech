@@ -84,6 +84,11 @@ export default function LaptopForm() {
     { name: "wifiBluetooth", label: "WiFi / Bluetooth" },
     { name: "keyboard", label: "Keyboard" },
     { name: "speakersMicrophone", label: "Speakers / Microphone" },
+
+
+    { name: "videoPlayback", label: "Video Playback" },
+    { name: "casualUse", label: "Casual Use" },
+    { name: "extremeUse", label: "Extreme Use" },
   ]
 
   const validateForm = () => {
@@ -215,7 +220,11 @@ export default function LaptopForm() {
             showValidation={showValidation}
           />
           <BatteryLife
-
+            formData={formData}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            fieldErrors={fieldErrors}
+            showValidation={showValidation}
           />
         </div>
 
