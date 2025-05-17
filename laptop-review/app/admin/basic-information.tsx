@@ -97,7 +97,11 @@ export default function BasicInformation({
             value={formData.operatingSystem}
             onChange={(e) => onChange("operatingSystem", e.target.value)}
             onFocus={() => onFocus("operatingSystem")}
+            className={showValidation && fieldErrors.operatingSystem ? "border-red-500" : ""}
           />
+          {showValidation && fieldErrors.operatingSystem && (
+            <p className="text-sm text-red-500 mt-1">Operation System is required</p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
