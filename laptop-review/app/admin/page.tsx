@@ -64,13 +64,15 @@ export default function LaptopForm() {
   const requiredFields = [
     { name: "laptopName", label: "Laptop Name" },
     { name: "brand", label: "Brand" },
-    { name: "cpu", label: "CPU / Processor" },
-    { name: "ram", label: "RAM" },
-    { name: "storage", label: "Storage" },
-    { name: "display", label: "Display" },
     { name: "operatingSystem", label: "Operating System" },
     { name: "weight", label: "Weight" },
     { name: "dimensions", label: "dimensions" },
+
+    { name: "cpu", label: "CPU / Processor" },
+    { name: "gpu", label: "GPU" },
+    { name: "ram", label: "RAM" },
+    { name: "storage", label: "Storage" },
+    { name: "display", label: "Display" },
   ]
 
   const validateForm = () => {

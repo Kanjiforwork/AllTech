@@ -58,7 +58,11 @@ export default function HardwareSpecifications({
               value={formData.gpu}
               onChange={(e) => onChange("gpu", e.target.value)}
               onFocus={() => onFocus("gpu")}
+              className={showValidation && fieldErrors.gpu ? "border-red-500" : ""}
             />
+            {showValidation && fieldErrors.gpu && (
+              <p className="text-sm text-red-500 mt-1">GPU is required</p>
+            )}
           </div>
         </div>
 
