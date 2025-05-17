@@ -74,6 +74,10 @@ export default function LaptopForm() {
     { name: "storage", label: "Storage" },
     { name: "display", label: "Display" },
     { name: "graphicsCard", label: "Graphics Card" },
+    { name: "ports", label: "Ports" },
+    { name: "colorGamut", label: "Color Gamut" },
+    { name: "battery", label: "Battery" },
+    { name: "charging", label: "Charging" },
   ]
 
   const validateForm = () => {
