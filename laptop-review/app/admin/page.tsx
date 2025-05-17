@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation"
 import { ChevronLeft, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Label } from "recharts"
 
 export default function LaptopForm() {
   const router = useRouter()
@@ -53,6 +54,24 @@ export default function LaptopForm() {
 
     // Detailed Analysis
     performanceSummary: "",
+    geekBenchV6Single: "",
+    geekBenchV6Multi: "",
+    cineBenchR23Single: "",
+    cineBenchR23Multi: "",
+
+    _3DMarkTimeSpy: "",
+    _3DMarkWildlifeExtrme: "",
+    geekBenchCompute: "",
+
+    pluggedInG6Single: "",
+    pluggedInG6Multi: "",
+    pluggedInCinebenchR23Single: "",
+    pluggedInCinebenchR23Multi: "",
+
+    unpluggedG6Single: "",
+    unpluggedG6Multi: "",
+    unpluggedCinebenchR23Single: "",
+    unpluggedCinebenchR23Multi: "",
   })
 
   // Track validation errors for each field
@@ -89,6 +108,27 @@ export default function LaptopForm() {
     { name: "videoPlayback", label: "Video Playback" },
     { name: "casualUse", label: "Casual Use" },
     { name: "extremeUse", label: "Extreme Use" },
+
+    { name: "geekBenchV6Single", label: "GeekBench V6 Single" },
+    { name: "geekBenchV6Multi", label: "GeekBench V6 Multi" },
+    { name: "cineBenchR23Single", label: "CineBench R23 Single" },
+    { name: "cineBenchR23Multi", label: "CineBench R23 Multi" },
+
+    { name: "_3DMarkTimeSpy", label: "3DMark Time Spy" },
+    { name: "_3DMarkWildlifeExtrme", label: "3DMark Wildlife Extrme" },
+    { name: "geekBenchCompute", label: "GeekBench Compute" },
+
+    { name: "pluggedInG6Single", label: "Plugged In G6 Single" },
+    { name: "pluggedInG6Multi", label: "Plugged In G6 Multi" },
+    { name: "pluggedInCinebenchR23Single", Label: "Plugged In Cinebench R23 Single" },
+    { name: "pluggedInCinebenchR23Multi", label: "Plugged In Cinebench R23 Multi" },
+    
+    { name: "unpluggedCinebenchR23Single", label: "Unplugged In Cinebench R23 Single" },
+    { name: "unpluggedG6Single", label: "Unplugged G6 Single" },
+    { name: "unpluggedG6Multi",  label: "Unplugged Cinebench R23 Single" },
+    { name: "unpluggedCinebenchR23Multi", label: "Unplugged Cinebench R23 Multi" }
+
+
   ]
 
   const validateForm = () => {
@@ -233,7 +273,11 @@ export default function LaptopForm() {
         <ProsCons />
 
         <DetailedAnalysis
-
+          formData={formData}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            fieldErrors={fieldErrors}
+            showValidation={showValidation}
         />
 
         {showValidation && formErrors.length > 0 && (
