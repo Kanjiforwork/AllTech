@@ -97,7 +97,11 @@ export default function BasicInformation({
             value={formData.operatingSystem}
             onChange={(e) => onChange("operatingSystem", e.target.value)}
             onFocus={() => onFocus("operatingSystem")}
+            className={showValidation && fieldErrors.operatingSystem ? "border-red-500" : ""}
           />
+          {showValidation && fieldErrors.operatingSystem && (
+            <p className="text-sm text-red-500 mt-1">Operation System is required</p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -109,7 +113,11 @@ export default function BasicInformation({
               value={formData.weight}
               onChange={(e) => onChange("weight", e.target.value)}
               onFocus={() => onFocus("weight")}
+              className={showValidation && fieldErrors.weight ? "border-red-500" : ""}
             />
+            {showValidation && fieldErrors.weight && (
+            <p className="text-sm text-red-500 mt-1">Weight is required</p>
+          )}
           </div>
           <div>
             <Label htmlFor="dimensions">Dimensions</Label>
@@ -119,7 +127,12 @@ export default function BasicInformation({
               value={formData.dimensions}
               onChange={(e) => onChange("dimensions", e.target.value)}
               onFocus={() => onFocus("dimensions")}
+              className={showValidation && fieldErrors.dimensions ? "border-red-500" : ""}
             />
+             {showValidation && fieldErrors.dimensions && (
+            <p className="text-sm text-red-500 mt-1">Dimemsions is required</p>
+          )}
+            
           </div>
         </div>
 
