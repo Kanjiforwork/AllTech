@@ -127,7 +127,12 @@ export default function BasicInformation({
               value={formData.dimensions}
               onChange={(e) => onChange("dimensions", e.target.value)}
               onFocus={() => onFocus("dimensions")}
+              className={showValidation && fieldErrors.dimensions ? "border-red-500" : ""}
             />
+             {showValidation && fieldErrors.dimensions && (
+            <p className="text-sm text-red-500 mt-1">Dimemsions is required</p>
+          )}
+            
           </div>
         </div>
 

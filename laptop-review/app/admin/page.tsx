@@ -70,6 +70,7 @@ export default function LaptopForm() {
     { name: "display", label: "Display" },
     { name: "operatingSystem", label: "Operating System" },
     { name: "weight", label: "Weight" },
+    { name: "dimensions", label: "dimensions" },
   ]
 
   const validateForm = () => {
