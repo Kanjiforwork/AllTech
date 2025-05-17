@@ -1034,6 +1034,7 @@ export const laptops = [
         battery: "75Wh, Up to 12 hours",
       },
       descriptions: {
+
     performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
     battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
     design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
@@ -1202,7 +1203,8 @@ export const laptops = [
         display: '14" QHD (2560 x 1440) IPS, 120Hz',
         battery: "76Wh, Up to 10 hours",
       },
-      descriptions: {
+descriptions: {
+
     performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
     battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
     design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
@@ -1703,6 +1705,7 @@ export const laptops = [
         battery: "57Wh, Up to 8 hours",
       },
       descriptions: {
+
     performance: "Bộ xử lý Apple M3 Pro mang lại hiệu năng vượt trội cho các tác vụ đa nhiệm và ứng dụng chuyên nghiệp. GPU 16 nhân cho phép xử lý đồ họa mượt mà và tăng tốc các ứng dụng sáng tạo. Khi sử dụng pin, hiệu suất giảm khoảng 19% đối với tác vụ đa nhân nhưng vẫn đủ mạnh cho công việc nhẹ.",
     battery: "Pin 70Wh cho thời lượng ấn tượng đối với một chiếc laptop mạnh mẽ như vậy. Trong thử nghiệm của chúng tôi, nó kéo dài khoảng 12.5 giờ làm việc năng suất và duyệt web ở độ sáng 150 nit. Xem video kéo dài đến khoảng 18 giờ, trong khi chơi game sẽ hết pin trong vòng chưa đầy 4 giờ. Bộ sạc nhanh 96W có thể sạc đến 60% chỉ trong 45 phút, rất tiện lợi khi cần sạc nhanh.",
     design: "Khung máy bằng nhôm mang lại cảm giác cao cấp và chắc chắn. Máy khá nhẹ và di động cho một thiết bị 14.2 inch. Kiểu dáng tối giản với màu Space Black sang trọng và chống bám vân tay hiệu quả.",
