@@ -106,7 +106,11 @@ export default function HardwareSpecifications({
               value={formData.graphicsCard}
               onChange={(e) => onChange("graphicsCard", e.target.value)}
               onFocus={() => onFocus("graphicsCard")}
+              className={showValidation && fieldErrors.graphicsCard ? "border-red-500" : ""}
             />
+            {showValidation && fieldErrors.graphicsCard && (
+                <p className="text-sm text-red-500 mt-1">Graphics Card is required</p>
+              )}
           </div>
           <div>
             <Label htmlFor="ports">Ports</Label>

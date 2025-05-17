@@ -73,6 +73,7 @@ export default function LaptopForm() {
     { name: "ram", label: "RAM" },
     { name: "storage", label: "Storage" },
     { name: "display", label: "Display" },
+    { name: "graphicsCard", label: "Graphics Card" },
   ]
 
   const validateForm = () => {
