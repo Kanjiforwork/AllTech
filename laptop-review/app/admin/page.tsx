@@ -78,6 +78,12 @@ export default function LaptopForm() {
     { name: "colorGamut", label: "Color Gamut" },
     { name: "battery", label: "Battery" },
     { name: "charging", label: "Charging" },
+
+
+    { name: "webcam", label: "Webcam" },
+    { name: "wifiBluetooth", label: "WiFi / Bluetooth" },
+    { name: "keyboard", label: "Keyboard" },
+    { name: "speakersMicrophone", label: "Speakers / Microphone" },
   ]
 
   const validateForm = () => {
