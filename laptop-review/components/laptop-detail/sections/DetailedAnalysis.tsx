@@ -200,20 +200,13 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
 
       {/* 2. Battery */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-gray-700 p-6 mb-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-5">
           <h3 className="text-xl font-semibold dark:text-white">2. Battery</h3>
           <div className="bg-blue-600 dark:bg-blue-500 text-white px-3 py-1 rounded-full font-bold">
             {laptop.benchmarks?.battery ? laptop.benchmarks.battery.toFixed(1) : "8.7"}/10
           </div>
         </div>
 
-        {/* <div className="mb-4">
-          <p className="mb-2">
-            <span className="font-medium">Battery Capacity:</span> 75Wh
-          </p>
-        </div> */}
-
-        {/* <h4 className="font-semibold mb-4">Battery Life</h4> */}
         <div className="space-y-6 mb-6">
           {laptop.benchmarks?.batteryLifeCasual ? (
             <div>
@@ -331,7 +324,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="3. Design & Build" 
         score={laptop.benchmarks?.build}
-        image="/images/laptop-design.jpg"
       >
         <div className="mb-4">
           <p className="mb-2 dark:text-gray-300">Dimensions: {laptop.detailedSpecs?.case?.dimensions}</p>
@@ -350,7 +342,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="4. Display" 
         score={laptop.benchmarks?.display}
-        image="/images/laptop-display.jpg"
       >
         <div className="grid md:grid-cols-2 gap-6 mb-4">
           <div>
@@ -376,7 +367,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       {/* 5. Keyboard */}
       <AnalysisSection 
         title="5. Keyboard"
-        image="/images/laptop-keyboard.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
           {laptop.descriptions?.keyboard ||
@@ -389,7 +379,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="6. Trackpad" 
         score={7.8}
-        image="/images/laptop-trackpad.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
           {laptop.descriptions?.trackpad ||
@@ -402,7 +391,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="7. Speakers" 
         score={7.5}
-        image="/images/laptop-speakers.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
           {laptop.descriptions?.speakers ||
@@ -415,7 +403,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="8. Webcam" 
         score={7.0}
-        image="/images/laptop-webcam.jpg"
       >
         <div>
           <p className="mb-3 dark:text-gray-300">Resolution: {laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p FHD + IR with Privacy Shutter" : laptop.detailedSpecs?.connectivity?.webcam}</p>
@@ -431,34 +418,31 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="9. Ports" 
         score={8.3}
-        image="/images/laptop-ports.jpg"
       >
-        <div>
-          <div className="grid md:grid-cols-2 gap-6 mb-4">
-            <div>
-              <h4 className="font-medium mb-2 dark:text-white">Left Side:</h4>
-              <ul className="list-disc list-inside space-y-1 dark:text-gray-300">
-                <li>1x USB-C 3.2 Gen 2 (DP 1.4, PD 3.0)</li>
-                <li>1x USB-A 3.2 Gen 1</li>
-                <li>HDMI 2.0</li>
-                <li>SD Card Reader</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium mb-2 dark:text-white">Right Side:</h4>
-              <ul className="list-disc list-inside space-y-1 dark:text-gray-300">
-                <li>1x USB-A 3.2 Gen 1</li>
-                <li>1x USB-C 3.2 Gen 2 (PD 3.0, Data)</li>
-                <li>3.5mm Combo Audio Jack</li>
-              </ul>
-            </div>
+        <div className="grid md:grid-cols-2 gap-6 mb-4">
+          <div>
+            <h4 className="font-medium mb-2 dark:text-white">Left Side:</h4>
+            <ul className="list-disc list-inside space-y-1 dark:text-gray-300">
+              <li>1x USB-C 3.2 Gen 2 (DP 1.4, PD 3.0)</li>
+              <li>1x USB-A 3.2 Gen 1</li>
+              <li>HDMI 2.0</li>
+              <li>SD Card Reader</li>
+            </ul>
           </div>
-          
-          <p className="text-gray-700 dark:text-gray-300">
-            {laptop.descriptions?.ports ||
-            `A comprehensive port selection covers most needs, including versatile USB-C ports and an SD reader. Well-distributed on both sides.`}
-          </p>
+          <div>
+            <h4 className="font-medium mb-2 dark:text-white">Right Side:</h4>
+            <ul className="list-disc list-inside space-y-1 dark:text-gray-300">
+              <li>1x USB-A 3.2 Gen 1</li>
+              <li>1x USB-C 3.2 Gen 2 (PD 3.0, Data)</li>
+              <li>3.5mm Combo Audio Jack</li>
+            </ul>
+          </div>
         </div>
+        
+        <p className="text-gray-700 dark:text-gray-300">
+          {laptop.descriptions?.ports ||
+          `A comprehensive port selection covers most needs, including versatile USB-C ports and an SD reader. Well-distributed on both sides.`}
+        </p>
       </AnalysisSection>
 
       {/* Best Prices & Deals */}
