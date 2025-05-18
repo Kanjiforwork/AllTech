@@ -77,7 +77,7 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-gray-700 p-6 mb-6">
       {/* Tiêu đề */}
       <div className="p-4 border-b">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-2xl font-bold">
           Bình luận về {displayName} ({comments.length})
         </h2>
       </div>
@@ -86,7 +86,7 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
       <div className="p-4">
         <Textarea
           placeholder={`Viết bình luận về ${displayName}...`}
-          className="w-full resize-none border rounded-lg p-2"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-800 p-4 sm:p-6 mb-8"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
@@ -117,7 +117,7 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
             </div>
           ))
         ) : (
-          <div className="text-center py-4 text-gray-500">
+          <div className="text-center py-4 text-gray-800">
             Chưa có bình luận nào về sản phẩm này. Hãy là người đầu tiên bình luận!
           </div>
         )}

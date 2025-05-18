@@ -52,11 +52,13 @@ export default function LaptopDetailPage({ laptop, similarLaptops = [] }: Laptop
         
         {/* Detailed Analysis Section */}
         <DetailedAnalysis laptop={laptop} />
+        <div className="mt-10">
+          <CommentSection laptop={laptop} laptopName={laptop.name} />
+        </div>
       </main>
 
       {/* Floating Comparison Button */}
       <ComparisonButton currentLaptopId={laptop.id} />
-      <CommentSection laptop={laptop} laptopName={laptop.name} />
       <Footer />
     </div>
   );

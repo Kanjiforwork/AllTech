@@ -14,7 +14,7 @@ export interface Comment {
 export const commentCollection: Comment[] = [
   {
     id: "1",
-    laptopId: "laptop-001",
+    laptopId: "macbook-pro-14-m3-pro",
     userId: "user1",
     username: "Nguyễn Văn A",
     content: "Sản phẩm này rất tốt, tôi đã sử dụng được 2 năm và vẫn hoạt động tốt!",
@@ -23,7 +23,7 @@ export const commentCollection: Comment[] = [
   },
   {
     id: "2",
-    laptopId: "laptop-001",
+    laptopId: "macbook-pro-14-m3-pro",
     userId: "user2",
     username: "Trần Thị B",
     content: "Giá cả hợp lý và chất lượng tuyệt vời.",
@@ -32,7 +32,7 @@ export const commentCollection: Comment[] = [
   },
   {
     id: "3",
-    laptopId: "laptop-002",
+    laptopId: "macbook-pro-14-m3-pro",
     userId: "user3",
     username: "Lê Văn C",
     content: "Pin trâu, hiệu năng tốt.",
@@ -45,6 +45,10 @@ export const commentCollection: Comment[] = [
 export function getCommentsByLaptopId(laptopId: string): Comment[] {
   return [...commentCollection]
     .filter((comment) => comment.laptopId === laptopId)
+    .map(comment => ({
+      ...comment,
+      timestamp: new Date(comment.timestamp),
+    }))
     .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
 }
 

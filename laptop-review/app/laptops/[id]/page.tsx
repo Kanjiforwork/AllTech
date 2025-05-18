@@ -88,7 +88,6 @@ export default function LaptopDetailPageContainer() {
   return (
     <>
       <LaptopDetailPage laptop={laptop} similarLaptops={similarLaptops} />
-      <CommentSection laptop={laptop} laptopName={laptop.name} />
     </>
   );
 }
