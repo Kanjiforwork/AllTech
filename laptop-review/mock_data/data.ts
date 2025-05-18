@@ -178,7 +178,7 @@ export const laptops = [
   image: "/placeholder.svg?height=600&width=600",
   price: "$1,099.00",
   originalPrice: "$1,199.00",
-  purchaseLink: "https://cellphones.com.vn/macbook-air-13-inch-m3-8-core-cpu-8-core-gpu-8gb-256gb.html",
+    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
   specs: {
     cpu: "Apple M3 (8-core CPU)",
     gpu: "10-core GPU",
@@ -349,7 +349,7 @@ export const laptops = [
   image: "/placeholder.svg?height=600&width=600",
   price: "$3,499.00",
   originalPrice: "$3,499.00",
-  purchaseLink: "https://cellphones.com.vn/macbook-pro-16-inch-m3-max-14-core-cpu-30-core-gpu-36gb-1tb.html",
+    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
   specs: {
     cpu: "Apple M3 Max (14-core CPU)",
     gpu: "30-core GPU",
@@ -520,7 +520,7 @@ export const laptops = [
   image: "/placeholder.svg?height=600&width=600",
   price: "$1,299.00",
   originalPrice: "$1,399.00",
-  purchaseLink: "https://cellphones.com.vn/macbook-air-15-inch-m2-8-core-cpu-10-core-gpu-8gb-256gb.html",
+    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
   specs: {
     cpu: "Apple M2 (8-core CPU)",
     gpu: "10-core GPU",
@@ -685,7 +685,14 @@ export const laptops = [
 },
 
 /// Microsoft Surface Laptop Studio
-    {    id: "microsoft-surface-laptop-studio",    name: "Microsoft Surface Laptop Studio",    image: "/placeholder.svg?height=600&width=600",    price: "$1,599.99",    originalPrice: "$1,799.99",    purchaseLink: "https://cellphones.com.vn/microsoft-surface-laptop-studio.html",    specs: {
+  {
+    id: "microsoft-surface-laptop-studio",
+    name: "Microsoft Surface Laptop Studio",
+    image: "/placeholder.svg?height=600&width=600",
+    price: "$1,599.99",
+    originalPrice: "$1,799.99",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+    specs: {
       cpu: "Intel Core i7-11370H",
       gpu: "NVIDIA GeForce RTX 3050 Ti 4GB",
       ram: "16GB LPDDR4x 4266MHz",
@@ -848,7 +855,14 @@ export const laptops = [
     ],
   },
  // Acer Swift 5
-    {    id: "acer-swift-5",    name: "Acer Swift 5",    image: "/placeholder.svg?height=600&width=600",    price: "$999.99",    originalPrice: "$1,199.99",    purchaseLink: "https://cellphones.com.vn/acer-swift-5.html",    specs: {
+  {
+    id: "acer-swift-5",
+    name: "Acer Swift 5",
+    image: "/placeholder.svg?height=600&width=600",
+    price: "$999.99",
+    originalPrice: "$1,199.99",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+    specs: {
       cpu: "Intel Core i7-1260P",
       gpu: "Intel Iris Xe Graphics",
       ram: "16GB LPDDR5 5200MHz",
@@ -1011,7 +1025,14 @@ export const laptops = [
     ],
   },
   // Lenovo IdeaPad 5 Pro 16
-        {      id: "lenovo-ideapad-5-pro-16",      name: "Lenovo IdeaPad 5 Pro 16",      image: "/placeholder.svg?height=600&width=600",      price: "$899.99",      originalPrice: "$1,099.99",      purchaseLink: "https://cellphones.com.vn/lenovo-ideapad-5-pro-16.html",      specs: {
+    {
+      id: "lenovo-ideapad-5-pro-16",
+      name: "Lenovo IdeaPad 5 Pro 16",
+      image: "/placeholder.svg?height=600&width=600",
+      price: "$899.99",
+      originalPrice: "$1,099.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      specs: {
         cpu: "AMD Ryzen 7 5800H",
         gpu: "NVIDIA GeForce RTX 3050 4GB",
         ram: "16GB DDR4 3200MHz",
@@ -1175,7 +1196,14 @@ export const laptops = [
       ],
     },
     // ASUS ROG Zephyrus G14
-        {      id: "asus-rog-zephyrus-g14",      name: "ASUS ROG Zephyrus G14",      image: "/placeholder.svg?height=600&width=600",      price: "$1,299.99",      originalPrice: "$1,499.99",      purchaseLink: "https://cellphones.com.vn/asus-rog-zephyrus-g14.html",      specs: {
+    {
+      id: "asus-rog-zephyrus-g14",
+      name: "ASUS ROG Zephyrus G14",
+      image: "/placeholder.svg?height=600&width=600",
+      price: "$1,299.99",
+      originalPrice: "$1,499.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      specs: {
         cpu: "AMD Ryzen 9 5900HS",
         gpu: "NVIDIA GeForce RTX 3060 6GB",
         ram: "16GB DDR4 3200MHz",
@@ -1335,7 +1363,14 @@ descriptions: {
     },
     // Dell XPS 15
 
-        {      id: "dell-xps-15",      name: "Dell XPS 15",      image: "/placeholder.svg?height=600&width=600",      price: "$1,799.99",      originalPrice: "$1,999.99",      purchaseLink: "https://cellphones.com.vn/dell-xps-15.html",      specs: {
+    {
+      id: "dell-xps-15",
+      name: "Dell XPS 15",
+      image: "/placeholder.svg?height=600&width=600",
+      price: "$1,799.99",
+      originalPrice: "$1,999.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      specs: {
         cpu: "Intel Core i7-11800H",
         gpu: "NVIDIA GeForce RTX 3050 Ti 4GB",
         ram: "16GB DDR4 3200MHz",
@@ -1494,7 +1529,14 @@ descriptions: {
     },
 
     // HP Spectre x360 14
-        {      id: "hp-spectre-x360",      name: "HP Spectre x360 14",      image: "/placeholder.svg?height=600&width=600",      price: "$1,399.99",      originalPrice: "$1,599.99",      purchaseLink: "https://cellphones.com.vn/hp-spectre-x360-14.html",      specs: {
+    {
+      id: "hp-spectre-x360",
+      name: "HP Spectre x360 14",
+      image: "/placeholder.svg?height=600&width=600",
+      price: "$1,399.99",
+      originalPrice: "$1,599.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      specs: {
         cpu: "Intel Core i7-1165G7",
         gpu: "Intel Iris Xe Graphics",
         ram: "16GB LPDDR4X 4266MHz",
@@ -1658,7 +1700,14 @@ descriptions: {
     },
     // Acer Nitro 5
 
-        {      id: "acer-nitro-5",      name: "Acer Nitro 5",      image: "/placeholder.svg?height=600&width=600",      price: "$899.99",      originalPrice: "$999.99",      purchaseLink: "https://cellphones.com.vn/acer-nitro-5.html",      specs: {
+    {
+      id: "acer-nitro-5",
+      name: "Acer Nitro 5",
+      image: "/placeholder.svg?height=600&width=600",
+      price: "$899.99",
+      originalPrice: "$999.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      specs: {
         cpu: "AMD Ryzen 7 5800H",
         gpu: "NVIDIA GeForce RTX 3060 6GB",
         ram: "16GB DDR4 3200MHz",
@@ -1823,7 +1872,14 @@ descriptions: {
     },
     // Acer Swift Go 14 SFG14-73-57FZ
 
-    {    id: "acer-swift-go-14-sfg14-73-57fz",    name: "Acer Swift Go 14 SFG14-73-57FZ",    image: "/placeholder.svg?height=600&width=600",    price: "29.990.000₫",    originalPrice: "32.990.000₫",    purchaseLink: "https://cellphones.com.vn/acer-swift-go-14.html",    specs: {
+  {
+    id: "acer-swift-go-14-sfg14-73-57fz",
+    name: "Acer Swift Go 14 SFG14-73-57FZ",
+    image: "/placeholder.svg?height=600&width=600",
+    price: "29.990.000₫",
+    originalPrice: "32.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+    specs: {
       cpu: "Intel Core i7-1360P",
       gpu: "Intel Iris Xe Graphics",
       ram: "16GB LPDDR5x 6400MHz",
@@ -1982,7 +2038,14 @@ descriptions: {
 // Acer Swift X 2021
 
 
-    {    id: "acer-swift-x-2021",    name: "Acer Swift X 2021",    image: "/placeholder.svg?height=600&width=600",    price: "25.990.000₫",    originalPrice: "28.990.000₫",    purchaseLink: "https://cellphones.com.vn/acer-swift-x-2021.html",    specs: {
+  {
+    id: "acer-swift-x-2021",
+    name: "Acer Swift X 2021",
+    image: "/placeholder.svg?height=600&width=600",
+    price: "25.990.000₫",
+    originalPrice: "28.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+    specs: {
       cpu: "Intel Core i5-11320H",
       gpu: "NVIDIA GeForce RTX 3050 Ti 4GB",
       ram: "16GB LPDDR4",
@@ -2142,7 +2205,14 @@ descriptions: {
   },
 
   // Acer Aspire 5 A515-59-50Q3
-    {    id: "acer-aspire-5-a515-59-50q3",    name: "Acer Aspire 5 A515-59-50Q3",    image: "/placeholder.svg?height=600&width=600",    price: "15.990.000₫",    originalPrice: "17.990.000₫",    purchaseLink: "https://cellphones.com.vn/acer-aspire-5.html",    specs: {
+  {
+    id: "acer-aspire-5-a515-59-50q3",
+    name: "Acer Aspire 5 A515-59-50Q3",
+    image: "/placeholder.svg?height=600&width=600",
+    price: "15.990.000₫",
+    originalPrice: "17.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+    specs: {
       cpu: "Intel Core i3-1315U",
       gpu: "Intel UHD Graphics",
       ram: "8GB LPDDR5 4800MHz",
@@ -2299,7 +2369,14 @@ descriptions: {
   },
 // Acer Aspire 7 A715-43G
 
-    {    id: "acer-aspire-7-a715-43g",    name: "Acer Aspire 7 A715-43G",    image: "/placeholder.svg?height=600&width=600",    price: "19.990.000₫",    originalPrice: "22.990.000₫",    purchaseLink: "https://cellphones.com.vn/acer-aspire-7.html",    specs: {
+  {
+    id: "acer-aspire-7-a715-43g",
+    name: "Acer Aspire 7 A715-43G",
+    image: "/placeholder.svg?height=600&width=600",
+    price: "19.990.000₫",
+    originalPrice: "22.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+    specs: {
       cpu: "AMD Ryzen 5 5625U",
       gpu: "NVIDIA GeForce RTX 3050 4GB",
       ram: "8GB DDR4",
@@ -2358,7 +2435,7 @@ descriptions: {
       },
       battery: {
         capacity: "48Wh",
-        chargeTime: "2.5 giờ",
+        chargeTime: "2.5 giờ để sạc đầy",
         type: "Lithium-ion",
         replaceable: false,
         fastCharging: false,
@@ -2458,7 +2535,14 @@ descriptions: {
   },
 // Acer Predator Helios 300 PH315-58
 
-    {    id: "acer-predator-helios-300-ph315-58",    name: "Acer Predator Helios 300 PH315-58",    image: "/placeholder.svg?height=600&width=600",    price: "34.990.000₫",    originalPrice: "39.990.000₫",    purchaseLink: "https://cellphones.com.vn/acer-predator-helios-300.html",    specs: {
+  {
+    id: "acer-predator-helios-300-ph315-58",
+    name: "Acer Predator Helios 300 PH315-58",
+    image: "/placeholder.svg?height=600&width=600",
+    price: "34.990.000₫",
+    originalPrice: "39.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+    specs: {
       cpu: "Intel Core i7-12700H",
       gpu: "NVIDIA GeForce RTX 3060 6GB",
       ram: "16GB DDR4 3200MHz",
@@ -2625,7 +2709,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "38.990.000₫",
     originalPrice: "42.990.000₫",
-    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i7-13620H",
       gpu: "NVIDIA GeForce RTX 4060 8GB",
@@ -2792,7 +2876,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "9.990.000₫",
     originalPrice: "11.990.000₫",
-    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i5-1135G7",
       gpu: "Intel Iris Xe Graphics",
@@ -2955,7 +3039,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "21.990.000₫",
     originalPrice: "24.990.000₫",
-    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i7-1165G7",
       gpu: "Intel Iris Xe Graphics",
@@ -3120,7 +3204,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "22.990.000₫",
     originalPrice: "25.990.000₫",
-    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i5-11400H",
       gpu: "NVIDIA GeForce GTX 1650 4GB",
@@ -3286,7 +3370,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "16.990.000₫",
     originalPrice: "18.990.000₫",
-    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i5-1235U",
       gpu: "Intel Iris Xe Graphics",
