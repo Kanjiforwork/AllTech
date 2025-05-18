@@ -6,6 +6,9 @@ import LaptopDetailPage from "@/components/laptop-detail/LaptopDetailPageUI";
 import { useState, useEffect } from "react";
 import { laptopService } from "@/services/firebaseServices";
 import { SimilarLaptop, Laptop } from "@/types/laptop";
+import { CommentSection } from "@/components/laptop-detail/sections/comment-section";
+
+
 
 interface LaptopData {
   laptop: Laptop | null;
@@ -19,26 +22,23 @@ export default function LaptopDetailPageContainer() {
   const { laptop, loading, error }: LaptopData = useLaptopData(id || '');
   const [similarLaptops, setSimilarLaptops] = useState<SimilarLaptop[]>([]);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
-  
+
   // Lấy laptop tương tự từ Firestore
   useEffect(() => {
-    // Kiểm tra laptop có tồn tại
     if (!laptop) return;
-    
-    // Kiểm tra có similarLaptopIds không
+
     const similarIds = laptop.similarLaptopIds || [];
     if (similarIds.length === 0) return;
-    
+
     async function fetchSimilarLaptops() {
       try {
         setLoadingSimilar(true);
         const laptopPromises = similarIds.map(
           (similarId: string) => laptopService.getById(similarId)
         );
-        
+
         const results = await Promise.all(laptopPromises);
-        
-        // Chuyển đổi dữ liệu Laptop thành SimilarLaptop
+
         const similarLaptopsData = results
           .filter((item: any) => item !== null)
           .map((item: any) => ({
@@ -54,7 +54,7 @@ export default function LaptopDetailPageContainer() {
             battery: item.specs.battery,
             score: item.benchmarks?.overall || 0
           }));
-        
+
         setSimilarLaptops(similarLaptopsData);
       } catch (error) {
         console.error("Error fetching similar laptops:", error);
@@ -62,22 +62,32 @@ export default function LaptopDetailPageContainer() {
         setLoadingSimilar(false);
       }
     }
-    
+
     fetchSimilarLaptops();
   }, [laptop]);
-  
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">Loading...</div>
+    );
+  }
+
   if (error || !laptop) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Laptop not found</h1>
-          <p className="text-gray-600">The laptop you're looking for doesn't exist or has been removed.</p>
+          <p className="text-gray-600">
+            The laptop you're looking for doesn't exist or has been removed.
+          </p>
         </div>
       </div>
     );
   }
-  
-  return <LaptopDetailPage laptop={laptop} similarLaptops={similarLaptops} />;
+
+  return (
+    <>
+      <LaptopDetailPage laptop={laptop} similarLaptops={similarLaptops} />
+    </>
+  );
 }
