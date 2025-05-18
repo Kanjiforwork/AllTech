@@ -2,94 +2,112 @@ import { db } from '../lib/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { seedLaptopData } from './seedLaptopData';
 
-// News data
+// Dữ liệu tin tức
 const newsItems = [
   {
-    title: "Apple Unveils M3-Powered MacBook Pro with Revolutionary Cooling System",
+    title: "Apple trình làng MacBook Pro M3 với hệ thống tản nhiệt đột phá",
     image: "/news/news1.jpg",
-    excerpt: "New thermal architecture promises sustained performance for professional workloads",
-    content: `At today's Apple Event, the company revealed its next-generation MacBook Pro featuring the M3 chip and an innovative dual-fan vapor chamber cooling system. Unlike previous models that throttled under sustained loads, this new design maintains peak performance during 4K video renders and machine learning tasks. Early benchmarks show a 40% improvement in sustained multicore performance compared to M2 models.
+    excerpt: "Công nghệ tản nhiệt mới giúp máy duy trì hiệu suất cao liên tục trong các tác vụ chuyên nghiệp",
+    content: `Tại sự kiện đặc biệt hôm nay, Apple đã chính thức giới thiệu thế hệ MacBook Pro mới nhất, trang bị chip M3 và hệ thống tản nhiệt buồng hơi kép hoàn toàn mới. Điểm khác biệt lớn so với các thế hệ trước đó chính là khả năng duy trì hiệu suất đỉnh cao ngay cả khi xử lý những tác vụ nặng như render video 4K hay huấn luyện mô hình AI trong thời gian dài.
 
-The system uses machine learning to dynamically adjust fan curves based on application demands. "This isn't just about raw power - it's about delivering that power consistently," said Apple's VP of Hardware Engineering. The redesign comes after criticism of thermal limitations in professional workflows. Available in 14" and 16" configurations, shipping begins November 30th starting at $2,499.`,
+Kết quả benchmark đầu tiên cho thấy một bước tiến ấn tượng với hiệu suất đa nhân cải thiện tới 40% so với dòng M2. Hệ thống này còn tích hợp trí tuệ nhân tạo để tự động điều chỉnh tốc độ quạt tản nhiệt dựa trên loại ứng dụng đang chạy.
+
+"Chúng tôi không chỉ tập trung vào sức mạnh thô, mà còn quan tâm đến việc duy trì sức mạnh đó một cách ổn định," đại diện phòng Kỹ thuật Phần cứng của Apple chia sẻ. Sản phẩm này được kỳ vọng sẽ giải quyết những hạn chế về nhiệt mà các chuyên gia đã phản ánh trong quá khứ. MacBook Pro M3 sẽ có sẵn ở hai kích thước 14 inch và 16 inch, bắt đầu giao hàng từ 30/11 với giá khởi điểm 2.499 USD.`,
     author: "Mark Gurman",
-    date: "11/15/2024",
-    readTime: "6 min read",
+    date: "15/11/2024",
+    readTime: "6 phút đọc",
     createdAt: new Date()
   },
   {
-    title: "Windows 12 Launch Sparks New Era of AI-Powered Laptops",
+    title: "Windows 12 ra mắt: Kỷ nguyên mới của laptop tích hợp AI",
     image: "/news/news3.jpg",
-    excerpt: "Major OEMs debut neural processing units in consumer laptops",
-    content: `Microsoft's Windows 12 launch has triggered a wave of new laptops featuring dedicated NPUs (Neural Processing Units). Dell's XPS 14 leads the charge with its integrated Intel AI Boost chip capable of 45 TOPS (Tera Operations Per Second), enabling real-time language translation and advanced background noise cancellation during video calls.
+    excerpt: "Các nhà sản xuất lớn đua nhau tung ra laptop tích hợp chip xử lý AI chuyên dụng",
+    content: `Sự ra đời của Windows 12 đã khơi mào một cuộc cách mạng trong ngành laptop với hàng loạt sản phẩm mới tích hợp NPU (bộ xử lý thần kinh) chuyên dụng. Dell XPS 14 dẫn đầu cuộc đua với chip Intel AI Boost có khả năng xử lý 45 nghìn tỷ phép tính mỗi giây (TOPS), mở ra khả năng dịch thuật thời gian thực và khử tiếng ồn thông minh trong cuộc gọi video.
 
-HP's latest Spectre x360 demonstrates practical AI applications - its new Studio Creator mode automatically optimizes system resources when launching creative apps like Photoshop. Lenovo meanwhile focuses on security, using NPUs for continuous authentication through typing patterns and webcam analysis. Early adopters report 30% better battery life during AI-accelerated tasks compared to traditional CPU processing.`,
+Không kém cạnh, HP Spectre x360 thế hệ mới cho thấy những ứng dụng AI thực tế ấn tượng. Chế độ Studio Creator có thể tự động tối ưu hóa tài nguyên hệ thống khi người dùng mở các phần mềm sáng tạo như Photoshop. Trong khi đó, Lenovo tập trung vào an ninh bảo mật, sử dụng NPU để xác thực người dùng liên tục thông qua cách gõ phím và nhận diện khuôn mặt.
+
+Những người dùng đầu tiên báo cáo rằng thời lượng pin cải thiện tới 30% khi thực hiện các tác vụ có hỗ trợ AI so với xử lý truyền thống bằng CPU.`,
     author: "Tom Warren",
-    date: "10/30/2024",
-    readTime: "8 min read",
+    date: "30/10/2024",
+    readTime: "8 phút đọc",
     createdAt: new Date()
   },
   {
-    title: "Framework Laptop 16 Redefines Modular Computing",
+    title: "Framework Laptop 16: Cách mạng hóa laptop theo kiểu module",
     image: "/news/news2.jpg",
-    excerpt: "User-upgradable GPU module and port ecosystem gain industry attention",
-    content: `Framework's latest innovation features a revolutionary expansion bay system allowing users to swap between an NVIDIA RTX 4060 Mobile GPU module and additional storage/IO configurations. The magnesium-alloy chassis maintains a slim 18mm profile while supporting up to 64GB DDR5 RAM and 8TB PCIe 5.0 storage.
+    excerpt: "Hệ thống GPU có thể thay đổi và cổng kết nối linh hoạt thu hút sự quan tâm của toàn ngành",
+    content: `Framework vừa tạo nên một bước ngoặt với hệ thống khe mở rộng cách mạng, cho phép người dùng dễ dàng hoán đổi giữa module GPU NVIDIA RTX 4060 Mobile và các cấu hình lưu trữ/kết nối khác nhau. Dù có thiết kế mỏng chỉ 18mm, máy vẫn hỗ trợ tới 64GB RAM DDR5 và ổ cứng PCIe 5.0 dung lượng 8TB.
 
-CEO Nirav Patel told us: "We're challenging the throwaway culture in tech." Early teardowns reveal standardized PCIe connections for third-party modules. Despite initial skepticism, the system handled Cyberpunk 2077 at 1440p/60fps in testing. The $1,899 base model ships Q1 2025, with expansion modules priced from $299.`,
+"Chúng tôi muốn thách thức văn hóa 'dùng xong vứt đi' trong ngành công nghệ," CEO Nirav Patel chia sẻ. Những phân tích sâu cho thấy hệ thống kết nối PCIe được chuẩn hóa, mở đường cho các nhà sản xuất bên thứ ba tham gia.
+
+Mặc dù ban đầu nhận về nhiều hoài nghi, trong thử nghiệm thực tế, máy đã chạy mượt mà Cyberpunk 2077 ở độ phân giải 1440p với 60 khung hình/giây. Phiên bản cơ bản có giá 1.899 USD sẽ được giao trong quý 1/2025, cùng với các module mở rộng từ 299 USD.`,
     author: "Linus Sebastian",
-    date: "11/01/2024",
-    readTime: "7 min read",
+    date: "01/11/2024",
+    readTime: "7 phút đọc",
     createdAt: new Date()
   },
 ];
 
-// Articles data
+// Dữ liệu bài viết chuyên sâu
 const articles = [
   {
-    title: "Best Productivity Laptops 2024: Ultimate Guide",
-    excerpt: "From executive boards to college dorms - we test all the top workhorses.",
-    content: `After testing 32 machines across price ranges, our team identified clear winners in three categories:
+    title: "Laptop năng suất tốt nhất 2024: Cẩm nang chọn máy hoàn hảo",
+    excerpt: "Từ phòng họp giám đốc đến phòng sinh viên - chúng tôi đã thử nghiệm tất cả những chiếc máy đáng tin cậy nhất.",
+    content: `Sau khi thử nghiệm kỹ lưỡng 32 mẫu laptop thuộc mọi phân khúc giá, đội ngũ chuyên gia của chúng tôi đã tìm ra những chiếc máy xuất sắc nhất trong từng danh mục:
 
-1. **Premium Powerhouse**: Dell XPS 15 (2024) combines Intel's new 14-core Ultra 9 processor with a stunning 4K OLED touchscreen. Its carbon fiber keyboard deck remains cool during marathon coding sessions.
+**Hạng mục cao cấp: Dell XPS 15 (2024)**
+Sự kết hợp hoàn hảo giữa bộ xử lý Intel 14 nhân Ultra 9 thế hệ mới và màn hình cảm ứng OLED 4K tuyệt đẹp. Điều đặc biệt là bàn phím bằng sợi carbon luôn giữ nhiệt độ mát mẻ ngay cả trong những phiên code marathon dài nhất.
 
-2. **Mid-Range Marvel**: The Asus Zenbook 14X surprises with AMD's Ryzen 7 8840U and a 90Wh battery lasting 14 hours of actual office use. Its new haptic touchpad rivals MacBooks for precision.
+**Hạng mục tầm trung: Asus Zenbook 14X**
+Một bất ngờ thú vị với chip AMD Ryzen 7 8840U và viên pin 90Wh có thể hoạt động liên tục 14 giờ trong điều kiện sử dụng văn phòng thực tế. Touchpad haptic mới có độ chính xác sánh ngang với MacBook.
 
-3. **Budget Champion**: Acer's Swift 3 (2024 edition) delivers shockingly good performance with its Core i5-1335U and military-grade durability for under $800.
+**Hạng mục giá rẻ: Acer Swift 3 (phiên bản 2024)**
+Hiệu suất vượt mong đợi với chip Core i5-1335U và độ bền chuẩn quân sự, tất cả trong mức giá dưới 800 USD.
 
-We evaluated 18 criteria including keyboard travel distance, PWM flicker rates, and real-world multi-monitor performance. Pro tip: Look for laptops with hardware kill switches for webcams/mics in this era of sophisticated phishing attacks.`,
+Chúng tôi đã đánh giá dựa trên 18 tiêu chí khác nhau, từ độ nảy của phím bấm, tỷ lệ nhấp nháy PWM, cho đến hiệu suất thực tế khi làm việc với nhiều màn hình. Bí quyết từ chuyên gia: Trong thời đại tấn công mạng tinh vi như hiện nay, hãy ưu tiên những laptop có nút tắt cứng cho webcam và microphone.`,
     image: "articles/article1.jpg",
-    category: "Guides",
-    date: "November 10, 2024",
+    category: "Cẩm nang",
+    date: "10 tháng 11, 2024",
     createdAt: new Date()
   },
   {
-    title: "OLED vs Mini-LED Displays: Eye Strain Analysis",
-    excerpt: "Medical study reveals surprising results about long-term use of displays on our eyes.",
-    content: `A 12-month Stanford University study tracked 500 participants using various display technologies. Key findings:
+    title: "OLED hay Mini-LED: Công nghệ nào dễ mắt hơn?",
+    excerpt: "Nghiên cứu y học mới nhất tiết lộ những điều bất ngờ về tác động lâu dài của các loại màn hình đến thị lực.",
+    content: `Trong một nghiên cứu kéo dài 12 tháng, Đại học Stanford đã theo dõi 500 người sử dụng các công nghệ màn hình khác nhau. Kết quả thu được khá bất ngờ:
 
-- **OLED users** reported 22% less eye strain during night sessions due to perfect black levels reducing pupil dilation stress
-- **Mini-LED displays** showed advantages in bright environments, with matte options causing 15% less reflection-related fatigue
-- Both technologies eliminated the PWM-induced headaches common in budget LCD panels
+**Người dùng màn hình OLED**: Giảm 22% tình trạng mỏi mắt khi làm việc ban đêm nhờ khả năng hiển thị màu đen tuyệt đối, giúp giảm áp lực lên đồng tử mắt.
 
-Dr. Emily Chen, lead researcher, notes: "The 2024 generation of self-healing OLED panels solved burn-in concerns - we saw zero image retention cases." Surprisingly, display curvature mattered more than technology - 1800R curved screens reduced neck strain by 40% during long tasks. Our recommendation: Pair any modern panel with ambient light sensors and take 20-second screen breaks hourly.`,
+**Màn hình Mini-LED**: Thể hiện ưu thế vượt trội trong môi trường có ánh sáng mạnh, đặc biệt phiên bản chống lóa giúp giảm 15% tình trạng mệt mỏi do phản xạ ánh sáng.
+
+Đáng chú ý, cả hai công nghệ này đều loại bỏ hoàn toàn chứng đau đầu do hiệu ứng PWM - vấn đề thường gặp ở các panel LCD giá rẻ.
+
+Tiến sĩ Emily Chen, trưởng nhóm nghiên cứu, nhận định: "Thế hệ panel OLED 2024 với khả năng tự phục hồi đã giải quyết triệt để vấn đề cháy màn hình - chúng tôi không ghi nhận bất kỳ trường hợp lưu ảnh nào." 
+
+Một phát hiện thú vị khác là độ cong màn hình quan trọng hơn cả công nghệ hiển thị. Màn hình cong 1800R giúp giảm tới 40% tình trạng đau cổ khi làm việc lâu. Chuyên gia khuyên nên kết hợp bất kỳ loại màn hình hiện đại nào với cảm biến ánh sáng thông minh và thói quen nghỉ mắt 20 giây mỗi giờ.`,
     image: "articles/article2.jpg",
-    category: "Comparisons",
-    date: "November 5, 2024",
+    category: "So sánh",
+    date: "5 tháng 11, 2024",
     createdAt: new Date()
   },
   {
-    title: "The Rise of ARM Architecture in Windows Laptops",
-    excerpt: "How Qualcomm and Microsoft are challenging the x86 dominance in Windows Laptops.",
-    content: `The Snapdragon X Elite's Geekbench 6 multi-core score of 15,230 - beating Intel's Core i9-13900H - marks a turning point. Microsoft's Windows 12 includes a redesigned ARM compiler showing 90% x64 emulation efficiency, finally making Photoshop and AutoCAD viable.
+    title: "Kiến trúc ARM: Làn gió mới thổi vào thế giới laptop Windows",
+    excerpt: "Cuộc cạnh tranh khốc liệt giữa Qualcomm và Microsoft nhằm phá vỡ thế thống trị x86 trong laptop Windows.",
+    content: `Điểm số đa nhân 15.230 trên Geekbench 6 của Snapdragon X Elite - vượt qua Intel Core i9-13900H - đánh dấu một bước ngoặt lịch sử. Windows 12 với trình biên dịch ARM được thiết kế lại đạt hiệu quả mô phỏng x64 lên tới 90%, cuối cùng cũng khiến Photoshop và AutoCAD chạy mượt mà trên nền tảng này.
 
-Key advantages driving adoption:
-- **Battery Life**: 22 hours average in HP EliteBook 1040 G11 (ARM) vs 9 hours in Intel version
-- **Instant Wake**: ARM's smartphone heritage enables 0.5s resume from sleep
-- **5G Integration**: Built-in modems eliminate dongle needs
+**Những ưu điểm vượt trội đang thúc đẩy xu hướng chuyển đổi:**
 
-But challenges remain - legacy enterprise software and niche drivers still require x86. "We're working with 150+ ISVs on native ports," says Qualcomm's CTO. Industry analysts predict ARM could capture 35% of the Windows market by 2026, especially in enterprise and education sectors.`,
+*Thời lượng pin vượt trội*: HP EliteBook 1040 G11 phiên bản ARM cho thời gian sử dụng trung bình 22 giờ, gấp hơn đôi so với phiên bản Intel (9 giờ).
+
+*Khởi động tức thì*: Nhờ thừa hưởng công nghệ smartphone, ARM cho phép máy tỉnh giấc chỉ trong 0,5 giây từ chế độ ngủ.
+
+*Kết nối 5G tích hợp*: Modem được tích hợp sẵn giúp loại bỏ hoàn toàn nhu cầu sử dụng dongle.
+
+Tuy nhiên, những thách thức vẫn còn tồn tại - các phần mềm doanh nghiệp cũ và driver chuyên dụng vẫn cần kiến trúc x86. "Chúng tôi đang hợp tác với hơn 150 nhà phát triển phần mềm để tạo ra các phiên bản native," CTO của Qualcomm chia sẻ. 
+
+Các chuyên gia phân tích dự đoán ARM có thể chiếm tới 35% thị phần Windows vào năm 2026, đặc biệt trong lĩnh vực doanh nghiệp và giáo dục.`,
     image: "articles/article3.png",
-    category: "Technology",
-    date: "November 1, 2024",
+    category: "Công nghệ",
+    date: "1 tháng 11, 2024",
     createdAt: new Date()
   },
 ];
