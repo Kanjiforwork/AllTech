@@ -142,18 +142,18 @@ export default function NewsModal({
   const getContentLabel = () => {
     // Check if the item has a category that indicates it's an article
     if (newsItem.category) {
-      return "LATEST ARTICLES";
+      return "BÀI VIẾT MỚI NHẤT";
     }
     // Default to news if no category is specified
-    return "LATEST NEWS";
+    return "TIN TỨC MỚI NHẤT";
   };
 
   // Determine the related content section label
   const getRelatedContentLabel = () => {
     if (newsItem.category) {
-      return "Latest Articles";
+      return "Bài Viết Liên Quan";
     }
-    return "Latest News";
+    return "Tin Tức Liên Quan";
   };
 
   const formatContent = (content: string) => {
@@ -329,11 +329,11 @@ export default function NewsModal({
           <div className="flex space-x-4">
             <button className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
               <Share2 className="w-5 h-5 mr-2" />
-              <span className="text-sm font-medium">Share</span>
+              <span className="text-sm font-medium">Chia Sẻ</span>
             </button>
             <button className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
               <Bookmark className="w-5 h-5 mr-2" />
-              <span className="text-sm font-medium">Save</span>
+              <span className="text-sm font-medium">Lưu</span>
             </button>
           </div>
           <div className="flex items-center space-x-2">
@@ -404,7 +404,7 @@ export default function NewsModal({
             </div>
             <div>
               <h4 className="font-bold dark:text-white">{newsItem.author}</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Technology Reporter</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Phóng Viên Công Nghệ</p>
             </div>
           </div>
         </div>

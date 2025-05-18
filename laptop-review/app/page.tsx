@@ -377,12 +377,12 @@ export default function Home() {
 
         {/* Article Highlights */}
         <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold dark:text-white">Latest Articles</h2>
+          <h2 className="mb-6 text-2xl font-bold dark:text-white">BÀI VIẾT MỚI NHẤT</h2>
           <ArticleHighlights />
         </section>
         <div className="flex justify-center mt-10 mb-6">
           <button className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700">
-            View All Articles
+            Đọc Thêm
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>

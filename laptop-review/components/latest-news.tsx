@@ -197,7 +197,7 @@ export default function LatestNews() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64 bg-gray-100 dark:bg-gray-800 rounded-xl animate-pulse">
-        <p className="text-gray-500 dark:text-gray-400">Loading news...</p>
+        <p className="text-gray-500 dark:text-gray-400">Đang tải...</p>
       </div>
     );
   }
@@ -205,7 +205,7 @@ export default function LatestNews() {
   if (newsItems.length === 0) {
     return (
       <div className="flex items-center justify-center h-64 bg-gray-100 dark:bg-gray-800 rounded-xl">
-        <p className="text-gray-500 dark:text-gray-400">No news available at the moment.</p>
+        <p className="text-gray-500 dark:text-gray-400">Không có tin tức nào.</p>
       </div>
     );
   }
@@ -293,7 +293,7 @@ export default function LatestNews() {
                       }}
                       className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-800 dark:bg-gray-700 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-105"
                     >
-                      Read More
+                      Đọc Thêm
                     </button>
                   </div>
                 </div>

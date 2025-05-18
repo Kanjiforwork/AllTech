@@ -48,9 +48,9 @@ export default function ArticleHighlights() {
       image: article.image,
       excerpt: article.excerpt,
       content: article.content,
-      author: "LapInsight Team", // Default author for articles
+      author: "Đội ngũ LapInsight", // Default author for articles
       date: article.date,
-      readTime: `${Math.floor(Math.random() * 5) + 3} min read`, // Generate random read time
+      readTime: `5 phút đọc`, 
       createdAt: article.createdAt,
       category: article.category
     };
@@ -168,7 +168,7 @@ export default function ArticleHighlights() {
                 <h3 className="mb-2 text-lg font-bold transition-colors group-hover:text-gray-700 dark:text-white dark:group-hover:text-gray-300">{article.title}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">{article.excerpt}</p>
                 <button className="mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
-                  Read Article →
+                  Đọc Bài Viết →
                 </button>
               </div>
             </div>
