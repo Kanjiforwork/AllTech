@@ -6,6 +6,7 @@ import Image from "next/image"
 import { SearchIcon, Heart, ChevronLeft, Filter, ChevronRight } from "lucide-react"
 import { laptopService } from "@/services/firebaseServices"
 import { Laptop } from "@/types/laptop"
+import { useRouter } from "next/navigation"
 
 import FilterPanel, { FilterState } from "@/components/filter-panel"
 import NotificationBell from "@/components/notification-bell"
@@ -26,6 +27,7 @@ export default function AllLaptopsPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(12)
   const [sortOption, setSortOption] = useState('relevance')
+  const router = useRouter()
   
   // State cho bộ lọc
   const [filters, setFilters] = useState<FilterState>({
@@ -313,6 +315,7 @@ export default function AllLaptopsPage() {
       }
     }
     setQuickViewLaptop(laptop)
+    router.push(`/compare-select?current=${laptop.id}`)
   }
 
   return (
@@ -488,7 +491,10 @@ export default function AllLaptopsPage() {
                       {/* Button section */}
                       <div className="grid grid-cols-2 gap-2 mt-4">
                         <button
-                          onClick={() => toggleLaptopComparison(laptop)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            toggleLaptopComparison(laptop);
+                          }}
                           className="flex items-center justify-center px-3 py-2 text-sm font-medium bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600"
                         >
                           Compare
