@@ -10,33 +10,60 @@ interface Item {
   text: string
 }
 
-export default function ProsCons() {
-  const [pros, setPros] = useState<Item[]>([{ id: "pro-1", text: "" }])
+interface ProsConsProps {
+  onChange?: (pros: Item[], cons: Item[]) => void
+}
 
+export default function ProsCons({ onChange }: ProsConsProps) {
+  const [pros, setPros] = useState<Item[]>([{ id: "pro-1", text: "" }])
   const [cons, setCons] = useState<Item[]>([{ id: "con-1", text: "" }])
 
   const addPro = () => {
-    setPros([...pros, { id: `pro-${Date.now()}`, text: "" }])
+    const newPros = [...pros, { id: `pro-${Date.now()}`, text: "" }]
+    setPros(newPros)
+    if (onChange) {
+      onChange(newPros, cons)
+    }
   }
 
   const addCon = () => {
-    setCons([...cons, { id: `con-${Date.now()}`, text: "" }])
+    const newCons = [...cons, { id: `con-${Date.now()}`, text: "" }]
+    setCons(newCons)
+    if (onChange) {
+      onChange(pros, newCons)
+    }
   }
 
   const removePro = (id: string) => {
-    setPros(pros.filter((pro) => pro.id !== id))
+    const newPros = pros.filter((pro) => pro.id !== id)
+    setPros(newPros)
+    if (onChange) {
+      onChange(newPros, cons)
+    }
   }
 
   const removeCon = (id: string) => {
-    setCons(cons.filter((con) => con.id !== id))
+    const newCons = cons.filter((con) => con.id !== id)
+    setCons(newCons)
+    if (onChange) {
+      onChange(pros, newCons)
+    }
   }
 
   const updatePro = (id: string, text: string) => {
-    setPros(pros.map((pro) => (pro.id === id ? { ...pro, text } : pro)))
+    const newPros = pros.map((pro) => (pro.id === id ? { ...pro, text } : pro))
+    setPros(newPros)
+    if (onChange) {
+      onChange(newPros, cons)
+    }
   }
 
   const updateCon = (id: string, text: string) => {
-    setCons(cons.map((con) => (con.id === id ? { ...con, text } : con)))
+    const newCons = cons.map((con) => (con.id === id ? { ...con, text } : con))
+    setCons(newCons)
+    if (onChange) {
+      onChange(pros, newCons)
+    }
   }
 
   return (
@@ -65,6 +92,7 @@ export default function ProsCons() {
                   size="icon"
                   onClick={() => removePro(pro.id)}
                   className="flex-shrink-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                  disabled={pros.length <= 1}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -101,6 +129,7 @@ export default function ProsCons() {
                   size="icon"
                   onClick={() => removeCon(con.id)}
                   className="flex-shrink-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                  disabled={cons.length <= 1}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

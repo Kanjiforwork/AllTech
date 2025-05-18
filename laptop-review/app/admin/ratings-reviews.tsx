@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -8,7 +10,11 @@ import StarRating from "@/components/ui/star-rating"
 import { Button } from "@/components/ui/button"
 import { Upload, X } from "lucide-react"
 
-export default function RatingsReviews() {
+type RatingsReviewsProps = {
+  onChange?: (ratings: typeof ratings, descriptions: typeof descriptions, images: typeof images) => void
+}
+
+export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
   const [ratings, setRatings] = useState({
     designWeight: 5,
     monitor: 5,
@@ -17,6 +23,16 @@ export default function RatingsReviews() {
     speaker: 5,
     webcam: 5,
     ports: 5,
+  })
+
+  const [descriptions, setDescriptions] = useState({
+    designWeight: "",
+    monitor: "",
+    keyboard: "",
+    touchPad: "",
+    speaker: "",
+    webcam: "",
+    ports: "",
   })
 
   const [images, setImages] = useState({
@@ -34,6 +50,36 @@ export default function RatingsReviews() {
       ...prev,
       [category]: value,
     }))
+
+    if (onChange) {
+      onChange(
+        {
+          ...ratings,
+          [category]: value,
+        },
+        descriptions,
+        images,
+      )
+    }
+  }
+
+  const handleDescriptionChange = (category: keyof typeof descriptions, value: string) => {
+    setDescriptions((prev) => ({
+      ...prev,
+      [category]: value,
+    }))
+
+    // Call the onChange prop whenever ratings, descriptions, or images change
+    if (onChange) {
+      onChange(
+        ratings,
+        {
+          ...descriptions,
+          [category]: value,
+        },
+        images,
+      )
+    }
   }
 
   const handleImageUpload = (category: keyof typeof images, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +88,13 @@ export default function RatingsReviews() {
         ...prev,
         [category]: e.target.files![0],
       }))
+
+      if (onChange) {
+        onChange(ratings, descriptions, {
+          ...images,
+          [category]: e.target.files![0],
+        })
+      }
     }
   }
 
@@ -50,8 +103,14 @@ export default function RatingsReviews() {
       ...prev,
       [category]: null,
     }))
-  }
 
+    if (onChange) {
+      onChange(ratings, descriptions, {
+        ...images,
+        [category]: null,
+      })
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -83,7 +142,12 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the design and weight..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the design and weight..."
+                className="min-h-[100px]"
+                value={descriptions.designWeight}
+                onChange={(e) => handleDescriptionChange("designWeight", e.target.value)}
+              />
               <div className="mt-2">
                 {images.designWeight ? (
                   <div className="relative w-full h-32 border rounded-md overflow-hidden">
@@ -144,7 +208,12 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the keyboard..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the keyboard..."
+                className="min-h-[100px]"
+                value={descriptions.keyboard}
+                onChange={(e) => handleDescriptionChange("keyboard", e.target.value)}
+              />
               <div className="mt-2">
                 {images.keyboard ? (
                   <div className="relative w-full h-32 border rounded-md overflow-hidden">
@@ -205,7 +274,12 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the speaker..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the speaker..."
+                className="min-h-[100px]"
+                value={descriptions.speaker}
+                onChange={(e) => handleDescriptionChange("speaker", e.target.value)}
+              />
               <div className="mt-2">
                 {images.speaker ? (
                   <div className="relative w-full h-32 border rounded-md overflow-hidden">
@@ -266,7 +340,12 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the ports..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the ports..."
+                className="min-h-[100px]"
+                value={descriptions.ports}
+                onChange={(e) => handleDescriptionChange("ports", e.target.value)}
+              />
               <div className="mt-2">
                 {images.ports ? (
                   <div className="relative w-full h-32 border rounded-md overflow-hidden">
@@ -329,7 +408,12 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the monitor..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the monitor..."
+                className="min-h-[100px]"
+                value={descriptions.monitor}
+                onChange={(e) => handleDescriptionChange("monitor", e.target.value)}
+              />
               <div className="mt-2">
                 {images.monitor ? (
                   <div className="relative w-full h-32 border rounded-md overflow-hidden">
@@ -390,7 +474,12 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the touch pad..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the touch pad..."
+                className="min-h-[100px]"
+                value={descriptions.touchPad}
+                onChange={(e) => handleDescriptionChange("touchPad", e.target.value)}
+              />
               <div className="mt-2">
                 {images.touchPad ? (
                   <div className="relative w-full h-32 border rounded-md overflow-hidden">
@@ -429,7 +518,6 @@ export default function RatingsReviews() {
                   </div>
                 )}
               </div>
-
             </div>
 
             <div className="border rounded-lg p-4">
@@ -452,7 +540,12 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the webcam..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the webcam..."
+                className="min-h-[100px]"
+                value={descriptions.webcam}
+                onChange={(e) => handleDescriptionChange("webcam", e.target.value)}
+              />
               <div className="mt-2">
                 {images.webcam ? (
                   <div className="relative w-full h-32 border rounded-md overflow-hidden">

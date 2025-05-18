@@ -20,7 +20,7 @@ interface LaptopLinkInputProps {
     fieldErrors: Record<string, boolean>
     showValidation: boolean
 }
-export default function LaptopLinkInputProps(
+export default function LaptopLinkInput(
 
     {
   formData,
