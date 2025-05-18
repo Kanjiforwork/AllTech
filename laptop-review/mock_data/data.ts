@@ -7,6 +7,7 @@ export const laptops = [
   image: "/placeholder.svg?height=600&width=600",
   price: "$1,999",
   originalPrice: "$1,999",
+  purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
   specs: {
     cpu: "Apple M3 Pro (12-core CPU)",
     gpu: "16-core GPU",
@@ -177,6 +178,7 @@ export const laptops = [
   image: "/placeholder.svg?height=600&width=600",
   price: "$1,099.00",
   originalPrice: "$1,199.00",
+    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
   specs: {
     cpu: "Apple M3 (8-core CPU)",
     gpu: "10-core GPU",
@@ -347,6 +349,7 @@ export const laptops = [
   image: "/placeholder.svg?height=600&width=600",
   price: "$3,499.00",
   originalPrice: "$3,499.00",
+    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
   specs: {
     cpu: "Apple M3 Max (14-core CPU)",
     gpu: "30-core GPU",
@@ -517,6 +520,7 @@ export const laptops = [
   image: "/placeholder.svg?height=600&width=600",
   price: "$1,299.00",
   originalPrice: "$1,399.00",
+    purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
   specs: {
     cpu: "Apple M2 (8-core CPU)",
     gpu: "10-core GPU",
@@ -687,6 +691,7 @@ export const laptops = [
     image: "/placeholder.svg?height=600&width=600",
     price: "$1,599.99",
     originalPrice: "$1,799.99",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i7-11370H",
       gpu: "NVIDIA GeForce RTX 3050 Ti 4GB",
@@ -856,6 +861,7 @@ export const laptops = [
     image: "/placeholder.svg?height=600&width=600",
     price: "$999.99",
     originalPrice: "$1,199.99",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i7-1260P",
       gpu: "Intel Iris Xe Graphics",
@@ -1025,6 +1031,7 @@ export const laptops = [
       image: "/placeholder.svg?height=600&width=600",
       price: "$899.99",
       originalPrice: "$1,099.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
       specs: {
         cpu: "AMD Ryzen 7 5800H",
         gpu: "NVIDIA GeForce RTX 3050 4GB",
@@ -1195,6 +1202,7 @@ export const laptops = [
       image: "/placeholder.svg?height=600&width=600",
       price: "$1,299.99",
       originalPrice: "$1,499.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
       specs: {
         cpu: "AMD Ryzen 9 5900HS",
         gpu: "NVIDIA GeForce RTX 3060 6GB",
@@ -1361,6 +1369,7 @@ descriptions: {
       image: "/placeholder.svg?height=600&width=600",
       price: "$1,799.99",
       originalPrice: "$1,999.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
       specs: {
         cpu: "Intel Core i7-11800H",
         gpu: "NVIDIA GeForce RTX 3050 Ti 4GB",
@@ -1526,6 +1535,7 @@ descriptions: {
       image: "/placeholder.svg?height=600&width=600",
       price: "$1,399.99",
       originalPrice: "$1,599.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
       specs: {
         cpu: "Intel Core i7-1165G7",
         gpu: "Intel Iris Xe Graphics",
@@ -1696,6 +1706,7 @@ descriptions: {
       image: "/placeholder.svg?height=600&width=600",
       price: "$899.99",
       originalPrice: "$999.99",
+        purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
       specs: {
         cpu: "AMD Ryzen 7 5800H",
         gpu: "NVIDIA GeForce RTX 3060 6GB",
@@ -1867,6 +1878,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "29.990.000₫",
     originalPrice: "32.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i7-1360P",
       gpu: "Intel Iris Xe Graphics",
@@ -2032,6 +2044,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "25.990.000₫",
     originalPrice: "28.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i5-11320H",
       gpu: "NVIDIA GeForce RTX 3050 Ti 4GB",
@@ -2198,6 +2211,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "15.990.000₫",
     originalPrice: "17.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i3-1315U",
       gpu: "Intel UHD Graphics",
@@ -2361,6 +2375,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "19.990.000₫",
     originalPrice: "22.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "AMD Ryzen 5 5625U",
       gpu: "NVIDIA GeForce RTX 3050 4GB",
@@ -2526,6 +2541,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "34.990.000₫",
     originalPrice: "39.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i7-12700H",
       gpu: "NVIDIA GeForce RTX 3060 6GB",
@@ -2693,6 +2709,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "38.990.000₫",
     originalPrice: "42.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i7-13620H",
       gpu: "NVIDIA GeForce RTX 4060 8GB",
@@ -2859,6 +2876,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "9.990.000₫",
     originalPrice: "11.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i5-1135G7",
       gpu: "Intel Iris Xe Graphics",
@@ -3021,6 +3039,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "21.990.000₫",
     originalPrice: "24.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i7-1165G7",
       gpu: "Intel Iris Xe Graphics",
@@ -3185,6 +3204,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "22.990.000₫",
     originalPrice: "25.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i5-11400H",
       gpu: "NVIDIA GeForce GTX 1650 4GB",
@@ -3350,6 +3370,7 @@ descriptions: {
     image: "/placeholder.svg?height=600&width=600",
     price: "16.990.000₫",
     originalPrice: "18.990.000₫",
+      purchaseLink: "https://cellphones.com.vn/macbook-pro-14-inch-m3-pro-2023-18gb-512gb.html",
     specs: {
       cpu: "Intel Core i5-1235U",
       gpu: "Intel Iris Xe Graphics",
