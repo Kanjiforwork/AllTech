@@ -9,6 +9,7 @@ import ProsCons from "./sections/ProsCons";
 import DetailedAnalysis from "./sections/DetailedAnalysis";
 import ComparisonTable from "./comparison-table";
 import ComparisonButton from "@/components/comparison/ComparisonButton";
+import { CommentSection } from "./sections/comment-section";
 
 type LaptopDetailPageProps = {
   laptop: any;
@@ -55,7 +56,7 @@ export default function LaptopDetailPage({ laptop, similarLaptops = [] }: Laptop
 
       {/* Floating Comparison Button */}
       <ComparisonButton currentLaptopId={laptop.id} />
-      
+      <CommentSection laptop={laptop} laptopName={laptop.name} />
       <Footer />
     </div>
   );

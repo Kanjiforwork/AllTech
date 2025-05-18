@@ -1,28 +1,60 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { ThumbsUp, MoreHorizontal } from "lucide-react"
-import { type Comment, commentCollection, addComment } from "@/lib/comment-collection"
+import { ThumbsUp } from "lucide-react"
+import { type Comment, getCommentsByLaptopId, addComment as addCommentToCollection } from "@/mock_data/comment-collection"
 
-export function CommentSection() {
-  const [comments, setComments] = useState<Comment[]>(commentCollection)
+// Định nghĩa kiểu dữ liệu cho laptop
+interface Laptop {
+  id: string
+  name: string
+}
+
+interface CommentSectionProps {
+  laptop?: Laptop
+  laptopId?: string
+  laptopName?: string
+}
+
+export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: propLaptopName }: CommentSectionProps) {
+  // Xác định laptopId từ prop laptop hoặc prop laptopId
+  const laptopId = laptop?.id || propLaptopId || "default-laptop"
+
+  // Xác định laptopName từ prop laptop hoặc prop laptopName
+  const displayName = propLaptopName || laptop?.name || "Sản phẩm"
+
+  // State để lưu trữ comments
+  const [comments, setComments] = useState<Comment[]>([])
   const [newComment, setNewComment] = useState("")
 
+  // Lấy comments từ collection khi component mount hoặc laptopId thay đổi
+  useEffect(() => {
+    const laptopComments = getCommentsByLaptopId(laptopId)
+    setComments(laptopComments)
+  }, [laptopId])
+
+  // Hàm thêm comment mới
   const handleAddComment = () => {
     if (!newComment.trim()) return
 
-    const comment = addComment({
+    const commentData = {
+      laptopId: laptopId,
       userId: "current-user", // Trong thực tế, lấy từ thông tin người dùng đã đăng nhập
-      username: "Kanji",
+      username: "Kanji", // Tên người dùng hiện tại
       content: newComment,
-    })
+    }
 
-    setComments([comment, ...comments])
+    // Thêm comment vào collection
+    const newCommentObj = addCommentToCollection(commentData)
+
+    // Cập nhật state
+    setComments([newCommentObj, ...comments])
     setNewComment("")
   }
 
+  // Hàm định dạng thời gian
   const formatTimestamp = (date: Date): string => {
     const now = new Date()
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
@@ -33,77 +65,63 @@ export function CommentSection() {
     return `${Math.floor(diffInSeconds / 86400)} ngày trước`
   }
 
+  // Hàm thích comment
   const handleLikeComment = (id: string) => {
+    // Cập nhật state
     setComments(comments.map((comment) => (comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment)))
+
+    // Trong thực tế, bạn sẽ gọi API để cập nhật likes trong cơ sở dữ liệu
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto mt-8 bg-white rounded-lg shadow-sm">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-gray-700 p-6 mb-6">
+      {/* Tiêu đề */}
       <div className="p-4 border-b">
-        <h2 className="text-xl font-semibold">Bình luận ({comments.length})</h2>
+        <h2 className="text-xl font-semibold">
+          Bình luận về {displayName} ({comments.length})
+        </h2>
       </div>
 
-      {/* Comment input */}
+      {/* Ô nhập comment */}
       <div className="p-4">
-        <div className="flex-1">
-          <Textarea
-            placeholder="Viết bình luận..."
-            className="w-full resize-none border rounded-lg p-2"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <div className="mt-2 flex justify-end">
-            <Button onClick={handleAddComment}>Đăng</Button>
-          </div>
+        <Textarea
+          placeholder={`Viết bình luận về ${displayName}...`}
+          className="w-full resize-none border rounded-lg p-2"
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        />
+        <div className="mt-2 flex justify-end">
+          <Button onClick={handleAddComment}>Đăng</Button>
         </div>
       </div>
 
-      {/* Comments list */}
+      {/* Danh sách comment */}
       <div className="p-4 space-y-4">
-        {comments.map((comment) => (
-          <div key={comment.id} className="space-y-4">
-            <CommentItem
-              comment={comment}
-              onLike={() => handleLikeComment(comment.id)}
-              formatTimestamp={formatTimestamp}
-            />
+        {comments.length > 0 ? (
+          comments.map((comment) => (
+            <div key={comment.id} className="border-b pb-3 last:border-0">
+              <div className="bg-gray-100 rounded-lg p-3">
+                <div className="font-semibold">{comment.username}</div>
+                <p className="mt-1">{comment.content}</p>
+              </div>
+              <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                <span>{formatTimestamp(comment.timestamp)}</span>
+                <button className="font-medium hover:underline" onClick={() => handleLikeComment(comment.id)}>
+                  Thích
+                </button>
+                <div className="flex items-center gap-1">
+                  <ThumbsUp className="w-4 h-4" />
+                  <span>{comment.likes}</span>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-4 text-gray-500">
+            Chưa có bình luận nào về sản phẩm này. Hãy là người đầu tiên bình luận!
           </div>
-        ))}
+        )}
       </div>
-    </div>
-  )
-}
-
-interface CommentItemProps {
-  comment: Comment
-  onLike: () => void
-  formatTimestamp: (date: Date) => string
-}
-
-function CommentItem({ comment, onLike, formatTimestamp }: CommentItemProps) {
-  return (
-    <div className="flex gap-3">
-      <div className="flex-1">
-        <div className="bg-gray-100 rounded-lg p-3">
-          <div className="font-semibold">{comment.username}</div>
-          <p className="mt-1">{comment.content}</p>
-        </div>
-        <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
-          <span>{formatTimestamp(comment.timestamp)}</span>
-          <button className="font-medium hover:underline" onClick={onLike}>
-            Thích
-          </button>
-        </div>
-        <div className="flex items-center gap-2 mt-1">
-          <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700">
-            <ThumbsUp className="w-4 h-4" />
-            <span>{comment.likes}</span>
-          </button>
-        </div>
-      </div>
-      <button className="text-gray-500 hover:text-gray-700">
-        <MoreHorizontal className="w-5 h-5" />
-      </button>
     </div>
   )
 }
