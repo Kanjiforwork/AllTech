@@ -7,6 +7,8 @@ import RatingsReviews from "./ratings-reviews"
 import ProsCons from "./pros-cons"
 import DetailedAnalysis from "./detailed-analysis"
 import LaptopLinkInput from "./linkShop"
+import Benchmark from "./benchmark"
+import { BenchmarkScores } from "./benchmark"
 
 import { initializeApp } from "firebase/app"
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore"
@@ -321,7 +323,7 @@ export default function LaptopForm() {
       alert("Laptop information saved successfully!")
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" })
-      console.log(prosConsData)
+      console.log(scores)
     }
   }
 
@@ -366,6 +368,25 @@ export default function LaptopForm() {
     // In a real application, this would navigate back to the dashboard
     router.push("/")
   }
+
+  //benchmark scores
+  const [scores, setScores] = useState<BenchmarkScores>({
+      battery: 7,
+      build: 6.5,
+      content: 5.5,
+      display: 6.5,
+      gaming: 4,
+      overall: 6.5,
+      productivity: 6.5,
+      value: 7,
+    })
+  
+    const handleSliderChange = (name: keyof BenchmarkScores, value: number[]) => {
+      setScores((prev) => ({
+        ...prev,
+        [name]: value[0],
+      }))
+    }
 
   return (
     <div className="container mx-auto py-6">
@@ -442,6 +463,11 @@ export default function LaptopForm() {
           fieldErrors={fieldErrors}
           showValidation={showValidation}
         />
+        <Benchmark
+        scores={scores}
+        handleSliderChange={handleSliderChange}
+        
+        ></Benchmark>
         <LaptopLinkInput
           formData={formData}
           onChange={handleInputChange}
