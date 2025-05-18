@@ -8,6 +8,10 @@ import ProsCons from "./pros-cons"
 import DetailedAnalysis from "./detailed-analysis"
 import LaptopLinkInput from "./linkShop"
 
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+
+
 import type React from "react"
 
 import { useState } from "react"
@@ -17,6 +21,15 @@ import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Label } from "recharts"
 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAFSVL94k5zXkrAy5oQKbO7rT6W5fPAk4M",
+  authDomain: "laptop-review-all.firebaseapp.com",
+  projectId: "laptop-review-all",
+  storageBucket: "laptop-review-all.firebasestorage.app",
+  messagingSenderId: "1044782876129",
+  appId: "1:1044782876129:web:6e0891bf2753c5a3f63ea0"
+};
 export default function LaptopForm() {
   const router = useRouter()
 
@@ -73,7 +86,7 @@ export default function LaptopForm() {
     unpluggedCinebenchR23Single: "",
     unpluggedCinebenchR23Multi: "",
 
-    laptopLinkInput:"",
+    laptopLinkInput: "",
   })
 
   // Track validation errors for each field
@@ -124,10 +137,10 @@ export default function LaptopForm() {
     { name: "pluggedInG6Multi", label: "Plugged In G6 Multi" },
     { name: "pluggedInCinebenchR23Single", Label: "Plugged In Cinebench R23 Single" },
     { name: "pluggedInCinebenchR23Multi", label: "Plugged In Cinebench R23 Multi" },
-    
+
     { name: "unpluggedCinebenchR23Single", label: "Unplugged In Cinebench R23 Single" },
     { name: "unpluggedG6Single", label: "Unplugged G6 Single" },
-    { name: "unpluggedG6Multi",  label: "Unplugged Cinebench R23 Single" },
+    { name: "unpluggedG6Multi", label: "Unplugged Cinebench R23 Single" },
     { name: "unpluggedCinebenchR23Multi", label: "Unplugged Cinebench R23 Multi" },
 
     { name: "laptopLinkInput", label: "Laptop Link" }
@@ -152,17 +165,45 @@ export default function LaptopForm() {
     return errors.length === 0
   }
 
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  async function saveReview() {
+    try {
+      const docRef = await addDoc(collection(db, "reviews"), {
+        benchmarks: {
+          battery: 6.5,
+          build: 8,
+          content: 8,
+          display: 8,
+          gaming: 8.5,
+          overall: 8,
+          productivity: 8.5,
+          value: 7.5
+        },
+        cons: [
+          "Pin trung bình",
+          "Máy nặng và dày",
+          "Nhiệt độ cao khi chơi game lâu"
+        ],
+        createdAt: serverTimestamp(),
+        descriptions: "" 
+      });
+
+    } catch (e) {
+      alert("Có lỗi xảy ra")
+    }
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setShowValidation(true)
 
     if (validateForm()) {
-      // Form is valid, proceed with submission
+      saveReview()
       alert("Laptop information saved successfully!")
-      console.log(formData);
-      // In a real application, you would submit the data to your backend here
+
     } else {
-      // Scroll to the top to show errors
+
       window.scrollTo({ top: 0, behavior: "smooth" })
     }
   }
@@ -279,17 +320,17 @@ export default function LaptopForm() {
 
         <DetailedAnalysis
           formData={formData}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            fieldErrors={fieldErrors}
-            showValidation={showValidation}
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+          fieldErrors={fieldErrors}
+          showValidation={showValidation}
         />
         <LaptopLinkInput
-        formData={formData}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            fieldErrors={fieldErrors}
-            showValidation={showValidation}
+          formData={formData}
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+          fieldErrors={fieldErrors}
+          showValidation={showValidation}
         ></LaptopLinkInput>
 
         {showValidation && formErrors.length > 0 && (
