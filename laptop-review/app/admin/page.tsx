@@ -6,7 +6,7 @@ import BatteryLife from "./battery-life"
 import RatingsReviews from "./ratings-reviews"
 import ProsCons from "./pros-cons"
 import DetailedAnalysis from "./detailed-analysis"
-
+import LaptopLinkInput from "./linkShop"
 
 import type React from "react"
 
@@ -72,6 +72,8 @@ export default function LaptopForm() {
     unpluggedG6Multi: "",
     unpluggedCinebenchR23Single: "",
     unpluggedCinebenchR23Multi: "",
+
+    laptopLinkInput:"",
   })
 
   // Track validation errors for each field
@@ -126,7 +128,9 @@ export default function LaptopForm() {
     { name: "unpluggedCinebenchR23Single", label: "Unplugged In Cinebench R23 Single" },
     { name: "unpluggedG6Single", label: "Unplugged G6 Single" },
     { name: "unpluggedG6Multi",  label: "Unplugged Cinebench R23 Single" },
-    { name: "unpluggedCinebenchR23Multi", label: "Unplugged Cinebench R23 Multi" }
+    { name: "unpluggedCinebenchR23Multi", label: "Unplugged Cinebench R23 Multi" },
+
+    { name: "laptopLinkInput", label: "Laptop Link" }
 
 
   ]
@@ -155,6 +159,7 @@ export default function LaptopForm() {
     if (validateForm()) {
       // Form is valid, proceed with submission
       alert("Laptop information saved successfully!")
+      console.log(formData);
       // In a real application, you would submit the data to your backend here
     } else {
       // Scroll to the top to show errors
@@ -279,6 +284,13 @@ export default function LaptopForm() {
             fieldErrors={fieldErrors}
             showValidation={showValidation}
         />
+        <LaptopLinkInput
+        formData={formData}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            fieldErrors={fieldErrors}
+            showValidation={showValidation}
+        ></LaptopLinkInput>
 
         {showValidation && formErrors.length > 0 && (
           <Alert variant="destructive">
