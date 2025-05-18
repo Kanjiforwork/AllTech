@@ -22,7 +22,8 @@ export const laptopData = laptops.map((laptop, index) => {
     onSale: originalPrice ? true : false,
     greatDeal: true,
     image: laptop.image || "/placeholder.svg?height=600&width=600",
-    detailLink: `/laptops/${laptop.id}`
+    detailLink: `/laptops/${laptop.id}`,
+    purchaseLink: laptop.purchaseLink || `/laptops/${laptop.id}`
   };
 });
 
@@ -39,4 +40,5 @@ export type Laptop = {
   greatDeal: boolean;
   image?: string;
   detailLink: string;
+  purchaseLink?: string;
 };
