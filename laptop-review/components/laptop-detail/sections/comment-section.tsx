@@ -12,13 +12,19 @@ interface Laptop {
   name: string
 }
 
+interface CurrentUser {
+  id: string
+  username: string
+}
+
 interface CommentSectionProps {
   laptop?: Laptop
   laptopId?: string
   laptopName?: string
+  currentUser: CurrentUser
 }
 
-export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: propLaptopName }: CommentSectionProps) {
+export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: propLaptopName, currentUser }: CommentSectionProps) {
   // Xác định laptopId từ prop laptop hoặc prop laptopId
   const laptopId = laptop?.id || propLaptopId || "default-laptop"
 
@@ -31,9 +37,20 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
 
   // Lấy comments từ collection khi component mount hoặc laptopId thay đổi
   useEffect(() => {
-    const laptopComments = getCommentsByLaptopId(laptopId)
-    setComments(laptopComments)
-  }, [laptopId])
+    if (typeof window !== "undefined") {
+      const local = localStorage.getItem(`comments_${laptopId}`);
+      if (local) {
+        const parsed = JSON.parse(local).map((c: any) => ({
+          ...c,
+          timestamp: new Date(c.timestamp),
+        }));
+        setComments(parsed);
+        return;
+      }
+    }
+    const laptopComments = getCommentsByLaptopId(laptopId);
+    setComments(laptopComments);
+  }, [laptopId]);
 
   // Hàm thêm comment mới
   const handleAddComment = () => {
@@ -41,8 +58,8 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
 
     const commentData = {
       laptopId: laptopId,
-      userId: "current-user", // Trong thực tế, lấy từ thông tin người dùng đã đăng nhập
-      username: "Kanji", // Tên người dùng hiện tại
+      userId: currentUser.id,
+      username: currentUser.username,
       content: newComment,
     }
 
@@ -50,8 +67,12 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
     const newCommentObj = addCommentToCollection(commentData)
 
     // Cập nhật state
-    setComments([newCommentObj, ...comments])
-    setNewComment("")
+    const updatedComments = [newCommentObj, ...comments];
+    setComments(updatedComments);
+    setNewComment("");
+    if (typeof window !== "undefined") {
+      localStorage.setItem(`comments_${laptopId}`, JSON.stringify(updatedComments));
+    }
   }
 
   // Hàm định dạng thời gian

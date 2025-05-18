@@ -53,7 +53,24 @@ export default function LaptopDetailPage({ laptop, similarLaptops = [] }: Laptop
         {/* Detailed Analysis Section */}
         <DetailedAnalysis laptop={laptop} />
         <div className="mt-10">
-          <CommentSection laptop={laptop} laptopName={laptop.name} />
+          {/* Lấy user hiện tại từ localStorage */}
+          {(() => {
+            let user = null;
+            if (typeof window !== "undefined") {
+              const storedUserData = localStorage.getItem("user");
+              user = storedUserData ? JSON.parse(storedUserData) : null;
+            }
+            return (
+              <CommentSection
+                laptop={laptop}
+                laptopName={laptop.name}
+                currentUser={{
+                  id: user?.uid || "guest",
+                  username: user?.displayName || user?.email || "Khách"
+                }}
+              />
+            );
+          })()}
         </div>
       </main>
 
