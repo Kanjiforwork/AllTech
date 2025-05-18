@@ -6,6 +6,7 @@ import Image from "next/image"
 import { SearchIcon, Heart, ChevronLeft, Filter, ChevronRight } from "lucide-react"
 import { laptopService } from "@/services/firebaseServices"
 import { Laptop } from "@/types/laptop"
+import { useRouter } from "next/navigation"
 
 import FilterPanel, { FilterState } from "@/components/filter-panel"
 import NotificationBell from "@/components/notification-bell"
@@ -26,6 +27,7 @@ export default function AllLaptopsPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(12)
   const [sortOption, setSortOption] = useState('relevance')
+  const router = useRouter()
   
   // State cho bộ lọc
   const [filters, setFilters] = useState<FilterState>({
@@ -313,6 +315,7 @@ export default function AllLaptopsPage() {
       }
     }
     setQuickViewLaptop(laptop)
+    router.push(`/compare-select?current=${laptop.id}`)
   }
 
   return (
@@ -488,17 +491,26 @@ export default function AllLaptopsPage() {
                       {/* Button section */}
                       <div className="grid grid-cols-2 gap-2 mt-4">
                         <button
-                          onClick={() => toggleLaptopComparison(laptop)}
-                          className="flex items-center justify-center px-3 py-2 text-sm font-medium bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            toggleLaptopComparison(laptop);
+                          }}
+                          className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600"
                         >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
                           Compare
                         </button>
                         <a
                           href={laptop.purchaseLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                          className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600"
                         >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
                           Buy Now
                         </a>
                       </div>
