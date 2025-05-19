@@ -148,44 +148,7 @@ export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
                 value={descriptions.designWeight}
                 onChange={(e) => handleDescriptionChange("designWeight", e.target.value)}
               />
-              <div className="mt-2">
-                {images.designWeight ? (
-                  <div className="relative w-full h-32 border rounded-md overflow-hidden">
-                    <img
-                      src={URL.createObjectURL(images.designWeight) || "/placeholder.svg"}
-                      alt="Design and Weight"
-                      className="w-full h-full object-cover"
-                    />
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-1 right-1 h-6 w-6 rounded-full"
-                      onClick={() => handleRemoveImage("designWeight")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="dropzone-file-designWeight"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="w-6 h-6 mb-1 text-gray-500" />
-                        <p className="text-xs text-gray-500">Upload image</p>
-                      </div>
-                      <input
-                        id="dropzone-file-designWeight"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleImageUpload("designWeight", e)}
-                      />
-                    </label>
-                  </div>
-                )}
-              </div>
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -214,44 +177,7 @@ export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
                 value={descriptions.keyboard}
                 onChange={(e) => handleDescriptionChange("keyboard", e.target.value)}
               />
-              <div className="mt-2">
-                {images.keyboard ? (
-                  <div className="relative w-full h-32 border rounded-md overflow-hidden">
-                    <img
-                      src={URL.createObjectURL(images.keyboard) || "/placeholder.svg"}
-                      alt="Keyboard"
-                      className="w-full h-full object-cover"
-                    />
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-1 right-1 h-6 w-6 rounded-full"
-                      onClick={() => handleRemoveImage("keyboard")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="dropzone-file-keyboard"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="w-6 h-6 mb-1 text-gray-500" />
-                        <p className="text-xs text-gray-500">Upload image</p>
-                      </div>
-                      <input
-                        id="dropzone-file-keyboard"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleImageUpload("keyboard", e)}
-                      />
-                    </label>
-                  </div>
-                )}
-              </div>
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -280,44 +206,7 @@ export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
                 value={descriptions.speaker}
                 onChange={(e) => handleDescriptionChange("speaker", e.target.value)}
               />
-              <div className="mt-2">
-                {images.speaker ? (
-                  <div className="relative w-full h-32 border rounded-md overflow-hidden">
-                    <img
-                      src={URL.createObjectURL(images.speaker) || "/placeholder.svg"}
-                      alt="Speaker"
-                      className="w-full h-full object-cover"
-                    />
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-1 right-1 h-6 w-6 rounded-full"
-                      onClick={() => handleRemoveImage("speaker")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="dropzone-file-speaker"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="w-6 h-6 mb-1 text-gray-500" />
-                        <p className="text-xs text-gray-500">Upload image</p>
-                      </div>
-                      <input
-                        id="dropzone-file-speaker"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleImageUpload("speaker", e)}
-                      />
-                    </label>
-                  </div>
-                )}
-              </div>
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -346,44 +235,7 @@ export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
                 value={descriptions.ports}
                 onChange={(e) => handleDescriptionChange("ports", e.target.value)}
               />
-              <div className="mt-2">
-                {images.ports ? (
-                  <div className="relative w-full h-32 border rounded-md overflow-hidden">
-                    <img
-                      src={URL.createObjectURL(images.ports) || "/placeholder.svg"}
-                      alt="Ports"
-                      className="w-full h-full object-cover"
-                    />
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-1 right-1 h-6 w-6 rounded-full"
-                      onClick={() => handleRemoveImage("ports")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="dropzone-file-ports"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="w-6 h-6 mb-1 text-gray-500" />
-                        <p className="text-xs text-gray-500">Upload image</p>
-                      </div>
-                      <input
-                        id="dropzone-file-ports"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleImageUpload("ports", e)}
-                      />
-                    </label>
-                  </div>
-                )}
-              </div>
+              
             </div>
           </div>
 
@@ -414,44 +266,7 @@ export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
                 value={descriptions.monitor}
                 onChange={(e) => handleDescriptionChange("monitor", e.target.value)}
               />
-              <div className="mt-2">
-                {images.monitor ? (
-                  <div className="relative w-full h-32 border rounded-md overflow-hidden">
-                    <img
-                      src={URL.createObjectURL(images.monitor) || "/placeholder.svg"}
-                      alt="Monitor"
-                      className="w-full h-full object-cover"
-                    />
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-1 right-1 h-6 w-6 rounded-full"
-                      onClick={() => handleRemoveImage("monitor")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="dropzone-file-monitor"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="w-6 h-6 mb-1 text-gray-500" />
-                        <p className="text-xs text-gray-500">Upload image</p>
-                      </div>
-                      <input
-                        id="dropzone-file-monitor"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleImageUpload("monitor", e)}
-                      />
-                    </label>
-                  </div>
-                )}
-              </div>
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -480,44 +295,7 @@ export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
                 value={descriptions.touchPad}
                 onChange={(e) => handleDescriptionChange("touchPad", e.target.value)}
               />
-              <div className="mt-2">
-                {images.touchPad ? (
-                  <div className="relative w-full h-32 border rounded-md overflow-hidden">
-                    <img
-                      src={URL.createObjectURL(images.touchPad) || "/placeholder.svg"}
-                      alt="Touch Pad"
-                      className="w-full h-full object-cover"
-                    />
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-1 right-1 h-6 w-6 rounded-full"
-                      onClick={() => handleRemoveImage("touchPad")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="dropzone-file-touchPad"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="w-6 h-6 mb-1 text-gray-500" />
-                        <p className="text-xs text-gray-500">Upload image</p>
-                      </div>
-                      <input
-                        id="dropzone-file-touchPad"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleImageUpload("touchPad", e)}
-                      />
-                    </label>
-                  </div>
-                )}
-              </div>
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -546,44 +324,7 @@ export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
                 value={descriptions.webcam}
                 onChange={(e) => handleDescriptionChange("webcam", e.target.value)}
               />
-              <div className="mt-2">
-                {images.webcam ? (
-                  <div className="relative w-full h-32 border rounded-md overflow-hidden">
-                    <img
-                      src={URL.createObjectURL(images.webcam) || "/placeholder.svg"}
-                      alt="Webcam"
-                      className="w-full h-full object-cover"
-                    />
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-1 right-1 h-6 w-6 rounded-full"
-                      onClick={() => handleRemoveImage("webcam")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center w-full">
-                    <label
-                      htmlFor="dropzone-file-webcam"
-                      className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="w-6 h-6 mb-1 text-gray-500" />
-                        <p className="text-xs text-gray-500">Upload image</p>
-                      </div>
-                      <input
-                        id="dropzone-file-webcam"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleImageUpload("webcam", e)}
-                      />
-                    </label>
-                  </div>
-                )}
-              </div>
+              
             </div>
           </div>
         </div>

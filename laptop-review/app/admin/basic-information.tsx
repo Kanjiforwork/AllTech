@@ -16,6 +16,8 @@ interface BasicInformationProps {
     operatingSystem: string
     weight: string
     dimensions: string
+    price: string
+    originalPrice: string
   }
   onChange: (field: string, value: string) => void
   onFocus: (field: string) => void
@@ -103,6 +105,7 @@ export default function BasicInformation({
             <p className="text-sm text-red-500 mt-1">Operation System is required</p>
           )}
         </div>
+        
 
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -131,6 +134,38 @@ export default function BasicInformation({
             />
              {showValidation && fieldErrors.dimensions && (
             <p className="text-sm text-red-500 mt-1">Dimemsions is required</p>
+          )}
+            
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="weight">Price</Label>
+            <Input
+              id="price"
+              placeholder="17.000.000"
+              value={formData.price}
+              onChange={(e) => onChange("price", e.target.value)}
+              onFocus={() => onFocus("price")}
+              className={showValidation && fieldErrors.price ? "border-red-500" : ""}
+            />
+            {showValidation && fieldErrors.price && (
+            <p className="text-sm text-red-500 mt-1">Price is required</p>
+          )}
+          </div>
+          <div>
+            <Label htmlFor="dimensions">Original Price</Label>
+            <Input
+              id="originalPrice"
+              placeholder="19.000.000"
+              value={formData.originalPrice}
+              onChange={(e) => onChange("originalPrice", e.target.value)}
+              onFocus={() => onFocus("originalPrice")}
+              className={showValidation && fieldErrors.originalPrice ? "border-red-500" : ""}
+            />
+             {showValidation && fieldErrors.originalPrice && (
+            <p className="text-sm text-red-500 mt-1">Original Price is required</p>
           )}
             
           </div>

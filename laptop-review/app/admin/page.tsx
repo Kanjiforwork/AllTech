@@ -9,6 +9,7 @@ import DetailedAnalysis from "./detailed-analysis"
 import LaptopLinkInput from "./linkShop"
 import Benchmark from "./benchmark"
 import { BenchmarkScores } from "./benchmark"
+import BatteryForm from "./batteryInfo"
 
 import { initializeApp } from "firebase/app"
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore"
@@ -17,9 +18,12 @@ import type React from "react"
 
 import { useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, AlertCircle } from "lucide-react"
+import { ChevronLeft, AlertCircle, Battery, Bluetooth, Webcam } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { spec } from "node:test/reporters"
+import { connect } from "http2"
+
 
 interface ProsConsItem {
   id: string
@@ -45,6 +49,8 @@ export default function LaptopForm() {
     operatingSystem: "",
     weight: "",
     dimensions: "",
+    price:"",
+    originalPrice:"", 
 
     // Hardware Specifications
     cpu: "",
@@ -140,6 +146,8 @@ export default function LaptopForm() {
     { name: "operatingSystem", label: "Operating System" },
     { name: "weight", label: "Weight" },
     { name: "dimensions", label: "dimensions" },
+    { name: "price", label: "Price" },
+    { name: "originalPrice", label: "Original Price" },
 
     { name: "cpu", label: "CPU / Processor" },
     { name: "gpu", label: "GPU" },
@@ -182,13 +190,13 @@ export default function LaptopForm() {
 
     { name: "laptopLinkInput", label: "Laptop Link" },
 
-    { name: "designWeight", label: "Design and Weight" },
-    { name: "monitor", label: "Monitor" },
-    { name: "keyboard", label: "Keyboard" },
-    { name: "touchPad", label: "Touchpad" },
-    { name: "speaker", label: "Speaker" },
-    { name: "webcam", label: "Webcam" },
-    { name: "ports", label: "Ports" },
+    // { name: "designWeight", label: "Design and Weight" },
+    // { name: "monitor", label: "Monitor" },
+    // { name: "keyboard", label: "Keyboard" },
+    // { name: "touchPad", label: "Touchpad" },
+    // { name: "speaker", label: "Speaker" },
+    // { name: "webcam", label: "Webcam" },
+    // { name: "ports", label: "Ports" },
   ]
 
   const validateForm = () => {
@@ -240,91 +248,89 @@ export default function LaptopForm() {
 
   const app = initializeApp(firebaseConfig)
   const db = getFirestore(app)
+
+  //----------------------------------------------------------------------------------------------------
   async function saveReview() {
     try {
-      const docRef = await addDoc(collection(db, "reviews"), {
-        // Basic information
-        laptopName: formData.laptopName,
-        brand: formData.brand,
-        operatingSystem: formData.operatingSystem,
-        weight: formData.weight,
-        dimensions: formData.dimensions,
+      const docRef = await addDoc(collection(db, "laptops"), {
+        
+        name : formData.laptopName,
+        price : formData.price,
+        originalPrice : formData.originalPrice,
 
-        // Hardware specifications
-        cpu: formData.cpu,
-        gpu: formData.gpu,
-        ram: formData.ram,
-        storage: formData.storage,
-        graphicsCard: formData.graphicsCard,
-        ports: formData.ports,
-        display: formData.display,
-        colorGamut: formData.colorGamut,
-        battery: formData.battery,
-        charging: formData.charging,
+        specs: {
+          cpu: formData.cpu,
+          gpu: formData.gpu,
+          ram: formData.ram,
+          display : formData.display,
+          storage: formData.storage,
+          battery: formData.battery,
+        },
 
-        // Additional features
-        webcam: formData.webcam,
-        wifiBluetooth: formData.wifiBluetooth,
-        keyboard: formData.keyboard,
-        speakersMicrophone: formData.speakersMicrophone,
+        detailedSpecs: {
+          battery:{
+            capacity: formData.battery,
+            charging: formData.charging,
+          },
+          connectivity: {
+            Bluetooth: formData.wifiBluetooth,
+          },
+          Webcam: formData.webcam,
+          wifi: formData.wifiBluetooth,
+        },
+        
 
-        // Battery life
-        videoPlayback: formData.videoPlayback,
-        casualUse: formData.casualUse,
-        extremeUse: formData.extremeUse,
+        Benchmarks:{
+          cinebenchR23Single: formData.cineBenchR23Single,
+          cinebenchR23Multi: formData.cineBenchR23Multi,
+          geekBenchV6Single: formData.geekBenchV6Single,
+          geekBenchV6Multi: formData.geekBenchV6Multi,
+          
+        },
 
-        // Detailed analysis
-        performanceSummary: formData.performanceSummary,
-        geekBenchV6Single: formData.geekBenchV6Single,
-        geekBenchV6Multi: formData.geekBenchV6Multi,
-        cineBenchR23Single: formData.cineBenchR23Single,
-        cineBenchR23Multi: formData.cineBenchR23Multi,
-        _3DMarkTimeSpy: formData._3DMarkTimeSpy,
-        _3DMarkWildlifeExtrme: formData._3DMarkWildlifeExtrme,
-        geekBenchCompute: formData.geekBenchCompute,
-        pluggedInG6Single: formData.pluggedInG6Single,
-        pluggedInG6Multi: formData.pluggedInG6Multi,
-        pluggedInCinebenchR23Single: formData.pluggedInCinebenchR23Single,
-        pluggedInCinebenchR23Multi: formData.pluggedInCinebenchR23Multi,
-        unpluggedG6Single: formData.unpluggedG6Single,
-        unpluggedG6Multi: formData.unpluggedG6Multi,
-        unpluggedCinebenchR23Single: formData.unpluggedCinebenchR23Single,
-        unpluggedCinebenchR23Multi: formData.unpluggedCinebenchR23Multi,
+        descriptions:{
 
-        // Ratings and reviews
-        ratings: ratingsData.ratings,
-        ratingDescriptions: ratingsData.descriptions,
+          design: ratingsData.descriptions.designWeight,
+          display : ratingsData.descriptions.monitor,
+          keyboard : ratingsData.descriptions.keyboard,  
+          ports : ratingsData.descriptions.ports,
+          speaker : ratingsData.descriptions.speaker,
+          trạckpad : ratingsData.descriptions.touchPad,
+          webcam : ratingsData.descriptions.webcam,
 
+        },
         // Pros and cons
         pros: prosConsData.pros.map((pro) => pro.text).filter((text) => text.trim() !== ""),
         cons: prosConsData.cons.map((con) => con.text).filter((text) => text.trim() !== ""),
 
         // Link
-        laptopLinkInput: formData.laptopLinkInput,
+        purchaseLink: formData.laptopLinkInput,
 
         // Metadata
         createdAt: serverTimestamp(),
       })
-      console.log("Document written with ID: ", docRef.id)
+     
       return true
     } catch (e) {
-      console.error("Error adding document: ", e)
+    
       alert("Có lỗi xảy ra")
       return false
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setShowValidation(true)
 
     if (validateForm()) {
-      saveReview()
+    const success = await saveReview() // chờ lưu xong
+    if (success) {
       alert("Laptop information saved successfully!")
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" })
-      console.log(scores)
     }
+  } else {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+    console.log(ratingsData)
+  }
   }
 
   const handleInputChange = (field: string, value: string) => {
@@ -463,11 +469,12 @@ export default function LaptopForm() {
           fieldErrors={fieldErrors}
           showValidation={showValidation}
         />
-        <Benchmark
+        {/* <Benchmark
         scores={scores}
         handleSliderChange={handleSliderChange}
-        
-        ></Benchmark>
+        ></Benchmark> */}
+
+        {/* <BatteryForm></BatteryForm> */}
         <LaptopLinkInput
           formData={formData}
           onChange={handleInputChange}
