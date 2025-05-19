@@ -58,56 +58,23 @@ export default function ComparisonBarChart({
     return sortOrder === "asc" ? valueA - valueB : valueB - valueA
   })
 
-  // Get background color based on theme
-  const getBgColor = () => {
-    return theme === "dark" ? "bg-gray-800" : "bg-white"
-  }
-
-  // Get text color based on theme
-  const getTextColor = () => {
-    return theme === "dark" ? "text-white" : "text-gray-900"
-  }
-
-  // Get secondary text color based on theme
-  const getSecondaryTextColor = () => {
-    return theme === "dark" ? "text-gray-300" : "text-gray-600"
-  }
-
-  // Get border color based on theme
-  const getBorderColor = () => {
-    return theme === "dark" ? "border-gray-700" : "border-gray-200"
-  }
-
-  // Get button background color based on theme
-  const getButtonBgColor = () => {
-    return theme === "dark" ? "bg-gray-700" : "bg-gray-100"
-  }
-
-  // Get button hover background color based on theme
-  const getButtonHoverBgColor = () => {
-    return theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"
-  }
-  
-  // Get progress background color based on theme
-  const getProgressBgColor = () => {
-    return theme === "dark" ? "bg-gray-600" : "bg-gray-200"
-  }
+  // Removed helper functions in favor of direct Tailwind classes
 
   return (
-    <div className={`rounded-lg shadow-sm border ${getBorderColor()} p-6 ${getBgColor()}`}>
+    <div className="rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-800">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-        <h2 className={`text-2xl font-bold ${getTextColor()}`}>{title}</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h2>
 
         {sortOptions.enabled && (
           <div className="flex items-center mt-4 md:mt-0">
-            <span className={`mr-2 text-sm ${getSecondaryTextColor()}`}>Sắp xếp theo</span>
+            <span className="mr-2 text-sm text-gray-600 dark:text-gray-300">Sắp xếp theo</span>
             <div className="flex">
               <button
                 onClick={() => setSortOrder("asc")}
                 className={`px-3 py-1 text-sm rounded-l ${
                   sortOrder === "asc"
-                    ? "bg-blue-600 dark:bg-blue-500 text-white"
-                    : `${getButtonBgColor()} ${getTextColor()} ${getButtonHoverBgColor()}`
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
                 }`}
               >
                 Tăng dần
@@ -116,8 +83,8 @@ export default function ComparisonBarChart({
                 onClick={() => setSortOrder("desc")}
                 className={`px-3 py-1 text-sm rounded-r ${
                   sortOrder === "desc"
-                    ? "bg-blue-600 dark:bg-blue-500 text-white"
-                    : `${getButtonBgColor()} ${getTextColor()} ${getButtonHoverBgColor()}`
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
                 }`}
               >
                 Giảm dần
@@ -131,7 +98,7 @@ export default function ComparisonBarChart({
         {metrics.map((metric) => (
           <div key={metric.id} className="flex items-center">
             <div className="w-4 h-4 rounded-full mr-1" style={{ backgroundColor: metric.color }}></div>
-            <span className={`text-sm ${getSecondaryTextColor()}`}>{metric.label}</span>
+            <span className="text-sm text-gray-600 dark:text-gray-300">{metric.label}</span>
           </div>
         ))}
       </div>
@@ -139,10 +106,10 @@ export default function ComparisonBarChart({
       <div className="space-y-8">
         {sortedItems.map((item) => (
           <div key={item.id} className="space-y-2">
-            <div className={`font-medium ${getTextColor()}`}>
+            <div className="font-medium text-gray-900 dark:text-white">
               {item.name}
               {item.subtitle && (
-                <span className={`ml-2 text-sm font-normal ${getSecondaryTextColor()}`}>{item.subtitle}</span>
+                <span className="ml-2 text-sm font-normal text-gray-600 dark:text-gray-300">{item.subtitle}</span>
               )}
             </div>
 
@@ -152,7 +119,7 @@ export default function ComparisonBarChart({
 
               return (
                 <div key={metric.id} className="space-y-1">
-                  <div className={`relative h-8 ${getProgressBgColor()} rounded-full overflow-hidden`}>
+                  <div className="relative h-8 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full flex items-center justify-end px-3"
                       style={{
