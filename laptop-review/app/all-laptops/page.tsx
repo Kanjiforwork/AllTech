@@ -427,7 +427,7 @@ export default function AllLaptopsPage() {
                   key={laptop.id}
                   className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out 
                     ${visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} 
-                    hover:shadow-md hover:-translate-y-1 relative`}
+                    hover:shadow-md hover:-translate-y-1 relative flex flex-col`}
                 >
                   {/* Nút yêu thích */}
                   <div className="absolute top-2 right-2 z-10">
@@ -438,12 +438,22 @@ export default function AllLaptopsPage() {
                     />
                   </div>
                   
-                  <div className="p-4">
+                  <div className="p-4 flex flex-col flex-grow">
                     <Link href={`/laptops/${laptop.id}`}>
                       <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md">
-                        <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300">
-                          {laptop.name}
-                        </div>
+                        {laptop.image ? (
+                            <Image 
+                                src={laptop.image || "/placeholder.svg"} 
+                                alt={laptop.name || "Laptop image"}
+                                fill
+                                style={{objectFit: 'contain'}}
+                                className="p-2"
+                            />
+                        ) : (
+                            <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300 p-2 text-center">
+                                {laptop.name}
+                            </div>
+                        )}
                       </div>
 
                       <div className="flex items-center mb-2">
@@ -459,15 +469,15 @@ export default function AllLaptopsPage() {
                       
                       <h3 className="mb-1 font-semibold line-clamp-2 dark:text-white">{laptop.name}</h3>
                       
-                      <p className="mb-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+                      <p className="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
                         {laptop.specs.cpu}, {laptop.specs.ram}, {laptop.specs.storage}
                       </p>
                     </Link>
 
-                    {/* Price section */}
-                    <div className="mt-2">
-                      {/* Price tags */}
-                      <div className="flex gap-2 mb-2">
+                    {/* Price section - được đẩy xuống dưới */}
+                    <div className="mt-auto">
+                      {/* Price tags - chiều cao cố định */}
+                      <div className="flex flex-wrap gap-x-2 gap-y-1 mb-2 h-12 items-start">
                         {laptop.price !== laptop.originalPrice && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
                             Giảm giá

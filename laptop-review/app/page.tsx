@@ -283,9 +283,9 @@ export default function Home() {
                   key={laptop.id} 
                   className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out ${
                     visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                  } hover:shadow-md hover:-translate-y-1`}
+                  } hover:shadow-md hover:-translate-y-1 flex flex-col`}
                 >
-                  <div className="p-4">
+                  <div className="p-4 flex flex-col flex-grow">
                     <Link href={laptop.detailLink}>
                       <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md relative">
                         <Image 
@@ -308,14 +308,14 @@ export default function Home() {
                     </div>
                     
                     <Link href={laptop.detailLink}>
-                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600 dark:text-white dark:hover:text-blue-400">{laptop.name}</h3>
+                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600 dark:text-white dark:hover:text-blue-400 line-clamp-2">{laptop.name}</h3>
                     </Link>
-                    <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">{laptop.specs}</p>
+                    <p className="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">{laptop.specs}</p>
 
-                    {/* Phần hiển thị giá */}
-                    <div className="mt-2">
-                      {/* Các tag */}
-                      <div className="flex gap-2 mb-2">
+                    {/* Phần hiển thị giá, tags và nút - được đẩy xuống dưới */}
+                    <div className="mt-auto">
+                      {/* Các tag - chiều cao cố định */}
+                      <div className="flex flex-wrap gap-x-2 gap-y-1 mb-2 h-12 items-start">
                         {laptop.onSale && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
                             Giảm giá

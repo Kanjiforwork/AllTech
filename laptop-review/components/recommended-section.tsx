@@ -179,21 +179,23 @@ export default function RecommendedSection() {
           {categories.map((category) => (
             <div key={category.id} className="w-full flex-shrink-0">
               <div className="bg-white dark:bg-gray-800 rounded-lg">
-                <div className="flex flex-col gap-6 md:flex-row">
-                  <div className="relative w-full h-48 overflow-hidden rounded-lg md:w-1/3">
-                    <Image src={category.image || "/placeholder.svg"} alt={category.name} fill className="object-cover" />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                      <h3 className="text-2xl font-bold text-white">{category.name}</h3>
+                <div className="flex flex-col gap-6 md:flex-row md:items-stretch">
+                  <div className="relative w-full overflow-hidden rounded-lg md:w-1/3 flex flex-col">
+                    <div className="relative w-full h-48 md:h-auto flex-grow">
+                      <Image src={category.image || "/placeholder.svg"} alt={category.name} fill className="object-cover" />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50 p-4">
+                        <h3 className="text-2xl font-bold text-white text-center">{category.name}</h3>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="md:w-2/3">
+                  <div className="md:w-2/3 flex flex-col">
                     <p className="mb-4 text-gray-600 dark:text-gray-300">{category.description}</p>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 mt-auto">
                       {category.laptops.map((laptop) => (
-                        <Link key={laptop.id} href={`/laptops/${laptop.id}`} className="group">
-                          <div className="overflow-hidden transition-all duration-200 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg group-hover:shadow-md">
-                            <div className="relative h-32">
+                        <Link key={laptop.id} href={`/laptops/${laptop.id}`} className="group flex">
+                          <div className="flex flex-col w-full overflow-hidden transition-all duration-200 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg group-hover:shadow-md">
+                            <div className="relative w-full h-40">
                               <Image
                                 src={laptop.image || "/placeholder.svg"}
                                 alt={laptop.name}
@@ -201,9 +203,9 @@ export default function RecommendedSection() {
                                 className="object-cover"
                               />
                             </div>
-                            <div className="p-3">
-                              <h4 className="text-sm font-medium dark:text-white">{laptop.name}</h4>
-                              <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{laptop.price}</p>
+                            <div className="p-3 flex flex-col flex-grow">
+                              <h4 className="text-sm font-medium dark:text-white line-clamp-2">{laptop.name}</h4>
+                              <p className="mt-auto text-sm font-bold text-gray-900 dark:text-gray-100 pt-1">{laptop.price}</p>
                             </div>
                           </div>
                         </Link>
