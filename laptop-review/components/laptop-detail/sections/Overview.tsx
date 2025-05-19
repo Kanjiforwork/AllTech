@@ -48,7 +48,7 @@ export default function Overview({ laptop, detailed = false }: OverviewProps) {
               {laptop.description ? (
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{laptop.description}</p>
               ) : (
-                <p className="text-gray-500 dark:text-gray-400 italic">No description.</p>
+                <p className="text-gray-500 dark:text-gray-400 italic"></p>
               )}
               
               {laptop.longDescription && (
@@ -95,32 +95,32 @@ export default function Overview({ laptop, detailed = false }: OverviewProps) {
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
               <SpecItem
                 icon={<Cpu className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
-                label="Processor"
+                label="Vi xử lý"
                 value={laptop.specs.cpu}
               />
               <SpecItem
                 icon={<Gpu className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
-                label="Graphics"
+                label="Card đồ họa"
                 value={laptop.specs.gpu}
               />
               <SpecItem
                 icon={<Memory className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
-                label="Memory"
+                label="Ram"
                 value={laptop.specs.ram}
               />
               <SpecItem
                 icon={<HardDrive className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
-                label="Storage"
+                label="Bộ nhớ"
                 value={laptop.specs.storage}
               />
               <SpecItem
                 icon={<Monitor className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
-                label="Display"
+                label="Màn hình"
                 value={laptop.specs.display}
               />
               <SpecItem
                 icon={<Battery className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
-                label="Battery"
+                label="Thời lượng pin"
                 value={laptop.specs.battery}
               />
             </div>
