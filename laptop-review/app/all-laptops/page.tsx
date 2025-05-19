@@ -333,12 +333,12 @@ export default function AllLaptopsPage() {
                 className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 mr-2 dark:text-gray-300 dark:hover:text-white"
               >
                 <ChevronLeft className="w-4 h-4 mr-1" />
-                Back to Compare
+                Trở lại trang so sánh
               </Link>
             </div>
             <h1 className="text-2xl font-bold dark:text-white">All Laptops</h1>
             <p className="text-gray-600 dark:text-gray-300">
-              {loading ? 'Đang tải dữ liệu...' : `Showing ${filteredLaptops.length} laptops`}
+              {loading ? 'Đang tải dữ liệu...' : `Hiển thị ${filteredLaptops.length} laptops`}
             </p>
           </div>
           
@@ -366,7 +366,7 @@ export default function AllLaptopsPage() {
             <div className="mb-6">
               <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Sort by:</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Sắp xếp:</span>
                 <select 
                     className="px-2 py-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                   value={sortOption}
@@ -378,11 +378,11 @@ export default function AllLaptopsPage() {
                       setCurrentPage(1); // Đặt lại trang về 1 khi thay đổi sắp xếp
                     }}
                 >
-                    <option value="relevance">Relevance</option>
-                    <option value="priceLowToHigh">Price: Low to High</option>
-                    <option value="priceHighToLow">Price: High to Low</option>
-                    <option value="rating">Rating</option>
-                    <option value="newest">Newest</option>
+                    <option value="relevance">Liên quan nhất</option>
+                    <option value="priceLowToHigh">Giá: Thấp đến cao</option>
+                    <option value="priceHighToLow">Giá: Cao đến thấp</option>
+                    <option value="rating">Đánh giá</option>
+                    <option value="newest">Mới nhất</option>
                 </select>
               </div>
               
@@ -470,12 +470,12 @@ export default function AllLaptopsPage() {
                       <div className="flex gap-2 mb-2">
                         {laptop.price !== laptop.originalPrice && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                            On Sale
+                            Giảm giá
                           </span>
                         )}
                         {(laptop.benchmarks?.value !== undefined && laptop.benchmarks.value > 8.5) && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
-                            Great Value
+                            Được yêu thích nhất
                           </span>
                         )}
                       </div>
@@ -500,7 +500,7 @@ export default function AllLaptopsPage() {
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
-                          Compare
+                          So sánh
                         </button>
                         <a
                           href={laptop.purchaseLink}
@@ -511,7 +511,7 @@ export default function AllLaptopsPage() {
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
-                          Buy Now
+                          Mua ngay
                         </a>
                       </div>
                     </div>

@@ -261,7 +261,7 @@ export default function Home() {
 
         {/* Recommended Section */}
         <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold dark:text-white">Recommended For You</h2>
+          <h2 className="mb-6 text-2xl font-bold dark:text-white">Gợi ý dành cho bạn</h2>
           <RecommendedSection />
         </section>
 
@@ -318,12 +318,12 @@ export default function Home() {
                       <div className="flex gap-2 mb-2">
                         {laptop.onSale && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                            On Sale
+                            Giảm giá
                           </span>
                         )}
                         {laptop.greatDeal && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
-                            Great Deal
+                            Được yêu thích nhất
                           </span>
                         )}
                       </div>
@@ -345,13 +345,13 @@ export default function Home() {
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
-                          Compare
+                          So sánh
                         </Link>
                         <a href={laptop.purchaseLink } target="_blank" rel="noopener noreferrer" className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
-                          Buy Now
+                          Mua ngay
                         </a>
                       </div>
                     </div>
@@ -366,7 +366,7 @@ export default function Home() {
                 href="/all-laptops"
                 className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
               >
-                Load More
+                Nhiều hơn nữa
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>

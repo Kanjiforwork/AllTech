@@ -112,7 +112,7 @@ export default function ComparisonOverview({ laptops }: ComparisonOverviewProps)
                   href={`/laptops/${laptop.id}`}
                   className="inline-block bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white font-medium py-2 px-6 rounded"
                 >
-                  View Details
+                  Xem chi tiết
                 </Link>
                 <button
                   onClick={() => handleRemoveLaptop(laptop.id)}

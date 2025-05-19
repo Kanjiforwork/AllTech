@@ -18,12 +18,12 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Detailed Analysis</h2>
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Thống kê chi tiết</h2>
 
       {/* 1. Performance */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-700 p-5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">1. Performance</h3>
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">1. Cấu hình</h3>
           {laptop.benchmarks?.gaming && getScoreBadge(laptop.benchmarks.gaming)}
         </div>
 

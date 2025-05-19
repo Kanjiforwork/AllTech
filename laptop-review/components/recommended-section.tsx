@@ -15,8 +15,8 @@ export default function RecommendedSection() {
   const categories = [
     {
       id: 1,
-      name: "For Students",
-      description: "Lightweight, long battery life, affordable",
+      name: "Dành cho học sinh/sinh viên",
+      description: "Nhẹ, pin lâu, giá phải chăng",
       image: "/placeholder.svg",
       laptops: [
         {
@@ -41,8 +41,8 @@ export default function RecommendedSection() {
     },
     {
       id: 2,
-      name: "For Gaming",
-      description: "Powerful GPUs, high refresh rate displays, advanced cooling",
+      name: "Dành cho Gaming",
+      description: "Chip đồ họa mạnh mẽ, màn hình tần số quét cao, hệ thống làm mát tiên tiến",
       image: "/placeholder.svg",
       laptops: [
         {
@@ -67,8 +67,8 @@ export default function RecommendedSection() {
     },
     {
       id: 3,
-      name: "For Professionals",
-      description: "Color-accurate displays, powerful CPUs, reliable performance",
+      name: "Dành cho công việc",
+      description: "Màn hình hiển thị màu sắc chính xác, CPU mạnh mẽ, hiệu suất ổn định",
       image: "/placeholder.svg",
       laptops: [
         {
