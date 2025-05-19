@@ -333,12 +333,12 @@ export default function AllLaptopsPage() {
                 className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 mr-2 dark:text-gray-300 dark:hover:text-white"
               >
                 <ChevronLeft className="w-4 h-4 mr-1" />
-                Back to Compare
+                Trở lại trang so sánh
               </Link>
             </div>
             <h1 className="text-2xl font-bold dark:text-white">All Laptops</h1>
             <p className="text-gray-600 dark:text-gray-300">
-              {loading ? 'Đang tải dữ liệu...' : `Showing ${filteredLaptops.length} laptops`}
+              {loading ? 'Đang tải dữ liệu...' : `Hiển thị ${filteredLaptops.length} laptops`}
             </p>
           </div>
           
@@ -366,7 +366,7 @@ export default function AllLaptopsPage() {
             <div className="mb-6">
               <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Sort by:</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Sắp xếp:</span>
                 <select 
                     className="px-2 py-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                   value={sortOption}
@@ -378,11 +378,11 @@ export default function AllLaptopsPage() {
                       setCurrentPage(1); // Đặt lại trang về 1 khi thay đổi sắp xếp
                     }}
                 >
-                    <option value="relevance">Relevance</option>
-                    <option value="priceLowToHigh">Price: Low to High</option>
-                    <option value="priceHighToLow">Price: High to Low</option>
-                    <option value="rating">Rating</option>
-                    <option value="newest">Newest</option>
+                    <option value="relevance">Liên quan nhất</option>
+                    <option value="priceLowToHigh">Giá: Thấp đến cao</option>
+                    <option value="priceHighToLow">Giá: Cao đến thấp</option>
+                    <option value="rating">Đánh giá</option>
+                    <option value="newest">Mới nhất</option>
                 </select>
               </div>
               
@@ -427,7 +427,7 @@ export default function AllLaptopsPage() {
                   key={laptop.id}
                   className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out 
                     ${visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} 
-                    hover:shadow-md hover:-translate-y-1 relative`}
+                    hover:shadow-md hover:-translate-y-1 relative flex flex-col`}
                 >
                   {/* Nút yêu thích */}
                   <div className="absolute top-2 right-2 z-10">
@@ -438,12 +438,22 @@ export default function AllLaptopsPage() {
                     />
                   </div>
                   
-                  <div className="p-4">
+                  <div className="p-4 flex flex-col flex-grow">
                     <Link href={`/laptops/${laptop.id}`}>
                       <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md">
-                        <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300">
-                          {laptop.name}
-                        </div>
+                        {laptop.image ? (
+                            <Image 
+                                src={laptop.image || "/placeholder.svg"} 
+                                alt={laptop.name || "Laptop image"}
+                                fill
+                                style={{objectFit: 'contain'}}
+                                className="p-2"
+                            />
+                        ) : (
+                            <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300 p-2 text-center">
+                                {laptop.name}
+                            </div>
+                        )}
                       </div>
 
                       <div className="flex items-center mb-2">
@@ -459,23 +469,23 @@ export default function AllLaptopsPage() {
                       
                       <h3 className="mb-1 font-semibold line-clamp-2 dark:text-white">{laptop.name}</h3>
                       
-                      <p className="mb-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+                      <p className="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
                         {laptop.specs.cpu}, {laptop.specs.ram}, {laptop.specs.storage}
                       </p>
                     </Link>
 
-                    {/* Price section */}
-                    <div className="mt-2">
-                      {/* Price tags */}
-                      <div className="flex gap-2 mb-2">
+                    {/* Price section - được đẩy xuống dưới */}
+                    <div className="mt-auto">
+                      {/* Price tags - chiều cao cố định */}
+                      <div className="flex flex-wrap gap-x-2 gap-y-1 mb-2 h-12 items-start">
                         {laptop.price !== laptop.originalPrice && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                            On Sale
+                            Giảm giá
                           </span>
                         )}
                         {(laptop.benchmarks?.value !== undefined && laptop.benchmarks.value > 8.5) && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
-                            Great Value
+                            Được yêu thích nhất
                           </span>
                         )}
                       </div>
@@ -489,30 +499,19 @@ export default function AllLaptopsPage() {
                       </div>
                       
                       {/* Button section */}
-                      <div className="grid grid-cols-2 gap-2 mt-4">
+                      <div className="mt-4">
                         <button
                           onClick={(e) => {
                             e.preventDefault();
                             toggleLaptopComparison(laptop);
                           }}
-                          className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600"
+                          className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 w-full"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
-                          Compare
+                          So sánh
                         </button>
-                        <a
-                          href={laptop.purchaseLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>
-                          Buy Now
-                        </a>
                       </div>
                     </div>
                   </div>

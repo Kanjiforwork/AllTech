@@ -12,7 +12,7 @@ type KeyDifferencesProps = {
 export default function KeyDifferences({ laptops, keyDifferences }: KeyDifferencesProps) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
-      <h2 className="text-2xl font-bold mb-6 dark:text-white">Key Differences</h2>
+      <h2 className="text-2xl font-bold mb-6 dark:text-white">Điểm khác biệt chính</h2>
 
       <div className="grid grid-cols-2 gap-8">
         {laptops.map((laptop, index) => (

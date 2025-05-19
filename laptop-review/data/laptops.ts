@@ -23,7 +23,7 @@ export const laptopData = laptops.map((laptop, index) => {
     greatDeal: true,
     image: laptop.image || "/placeholder.svg?height=600&width=600",
     detailLink: `/laptops/${laptop.id}`,
-    purchaseLink: laptop.purchaseLink || `/laptops/${laptop.id}`
+    // purchaseLink: laptop.purchaseLink || `/laptops/${laptop.id}` // Loại bỏ hoặc comment dòng này
   };
 });
 
@@ -40,5 +40,5 @@ export type Laptop = {
   greatDeal: boolean;
   image?: string;
   detailLink: string;
-  purchaseLink?: string;
+  purchaseLink?: string; // Đã là tùy chọn, giữ nguyên
 };

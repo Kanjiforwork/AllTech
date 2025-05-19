@@ -36,16 +36,16 @@ export default function Performance({ laptop }: PerformanceProps) {
       <div>
         <h3 className="text-base font-semibold mb-3 text-gray-800 dark:text-white">Hardware Ratings</h3>
         {laptop.benchmarks.display !== undefined && (
-          <RatingBar score={laptop.benchmarks.display} label="Display Quality" />
+          <RatingBar score={laptop.benchmarks.display} label="Chất lượng hiển thị" />
         )}
         {laptop.benchmarks.battery !== undefined && (
-          <RatingBar score={laptop.benchmarks.battery} label="Battery Life" />
+          <RatingBar score={laptop.benchmarks.battery} label="Thời lượng pin" />
         )}
         {laptop.benchmarks.build !== undefined && (
-          <RatingBar score={laptop.benchmarks.build} label="Build Quality" />
+          <RatingBar score={laptop.benchmarks.build} label="Chất lượng build" />
         )}
         {laptop.benchmarks.value !== undefined && (
-          <RatingBar score={laptop.benchmarks.value} label="Value for Money" />
+          <RatingBar score={laptop.benchmarks.value} label="Giá tiền" />
         )}
       </div>
       

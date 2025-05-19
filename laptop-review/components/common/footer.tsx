@@ -41,7 +41,7 @@ export default function Footer() {
                 <h3 className="text-xl font-bold text-white">LapInsight</h3>
               </div>
               <p className="mb-6 text-gray-400">
-                Your trusted guide to laptops: Precise reviews, smart comparisons, and budget-friendly recommendations to power your perfect tech decision.
+                Hướng dẫn chọn mua laptop đáng tin cậy: Phân tích chuẩn xác, so sánh thông minh và gợi ý hợp túi tiền – giúp bạn dễ dàng tìm ra thiết bị lý tưởng cho mục đích của bạn.
               </p>
               <div className="flex space-x-4">
                 <Link href="#" className="text-gray-400 hover:text-white transition-colors">

@@ -261,7 +261,7 @@ export default function Home() {
 
         {/* Recommended Section */}
         <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold dark:text-white">Recommended For You</h2>
+          <h2 className="mb-6 text-2xl font-bold dark:text-white">Gợi ý dành cho bạn</h2>
           <RecommendedSection />
         </section>
 
@@ -283,9 +283,9 @@ export default function Home() {
                   key={laptop.id} 
                   className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out ${
                     visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                  } hover:shadow-md hover:-translate-y-1`}
+                  } hover:shadow-md hover:-translate-y-1 flex flex-col`}
                 >
-                  <div className="p-4">
+                  <div className="p-4 flex flex-col flex-grow">
                     <Link href={laptop.detailLink}>
                       <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md relative">
                         <Image 
@@ -308,22 +308,22 @@ export default function Home() {
                     </div>
                     
                     <Link href={laptop.detailLink}>
-                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600 dark:text-white dark:hover:text-blue-400">{laptop.name}</h3>
+                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600 dark:text-white dark:hover:text-blue-400 line-clamp-2">{laptop.name}</h3>
                     </Link>
-                    <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">{laptop.specs}</p>
+                    <p className="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">{laptop.specs}</p>
 
-                    {/* Phần hiển thị giá */}
-                    <div className="mt-2">
-                      {/* Các tag */}
-                      <div className="flex gap-2 mb-2">
+                    {/* Phần hiển thị giá, tags và nút - được đẩy xuống dưới */}
+                    <div className="mt-auto">
+                      {/* Các tag - chiều cao cố định */}
+                      <div className="flex flex-wrap gap-x-2 gap-y-1 mb-2 h-12 items-start">
                         {laptop.onSale && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                            On Sale
+                            Giảm giá
                           </span>
                         )}
                         {laptop.greatDeal && (
                           <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
-                            Great Deal
+                            Được yêu thích nhất
                           </span>
                         )}
                       </div>
@@ -339,20 +339,14 @@ export default function Home() {
                         )}
                       </div>
 
-                      {/* Nút mua và so sánh */}
-                      <div className="grid grid-cols-2 gap-2 mt-2">
-                        <Link href={`/compare-select?current=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
+                      {/* Nút so sánh */}
+                      <div className="mt-2">
+                        <Link href={`/compare-select?current=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600 w-full">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
-                          Compare
+                          So sánh
                         </Link>
-                        <a href={laptop.purchaseLink } target="_blank" rel="noopener noreferrer" className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>
-                          Buy Now
-                        </a>
                       </div>
                     </div>
                   </div>
@@ -366,7 +360,7 @@ export default function Home() {
                 href="/all-laptops"
                 className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
               >
-                Load More
+                Nhiều hơn nữa
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>

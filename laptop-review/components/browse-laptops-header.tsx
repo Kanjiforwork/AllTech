@@ -73,7 +73,7 @@ export default function BrowseLaptopsHeader({ laptopData, handle }: BrowseLaptop
             className={`flex flex-col sm:flex-row sm:items-center justify-between mb-8 transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
         >
-            <h2 className="text-3xl font-bold mb-5 sm:mb-0 dark:text-white">Browse Laptops</h2>
+            <h2 className="text-3xl font-bold mb-5 sm:mb-0 dark:text-white">Tìm kiếm laptop</h2>
 
             <div className="flex gap-4">
                 <button

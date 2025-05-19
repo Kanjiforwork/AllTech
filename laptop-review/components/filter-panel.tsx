@@ -18,12 +18,11 @@ import { Laptop as LaptopType } from "@/types/laptop"
 
 // Tạo mảng giá trị khoảng giá
 const priceRanges = [
-  { min: 0, max: 500, label: "Dưới $500" },
-  { min: 500, max: 1000, label: "$500 - $1,000" },
-  { min: 1000, max: 1500, label: "$1,000 - $1,500" },
-  { min: 1500, max: 2000, label: "$1,500 - $2,000" },
-  { min: 2000, max: 3000, label: "$2,000 - $3,000" },
-  { min: 3000, max: Infinity, label: "Trên $3,000" },
+  { min: 0, max: 10000000, label: "Dưới 10 triệu" },
+  { min: 10000000, max: 20000000, label: "10 - 20 triệu" },
+  { min: 20000000, max: 30000000, label: "$20 - 30 triệu" },
+  { min: 30000000, max: 40000000, label: "30 - 40 triệu" },
+  { min: 40000000, max: Infinity, label: "Trên 40 triệu" },
 ]
 
 export interface FilterState {

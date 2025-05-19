@@ -135,11 +135,11 @@ export default function ComparisonPage() {
         <div className="mb-6">
           <Link href="/" className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
             <ChevronLeft className="w-4 h-4 mr-1" />
-            Back to Home
+            Trở về trang chủ
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold mb-8 text-center dark:text-white">Laptop Comparison</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center dark:text-white">So sánh laptop</h1>
 
         {/* Overview Section */}
         <ComparisonOverview laptops={laptops} />
@@ -181,19 +181,16 @@ export default function ComparisonPage() {
 
         {/* Value for Money */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-6 dark:text-white">Value for Money</h2>
+          <h2 className="text-2xl font-bold mb-6 dark:text-white">Giá tiền</h2>
 
           <div className="grid grid-cols-2 gap-8">
             {laptops.map((laptop, index) => (
               <div key={laptop.id} className="text-center">
                 <div className="text-2xl font-bold mb-2 dark:text-white">{laptop.price}</div>
                 <div className="text-lg mb-4 dark:text-gray-300">
-                  <span className="font-medium dark:text-gray-200">
-                    ${(Number.parseInt(laptop.price.replace("$", "").replace(",", "")) / 10).toFixed(2)}
-                  </span>{" "}
-                  per point
+
                 </div>
-                <RatingBar score={laptop.benchmarks.value} label="Value Rating" />
+                <RatingBar score={laptop.benchmarks.value} label="Đánh giá" />
               </div>
             ))}
           </div>
@@ -201,25 +198,25 @@ export default function ComparisonPage() {
 
         {/* Detailed Comparison */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-6 dark:text-white">Detailed Comparison</h2>
+          <h2 className="text-2xl font-bold mb-6 dark:text-white">So sánh chi tiết</h2>
 
-          <ComparisonTable laptops={laptops} title="Case" specs={caseSpecs} />
-          <ComparisonTable laptops={laptops} title="Display" specs={displaySpecs} />
-          <ComparisonTable laptops={laptops} title="Performance" specs={performanceSpecs} />
-          <ComparisonTable laptops={laptops} title="Battery" specs={batterySpecs} />
-          <ComparisonTable laptops={laptops} title="Connectivity" specs={connectivitySpecs} />
+          <ComparisonTable laptops={laptops} title="Vỏ" specs={caseSpecs} />
+          <ComparisonTable laptops={laptops} title="Màn hình" specs={displaySpecs} />
+          <ComparisonTable laptops={laptops} title="Cấu hình" specs={performanceSpecs} />
+          <ComparisonTable laptops={laptops} title="Pin" specs={batterySpecs} />
+          <ComparisonTable laptops={laptops} title="Tùy chọn kết nối" specs={connectivitySpecs} />
           <ComparisonTable laptops={laptops} title="Input" specs={inputSpecs} />
         </div>
 
         {/* User Voting */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-6 dark:text-white">Which one would you choose?</h2>
+          <h2 className="text-2xl font-bold mb-6 dark:text-white">Bạn yêu thích laptop nào hơn?</h2>
 
           <div className="grid grid-cols-2 gap-8">
             {laptops.map((laptop) => (
               <div key={laptop.id} className="text-center">
                 <button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg w-full">
-                  Vote for {laptop.name}
+                  Bình chọn cho {laptop.name}
                 </button>
                 <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                   <span className="font-medium dark:text-gray-300">1,245</span> users voted for this laptop
@@ -234,7 +231,7 @@ export default function ComparisonPage() {
             href="/"
             className="inline-block bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-2 px-6 rounded"
           >
-            Back to Home
+            Trở về trang chủ
           </Link>
         </div>
       </main>

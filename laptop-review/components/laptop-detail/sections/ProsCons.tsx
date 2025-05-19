@@ -12,7 +12,7 @@ export default function ProsCons({ laptop }: ProsConsProps) {
     <div className="grid md:grid-cols-2 gap-6 mb-8">
       {laptop.pros && laptop.pros.length > 0 && (
         <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-5 shadow-sm">
-          <h3 className="text-lg font-semibold text-green-800 dark:text-green-300 mb-3">Pros</h3>
+          <h3 className="text-lg font-semibold text-green-800 dark:text-green-300 mb-3">Ưu điểm</h3>
           <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
             {laptop.pros.map((pro: string, index: number) => (
               <li key={`pro-${index}`} className="flex items-start">
@@ -28,7 +28,7 @@ export default function ProsCons({ laptop }: ProsConsProps) {
       
       {laptop.cons && laptop.cons.length > 0 && (
         <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-5 shadow-sm">
-          <h3 className="text-lg font-semibold text-red-800 dark:text-red-300 mb-3">Cons</h3>
+          <h3 className="text-lg font-semibold text-red-800 dark:text-red-300 mb-3">Nhược điểm</h3>
           <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
             {laptop.cons.map((con: string, index: number) => (
               <li key={`con-${index}`} className="flex items-start">

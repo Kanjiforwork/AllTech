@@ -87,12 +87,12 @@ export default function LaptopCardSelectable({
           <div className="flex gap-2 mb-2">
             {laptop.onSale && (
               <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                On Sale
+                Giảm giá
               </span>
             )}
             {laptop.greatDeal && (
               <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
-                Great Deal
+                Được yêu thích nhất
               </span>
             )}
           </div>
