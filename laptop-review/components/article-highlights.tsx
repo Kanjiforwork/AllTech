@@ -48,9 +48,9 @@ export default function ArticleHighlights() {
       image: article.image,
       excerpt: article.excerpt,
       content: article.content,
-      author: "LapInsight Team", // Default author for articles
+      author: "Đội ngũ LapInsight", // Default author for articles
       date: article.date,
-      readTime: `${Math.floor(Math.random() * 5) + 3} min read`, // Generate random read time
+      readTime: `5 phút đọc`, 
       createdAt: article.createdAt,
       category: article.category
     };
@@ -128,7 +128,7 @@ export default function ArticleHighlights() {
     return (
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-64 bg-gray-100 rounded-lg animate-pulse"></div>
+          <div key={i} className="h-64 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>
         ))}
       </div>
     );
@@ -136,8 +136,8 @@ export default function ArticleHighlights() {
 
   if (articles.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 bg-gray-100 rounded-xl">
-        <p className="text-gray-500">No articles available at the moment.</p>
+      <div className="flex items-center justify-center h-64 bg-gray-100 dark:bg-gray-800 rounded-xl">
+        <p className="text-gray-500 dark:text-gray-400">No articles available at the moment.</p>
       </div>
     );
   }
@@ -151,7 +151,7 @@ export default function ArticleHighlights() {
             className="group article-card opacity-0 cursor-pointer"
             onClick={() => openArticleModal(article)}
           >
-            <div className="overflow-hidden transition-all duration-200 bg-white border rounded-lg shadow-sm group-hover:shadow-md hover:shadow-lg hover:-translate-y-1">
+            <div className="overflow-hidden transition-all duration-200 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm group-hover:shadow-md hover:shadow-lg hover:-translate-y-1">
               <div className="relative h-48 overflow-hidden">
                 <Image
                   src={article.image || "/placeholder.svg"}
@@ -159,16 +159,16 @@ export default function ArticleHighlights() {
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute top-0 right-0 px-3 py-1 m-2 text-xs font-medium text-white bg-gray-900 rounded-full">
+                <div className="absolute top-0 right-0 px-3 py-1 m-2 text-xs font-medium text-white bg-gray-900 dark:bg-gray-700 rounded-full">
                   {article.category}
                 </div>
               </div>
               <div className="p-4">
-                <p className="mb-2 text-sm text-gray-500">{article.date}</p>
-                <h3 className="mb-2 text-lg font-bold transition-colors group-hover:text-gray-700">{article.title}</h3>
-                <p className="text-sm text-gray-600">{article.excerpt}</p>
-                <button className="mt-3 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">
-                  Read Article →
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">{article.date}</p>
+                <h3 className="mb-2 text-lg font-bold transition-colors group-hover:text-gray-700 dark:text-white dark:group-hover:text-gray-300">{article.title}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">{article.excerpt}</p>
+                <button className="mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
+                  Đọc Bài Viết →
                 </button>
               </div>
             </div>

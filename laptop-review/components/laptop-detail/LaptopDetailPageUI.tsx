@@ -9,6 +9,7 @@ import ProsCons from "./sections/ProsCons";
 import DetailedAnalysis from "./sections/DetailedAnalysis";
 import ComparisonTable from "./comparison-table";
 import ComparisonButton from "@/components/comparison/ComparisonButton";
+import { CommentSection } from "./sections/comment-section";
 
 type LaptopDetailPageProps = {
   laptop: any;
@@ -51,11 +52,30 @@ export default function LaptopDetailPage({ laptop, similarLaptops = [] }: Laptop
         
         {/* Detailed Analysis Section */}
         <DetailedAnalysis laptop={laptop} />
+        <div className="mt-10">
+          {/* Lấy user hiện tại từ localStorage */}
+          {(() => {
+            let user = null;
+            if (typeof window !== "undefined") {
+              const storedUserData = localStorage.getItem("user");
+              user = storedUserData ? JSON.parse(storedUserData) : null;
+            }
+            return (
+              <CommentSection
+                laptop={laptop}
+                laptopName={laptop.name}
+                currentUser={{
+                  id: user?.uid || "guest",
+                  username: user?.displayName || user?.email || "Khách"
+                }}
+              />
+            );
+          })()}
+        </div>
       </main>
 
       {/* Floating Comparison Button */}
       <ComparisonButton currentLaptopId={laptop.id} />
-      
       <Footer />
     </div>
   );

@@ -329,7 +329,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="3. Design & Build" 
         score={laptop.benchmarks?.build}
-        image="/images/laptop-design.jpg"
       >
         <div className="mb-4">
           <p className="mb-2 dark:text-gray-300">Dimensions: {laptop.detailedSpecs?.case?.dimensions}</p>
@@ -347,7 +346,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="4. Display" 
         score={laptop.benchmarks?.display}
-        image="/images/laptop-display.jpg"
       >
         <div className="grid md:grid-cols-2 gap-6 mb-4">
           <div>
@@ -372,7 +370,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       {/* 5. Keyboard */}
       <AnalysisSection 
         title="5. Keyboard"
-        image="/images/laptop-keyboard.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
           Features a comfortable keyboard with good travel and tactile feedback, plus a numpad. 
@@ -384,7 +381,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="6. Trackpad" 
         score={7.8}
-        image="/images/laptop-trackpad.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
           Large and responsive Microsoft Precision trackpad supports gestures well. Clicking is satisfactory. 
@@ -396,7 +392,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="7. Speakers" 
         score={7.5}
-        image="/images/laptop-speakers.jpg"
       >
         <p className="text-gray-700 dark:text-gray-300">
           Downward-firing speakers with {laptop.detailedSpecs?.sound?.dolbyAtmos ? "Dolby Atmos" : "good audio"} provide clear audio, 
@@ -408,7 +403,6 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="8. Webcam" 
         score={7.0}
-        image="/images/laptop-webcam.jpg"
       >
         <div>
           <p className="mb-3 dark:text-gray-300">Resolution: {laptop.detailedSpecs?.connectivity?.webcam?.includes("1080p") ? "1080p FHD + IR with Privacy Shutter" : laptop.detailedSpecs?.connectivity?.webcam}</p>
@@ -423,7 +417,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
       <AnalysisSection 
         title="9. Ports" 
         score={8.3}
-        image="/images/laptop-ports.jpg"
+          
       >
         <div>
           <div className="grid md:grid-cols-2 gap-6 mb-4">
@@ -452,7 +446,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
         </div>
       </AnalysisSection>
 
-      {/* Best Prices & Deals */}
+      {/* Best Prices & Deals
       <div>
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Best Prices & Deals</h2>
         
@@ -493,7 +487,9 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
+      
     </div>
+    
   );
 }

@@ -70,6 +70,7 @@ export interface SpecData {
     image?: string;
     price?: string;
     originalPrice?: string;
+    purchaseLink?: string;
     description?: string;
     longDescription?: string;
     reviewUrl?: string;

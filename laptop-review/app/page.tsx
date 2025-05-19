@@ -30,6 +30,7 @@ export default function Home() {
   const maxScrollsAllowed = 5; // Maximum scrolls before login prompt
   const scrollThrottleRef = useRef(false);
   const hasShownPromptRef = useRef(false);
+  
   // State cho bộ lọc
   const [filters, setFilters] = useState<FilterState>({
     brands: [],
@@ -340,18 +341,18 @@ export default function Home() {
 
                       {/* Nút mua và so sánh */}
                       <div className="grid grid-cols-2 gap-2 mt-2">
-                        <Link href={`/compare-select?id=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
+                        <Link href={`/compare-select?current=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                           Compare
                         </Link>
-                        <Link href={laptop.detailLink} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
+                        <a href={laptop.purchaseLink } target="_blank" rel="noopener noreferrer" className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
                           Buy Now
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -376,12 +377,12 @@ export default function Home() {
 
         {/* Article Highlights */}
         <section className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold dark:text-white">Latest Articles</h2>
+          <h2 className="mb-6 text-2xl font-bold dark:text-white">BÀI VIẾT MỚI NHẤT</h2>
           <ArticleHighlights />
         </section>
         <div className="flex justify-center mt-10 mb-6">
           <button className="px-8 py-3 text-base font-medium text-gray-900 bg-white border-2 border-gray-900 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center hover:shadow-md hover:-translate-y-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700">
-            View All Articles
+            Đọc Thêm
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
