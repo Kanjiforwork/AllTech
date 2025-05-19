@@ -44,7 +44,7 @@ export default function ComparisonTable({ laptops, title, specs }: ComparisonTab
                 {laptops.map((laptop, idx) => {
                   const value = getNestedValue(laptop, spec.path);
                   const otherValue = getNestedValue(laptops[1 - idx], spec.path);
-                  const [isWorse, isBetter] = compareSpecs(
+                  const [isBetter, isWorse] = compareSpecs(
                     value,
                     otherValue,
                     spec.isHigherBetter !== false
@@ -57,11 +57,11 @@ export default function ComparisonTable({ laptops, title, specs }: ComparisonTab
                         isBetter 
                           ? 'text-green-600 dark:text-green-400 font-medium' 
                           : isWorse 
-                            ? 'text-gray-500 dark:text-gray-400' 
+                            ? 'text-gray-500 dark:text-gray-400'
                             : 'text-gray-500 dark:text-gray-400'
                       }`}
                     >
-                      {typeof value === 'boolean' ? (value ? "Yes" : "No") : value || "No"}
+                      {typeof value === 'boolean' ? (value ? "Yes" : "No") : (value !== null && value !== undefined && value !== '' ? value : (typeof value === 'number' ? value : "N/A"))}
                     </td>
                   );
                 })}
