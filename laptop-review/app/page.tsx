@@ -18,9 +18,11 @@ import BrowseLaptopsHeader from "@/components/browse-laptops-header"
 import Header from "@/components/common/header"
 import Footer from "@/components/common/footer"
 
+const ITEMS_PER_HOMEPAGE = 9; // Giới hạn số lượng laptop hiển thị
+
 export default function Home() {
   // State to track which laptop cards are visible
-  const [visibleCards, setVisibleCards] = useState<boolean[]>(Array(laptopData.length).fill(false))
+  const [visibleCards, setVisibleCards] = useState<boolean[]>(() => Array(laptopData.slice(0, ITEMS_PER_HOMEPAGE).length).fill(false));
   // Ref for the laptop grid container
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
@@ -43,8 +45,11 @@ export default function Home() {
     features: [],
   })
 
-  const [dataSort, setDataSort] = useState(laptopData)
-  const [filteredData, setFilteredData] = useState(laptopData)
+  // filteredData lưu trữ toàn bộ danh sách laptop sau khi áp dụng filter
+  const [filteredData, setFilteredData] = useState(laptopData) 
+  // dataSort chỉ lưu trữ 9 sản phẩm để hiển thị, lấy từ filteredData đã được sắp xếp/lọc
+  const [dataSort, setDataSort] = useState(() => laptopData.slice(0, ITEMS_PER_HOMEPAGE))
+
   const isLoggedIn = !!user;
   // Animation for laptop cards using Intersection Observer
   useEffect(() => {
@@ -52,22 +57,31 @@ export default function Home() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+    // Chỉ animate những card sẽ hiển thị ban đầu (9 cái)
+    const initialLaptopsToAnimate = laptopData.slice(0, ITEMS_PER_HOMEPAGE);
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           // Start staggered fade in of laptop cards when they enter viewport
-          laptopData.forEach((_, index) => {
+          initialLaptopsToAnimate.forEach((_, index) => { // Chỉ lặp qua 9 items đầu
             setTimeout(() => {
               setVisibleCards(prev => {
-                const newState = [...prev]
-                newState[index] = true
-                return newState
+                // Đảm bảo prev có đúng độ dài
+                const currentDisplayLength = initialLaptopsToAnimate.length;
+                const newState = prev.length === currentDisplayLength ? [...prev] : Array(currentDisplayLength).fill(false);
+                if (index < newState.length) {
+                  newState[index] = true;
+                }
+                return newState;
               })
             }, 100 * index) // 100ms delay between each card
           })
           
-          // Disconnect observer after triggering animations
-          observer.disconnect()
+          // Disconnect observer after triggering animations for the initial set
+          if (laptopGridRef.current) {
+            observer.unobserve(laptopGridRef.current);
+          }
         }
       },
       { threshold: 0.1 } // Trigger when 10% of the element is visible
@@ -81,7 +95,7 @@ export default function Home() {
       observer.disconnect() // Clean up on unmount
     }
     
-  }, [])
+  }, []) // Chạy một lần khi component mount
   
   const handleLogout = () => {
     // Xóa thông tin người dùng khỏi localStorage và cập nhật trạng thái
@@ -91,8 +105,10 @@ export default function Home() {
   };
 
   // Xử lý sắp xếp theo giá
+  // newListData là danh sách đã được lọc và sắp xếp đầy đủ
   function handleSort(newListData: typeof laptopData) {
-    setDataSort(newListData)
+    setFilteredData(newListData); // Cập nhật filteredData với danh sách đã sắp xếp
+    setDataSort(newListData.slice(0, ITEMS_PER_HOMEPAGE)); // Hiển thị 9 item đầu tiên
   }
    useEffect(() => {
     // Skip if user is logged in or prompt already shown in this session
@@ -137,7 +153,7 @@ export default function Home() {
   };
   // Áp dụng bộ lọc
   useEffect(() => {
-    let results = [...laptopData];
+    let results = [...laptopData]; // Bắt đầu với toàn bộ dữ liệu gốc
     
     // Áp dụng các bộ lọc
     // Filter by brand
@@ -198,9 +214,10 @@ export default function Home() {
       });
     }
     
-    // Set filtered data
+    // Set filtered data (chứa tất cả kết quả lọc)
     setFilteredData(results);
-    setDataSort(results);
+    // Set dataSort (chỉ 9 item đầu để hiển thị)
+    setDataSort(results.slice(0, ITEMS_PER_HOMEPAGE));
   }, [filters]);
   
   // Handle filter changes from FilterPanel
@@ -271,7 +288,8 @@ export default function Home() {
             <FilterPanel onFilter={handleFilterChange} />
           </div>
           <div className="lg:col-span-3 relative z-0">
-            <BrowseLaptopsHeader laptopData={laptopData} handle={handleSort} />
+            {/* Truyền filteredData cho BrowseLaptopsHeader để nó sắp xếp trên dữ liệu đã lọc */}
+            <BrowseLaptopsHeader laptopData={filteredData} handle={handleSort} />
             {/* Laptop Grid with animation */}
           
             <div 
