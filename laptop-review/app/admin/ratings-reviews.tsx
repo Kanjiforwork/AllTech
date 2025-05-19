@@ -1,12 +1,20 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import StarRating from "@/components/ui/star-rating"
+import { Button } from "@/components/ui/button"
+import { Upload, X } from "lucide-react"
 
-export default function RatingsReviews() {
+type RatingsReviewsProps = {
+  onChange?: (ratings: typeof ratings, descriptions: typeof descriptions, images: typeof images) => void
+}
+
+export default function RatingsReviews({ onChange }: RatingsReviewsProps) {
   const [ratings, setRatings] = useState({
     designWeight: 5,
     monitor: 5,
@@ -17,11 +25,91 @@ export default function RatingsReviews() {
     ports: 5,
   })
 
+  const [descriptions, setDescriptions] = useState({
+    designWeight: "",
+    monitor: "",
+    keyboard: "",
+    touchPad: "",
+    speaker: "",
+    webcam: "",
+    ports: "",
+  })
+
+  const [images, setImages] = useState({
+    designWeight: null as File | null,
+    monitor: null as File | null,
+    keyboard: null as File | null,
+    touchPad: null as File | null,
+    speaker: null as File | null,
+    webcam: null as File | null,
+    ports: null as File | null,
+  })
+
   const handleRatingChange = (category: keyof typeof ratings, value: number) => {
     setRatings((prev) => ({
       ...prev,
       [category]: value,
     }))
+
+    if (onChange) {
+      onChange(
+        {
+          ...ratings,
+          [category]: value,
+        },
+        descriptions,
+        images,
+      )
+    }
+  }
+
+  const handleDescriptionChange = (category: keyof typeof descriptions, value: string) => {
+    setDescriptions((prev) => ({
+      ...prev,
+      [category]: value,
+    }))
+
+    // Call the onChange prop whenever ratings, descriptions, or images change
+    if (onChange) {
+      onChange(
+        ratings,
+        {
+          ...descriptions,
+          [category]: value,
+        },
+        images,
+      )
+    }
+  }
+
+  const handleImageUpload = (category: keyof typeof images, e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImages((prev) => ({
+        ...prev,
+        [category]: e.target.files![0],
+      }))
+
+      if (onChange) {
+        onChange(ratings, descriptions, {
+          ...images,
+          [category]: e.target.files![0],
+        })
+      }
+    }
+  }
+
+  const handleRemoveImage = (category: keyof typeof images) => {
+    setImages((prev) => ({
+      ...prev,
+      [category]: null,
+    }))
+
+    if (onChange) {
+      onChange(ratings, descriptions, {
+        ...images,
+        [category]: null,
+      })
+    }
   }
 
   return (
@@ -54,7 +142,13 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the design and weight..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the design and weight..."
+                className="min-h-[100px]"
+                value={descriptions.designWeight}
+                onChange={(e) => handleDescriptionChange("designWeight", e.target.value)}
+              />
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -77,7 +171,13 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the keyboard..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the keyboard..."
+                className="min-h-[100px]"
+                value={descriptions.keyboard}
+                onChange={(e) => handleDescriptionChange("keyboard", e.target.value)}
+              />
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -100,7 +200,13 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the speaker..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the speaker..."
+                className="min-h-[100px]"
+                value={descriptions.speaker}
+                onChange={(e) => handleDescriptionChange("speaker", e.target.value)}
+              />
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -123,7 +229,13 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the ports..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the ports..."
+                className="min-h-[100px]"
+                value={descriptions.ports}
+                onChange={(e) => handleDescriptionChange("ports", e.target.value)}
+              />
+              
             </div>
           </div>
 
@@ -148,7 +260,13 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the monitor..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the monitor..."
+                className="min-h-[100px]"
+                value={descriptions.monitor}
+                onChange={(e) => handleDescriptionChange("monitor", e.target.value)}
+              />
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -171,7 +289,13 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the touch pad..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the touch pad..."
+                className="min-h-[100px]"
+                value={descriptions.touchPad}
+                onChange={(e) => handleDescriptionChange("touchPad", e.target.value)}
+              />
+              
             </div>
 
             <div className="border rounded-lg p-4">
@@ -194,7 +318,13 @@ export default function RatingsReviews() {
                   />
                 </div>
               </div>
-              <Textarea placeholder="Describe the webcam..." className="min-h-[100px]" />
+              <Textarea
+                placeholder="Describe the webcam..."
+                className="min-h-[100px]"
+                value={descriptions.webcam}
+                onChange={(e) => handleDescriptionChange("webcam", e.target.value)}
+              />
+              
             </div>
           </div>
         </div>

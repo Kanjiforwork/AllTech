@@ -35,7 +35,11 @@ export default function AdditionalFeatures({
             value={formData.webcam}
             onChange={(e) => onChange("webcam", e.target.value)}
             onFocus={() => onFocus("webcam")}
+            className={showValidation && fieldErrors.webcam ? "border-red-500" : ""}
           />
+          {showValidation && fieldErrors.webcam && (
+                  <p className="text-sm text-red-500 mt-1">Webcam is required</p>
+                )}
         </div>
 
         <div>
@@ -46,7 +50,11 @@ export default function AdditionalFeatures({
             value={formData.wifiBluetooth}
             onChange={(e) => onChange("wifiBluetooth", e.target.value)}
             onFocus={() => onFocus("wifiBluetooth")}
+            className={showValidation && fieldErrors.wifiBluetooth ? "border-red-500" : ""}
           />
+           {showValidation && fieldErrors.wifiBluetooth && (
+                  <p className="text-sm text-red-500 mt-1">WiFi / Bluetooth is required</p>
+                )}
         </div>
 
         <div>
@@ -57,7 +65,11 @@ export default function AdditionalFeatures({
             value={formData.keyboard}
             onChange={(e) => onChange("keyboard", e.target.value)}
             onFocus={() => onFocus("keyboard")}
+            className={showValidation && fieldErrors.keyboard ? "border-red-500" : ""}
           />
+           {showValidation && fieldErrors.keyboard && (
+                  <p className="text-sm text-red-500 mt-1">Keyboard is required</p>
+                )}
         </div>
 
         <div>
@@ -68,7 +80,11 @@ export default function AdditionalFeatures({
             value={formData.speakersMicrophone}
             onChange={(e) => onChange("speakersMicrophone", e.target.value)}
             onFocus={() => onFocus("speakersMicrophone")}
+            className={showValidation && fieldErrors.speakersMicrophone ? "border-red-500" : ""}
           />
+           {showValidation && fieldErrors.speakersMicrophone && (
+                  <p className="text-sm text-red-500 mt-1">Speakers / Microphone is required</p>
+                )}
         </div>
       </div>
     </div>

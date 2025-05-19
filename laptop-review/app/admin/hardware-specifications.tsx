@@ -58,7 +58,11 @@ export default function HardwareSpecifications({
               value={formData.gpu}
               onChange={(e) => onChange("gpu", e.target.value)}
               onFocus={() => onFocus("gpu")}
+              className={showValidation && fieldErrors.gpu ? "border-red-500" : ""}
             />
+            {showValidation && fieldErrors.gpu && (
+              <p className="text-sm text-red-500 mt-1">GPU is required</p>
+            )}
           </div>
         </div>
 
@@ -102,7 +106,11 @@ export default function HardwareSpecifications({
               value={formData.graphicsCard}
               onChange={(e) => onChange("graphicsCard", e.target.value)}
               onFocus={() => onFocus("graphicsCard")}
+              className={showValidation && fieldErrors.graphicsCard ? "border-red-500" : ""}
             />
+            {showValidation && fieldErrors.graphicsCard && (
+                <p className="text-sm text-red-500 mt-1">Graphics Card is required</p>
+              )}
           </div>
           <div>
             <Label htmlFor="ports">Ports</Label>
@@ -112,7 +120,11 @@ export default function HardwareSpecifications({
               value={formData.ports}
               onChange={(e) => onChange("ports", e.target.value)}
               onFocus={() => onFocus("ports")}
+              className={showValidation && fieldErrors.ports ? "border-red-500" : ""}
             />
+             {showValidation && fieldErrors.ports && (
+                <p className="text-sm text-red-500 mt-1">Graphics Card is required</p>
+              )}
           </div>
         </div>
 
@@ -132,14 +144,18 @@ export default function HardwareSpecifications({
             {showValidation && fieldErrors.display && <p className="text-sm text-red-500 mt-1">Display is required</p>}
           </div>
           <div>
-            <Label htmlFor="color-gamut">Color Gamut</Label>
+            <Label htmlFor="color-gamut" className="flex items-center gap-1">Color Gamut</Label>
             <Input
               id="color-gamut"
               placeholder="e.g. 100% sRGB"
               value={formData.colorGamut}
               onChange={(e) => onChange("colorGamut", e.target.value)}
               onFocus={() => onFocus("colorGamut")}
+              className={showValidation && fieldErrors.colorGamut ? "border-red-500" : ""}
             />
+            {showValidation && fieldErrors.colorGamut && (
+                  <p className="text-sm text-red-500 mt-1">Color Gamut is required</p>
+                )}
           </div>
         </div>
 
@@ -152,7 +168,11 @@ export default function HardwareSpecifications({
               value={formData.battery}
               onChange={(e) => onChange("battery", e.target.value)}
               onFocus={() => onFocus("battery")}
+              className={showValidation && fieldErrors.battery ? "border-red-500" : ""}
             />
+            {showValidation && fieldErrors.battery && (
+                <p className="text-sm text-red-500 mt-1">Battery is required</p>
+              )}
           </div>
           <div>
             <Label htmlFor="charging">Charging</Label>
@@ -162,7 +182,11 @@ export default function HardwareSpecifications({
               value={formData.charging}
               onChange={(e) => onChange("charging", e.target.value)}
               onFocus={() => onFocus("charging")}
+              className={showValidation && fieldErrors.charging ? "border-red-500" : ""}
             />
+             {showValidation && fieldErrors.charging && (
+                <p className="text-sm text-red-500 mt-1">Charging is required</p>
+              )}
           </div>
         </div>
       </div>
