@@ -97,8 +97,8 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-gray-700 p-6 mb-6">
       {/* Tiêu đề */}
-      <div className="p-4 border-b">
-        <h2 className="text-2xl font-bold">
+      <div className="p-4 border-b dark:border-gray-700">
+        <h2 className="text-2xl font-bold dark:text-white">
           Bình luận về {displayName} ({comments.length})
         </h2>
       </div>
@@ -107,7 +107,7 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
       <div className="p-4">
         <Textarea
           placeholder={`Viết bình luận về ${displayName}...`}
-          className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-800 p-4 sm:p-6 mb-8"
+          className="bg-white dark:bg-gray-700 rounded-lg shadow dark:shadow-gray-800 p-4 sm:p-6 mb-8 dark:text-gray-100 dark:border-gray-600 dark:placeholder-gray-400"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
@@ -120,12 +120,12 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
       <div className="p-4 space-y-4">
         {comments.length > 0 ? (
           comments.map((comment) => (
-            <div key={comment.id} className="border-b pb-3 last:border-0">
-              <div className="bg-gray-100 rounded-lg p-3">
-                <div className="font-semibold">{comment.username}</div>
-                <p className="mt-1">{comment.content}</p>
+            <div key={comment.id} className="border-b pb-3 last:border-0 dark:border-gray-700">
+              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
+                <div className="font-semibold dark:text-white">{comment.username}</div>
+                <p className="mt-1 dark:text-gray-200">{comment.content}</p>
               </div>
-              <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+              <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
                 <span>{formatTimestamp(comment.timestamp)}</span>
                 <button className="font-medium hover:underline" onClick={() => handleLikeComment(comment.id)}>
                   Thích
@@ -138,7 +138,7 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
             </div>
           ))
         ) : (
-          <div className="text-center py-4 text-gray-800">
+          <div className="text-center py-4 text-gray-800 dark:text-gray-200">
             Chưa có bình luận nào về sản phẩm này. Hãy là người đầu tiên bình luận!
           </div>
         )}
