@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, AlertCircle } from "lucide-react"
+import { ArrowRight, AlertCircle, Plus, List, Settings } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -20,7 +20,7 @@ export default function AdminPage() {
         </AlertDescription>
       </Alert>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Form Mới</CardTitle>
@@ -38,8 +38,32 @@ export default function AdminPage() {
               onClick={() => router.push("/admin/laptop-form")} 
               className="w-full"
             >
-              Sử dụng Form Mới
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Plus className="mr-2 h-4 w-4" />
+              Thêm Laptop Mới
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Quản Lý Laptop</CardTitle>
+            <CardDescription>
+              Xem, chỉnh sửa và xóa các laptop hiện có.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              Quản lý thông tin các laptop đã lưu trong hệ thống. Bạn có thể chỉnh sửa thông tin hoặc xóa laptop.
+            </p>
+          </CardContent>
+          <CardFooter>
+            <Button 
+              onClick={() => router.push("/admin/manage-laptops")} 
+              className="w-full"
+              variant="secondary"
+            >
+              <Settings className="mr-2 h-4 w-4" />
+              Quản Lý Laptop
             </Button>
           </CardFooter>
         </Card>

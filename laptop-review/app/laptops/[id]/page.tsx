@@ -8,8 +8,6 @@ import { laptopService } from "@/services/firebaseServices";
 import { SimilarLaptop, Laptop } from "@/types/laptop";
 import { CommentSection } from "@/components/laptop-detail/sections/comment-section";
 
-
-
 interface LaptopData {
   laptop: Laptop | null;
   loading: boolean;

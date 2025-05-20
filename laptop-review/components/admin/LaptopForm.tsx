@@ -1,11 +1,11 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle, ChevronLeft } from "lucide-react"
 import { initializeApp } from "firebase/app"
-import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore"
+import { getFirestore, collection, addDoc, serverTimestamp, doc, updateDoc } from "firebase/firestore"
 
 import BasicInfo from "./BasicInfo"
 import Specifications from "./Specifications"
@@ -32,7 +32,13 @@ interface ProsConsItem {
   text: string
 }
 
-export default function LaptopForm() {
+interface LaptopFormProps {
+  editMode?: boolean
+  initialData?: any
+  laptopId?: string
+}
+
+export default function LaptopForm({ editMode = false, initialData = null, laptopId = "" }: LaptopFormProps) {
   const router = useRouter()
   const [showValidation, setShowValidation] = useState(false)
   const [formErrors, setFormErrors] = useState<string[]>([])
@@ -216,6 +222,82 @@ export default function LaptopForm() {
   const app = initializeApp(firebaseConfig)
   const db = getFirestore(app)
 
+  // Load initial data if in edit mode
+  useEffect(() => {
+    if (editMode && initialData) {
+      // Map the flat Firestore data structure to our nested form structure
+      const mappedData = {
+        id: initialData.id || "",
+        name: initialData.name || "",
+        image: initialData.image || "/placeholder.svg?height=600&width=600",
+        price: initialData.price || "",
+        originalPrice: initialData.originalPrice || "",
+        purchaseLink: initialData.purchaseLink || "",
+
+        specs: {
+          cpu: initialData.specs?.cpu || "",
+          gpu: initialData.specs?.gpu || "",
+          ram: initialData.specs?.ram || "",
+          storage: initialData.specs?.storage || "",
+          display: initialData.specs?.display || "",
+          battery: initialData.specs?.battery || "",
+        },
+
+        descriptions: {
+          performance: initialData.descriptions?.performance || "",
+          battery: initialData.descriptions?.battery || "",
+          design: initialData.descriptions?.design || "",
+          display: initialData.descriptions?.display || "",
+          keyboard: initialData.descriptions?.keyboard || "",
+          trackpad: initialData.descriptions?.trackpad || "",
+          speakers: initialData.descriptions?.speakers || "",
+          webcam: initialData.descriptions?.webcam || "",
+          ports: initialData.descriptions?.ports || "",
+        },
+
+        benchmarks: {
+          gaming: initialData.benchmarks?.gaming || 5,
+          productivity: initialData.benchmarks?.productivity || 5,
+          content: initialData.benchmarks?.content || 5,
+          battery: initialData.benchmarks?.battery || 5,
+          display: initialData.benchmarks?.display || 5,
+          build: initialData.benchmarks?.build || 5,
+          value: initialData.benchmarks?.value || 5,
+          overall: initialData.benchmarks?.overall || 5,
+          batteryLifeCasual: initialData.benchmarks?.batteryLifeCasual || "",
+          batteryLifeVideo: initialData.benchmarks?.batteryLifeVideo || "",
+          batteryLifeHeavy: initialData.benchmarks?.batteryLifeHeavy || "",
+        },
+
+        detailedSpecs: {
+          ...formData.detailedSpecs,
+          ...(initialData.detailedSpecs || {}),
+        },
+      }
+
+      setFormData(mappedData)
+
+      if (initialData.pros && initialData.pros.length > 0) {
+        const prosItems = initialData.pros.map((text: string, index: number) => ({
+          id: `pro-${index + 1}`,
+          text,
+        }))
+        
+        if (initialData.cons && initialData.cons.length > 0) {
+          const consItems = initialData.cons.map((text: string, index: number) => ({
+            id: `con-${index + 1}`,
+            text,
+          }))
+          
+          setProsConsData({
+            pros: prosItems,
+            cons: consItems,
+          })
+        }
+      }
+    }
+  }, [editMode, initialData])
+
   // Form validation
   const validateForm = () => {
     const errors: string[] = []
@@ -328,11 +410,22 @@ export default function LaptopForm() {
         ...formData,
         pros: prosConsData.pros.map(pro => pro.text).filter(text => text.trim() !== ""),
         cons: prosConsData.cons.map(con => con.text).filter(text => text.trim() !== ""),
-        createdAt: serverTimestamp(),
       }
 
-      // Add to Firestore
-      await addDoc(collection(db, "laptops"), laptopData)
+      if (editMode && laptopId) {
+        // Update existing document
+        const laptopRef = doc(db, "laptops", laptopId)
+        await updateDoc(laptopRef, {
+          ...laptopData,
+          updatedAt: serverTimestamp(),
+        })
+      } else {
+        // Add new document
+        await addDoc(collection(db, "laptops"), {
+          ...laptopData,
+          createdAt: serverTimestamp(),
+        })
+      }
       
       return true
     } catch (error) {
@@ -350,9 +443,16 @@ export default function LaptopForm() {
       const success = await saveToFirestore()
       
       if (success) {
-        alert("Thông tin laptop đã được lưu thành công!")
-        // Optional: Reset form or redirect
-        // router.push("/admin/laptops")
+        alert(editMode 
+          ? "Thông tin laptop đã được cập nhật thành công!" 
+          : "Thông tin laptop đã được lưu thành công!")
+        
+        if (editMode) {
+          router.push("/admin/manage-laptops")
+        } else {
+          // Optional: Reset form or redirect
+          // router.push("/admin/laptops")
+        }
       } else {
         alert("Có lỗi xảy ra khi lưu thông tin laptop")
       }
@@ -368,13 +468,17 @@ export default function LaptopForm() {
         <Button
           variant="ghost"
           className="flex items-center gap-1 text-muted-foreground"
-          onClick={() => router.push("/")}
+          onClick={() => router.push(editMode ? "/admin/manage-laptops" : "/")}
         >
           <ChevronLeft className="h-4 w-4" />
-          Quay lại trang chủ
+          {editMode ? "Quay lại danh sách laptop" : "Quay lại trang chủ"}
         </Button>
-        <h1 className="text-2xl font-bold">Thêm Laptop Mới</h1>
-        <Button onClick={handleSubmit}>Lưu Laptop</Button>
+        <h1 className="text-2xl font-bold">
+          {editMode ? "Chỉnh Sửa Laptop" : "Thêm Laptop Mới"}
+        </h1>
+        <Button onClick={handleSubmit}>
+          {editMode ? "Cập Nhật Laptop" : "Lưu Laptop"}
+        </Button>
       </div>
 
       {showValidation && formErrors.length > 0 && (
@@ -465,7 +569,7 @@ export default function LaptopForm() {
 
         <div className="flex justify-end">
           <Button type="submit" size="lg">
-            Lưu Thông Tin Laptop
+            {editMode ? "Cập Nhật Thông Tin Laptop" : "Lưu Thông Tin Laptop"}
           </Button>
         </div>
       </form>
