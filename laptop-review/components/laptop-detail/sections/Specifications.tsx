@@ -30,8 +30,8 @@ export default function Specifications({ laptop }: SpecificationsProps) {
                 <td className="py-2 font-medium text-gray-700 dark:text-gray-300">{laptop.detailedSpecs?.storage?.capacity || laptop.specs.storage}</td>
               </tr>
               <tr>
-                <td className="py-2 pr-2 text-gray-500 dark:text-gray-400">Hệ điều hành</td>
-                <td className="py-2 font-medium text-gray-700 dark:text-gray-300">{laptop.specs.operatingSystem || "Windows 11 Home"}</td>
+                <td className="py-2 pr-2 text-gray-500 dark:text-gray-400">Sạc</td>
+                <td className="py-2 font-medium text-gray-700 dark:text-gray-300">{laptop.detailedSpecs?.battery?.chargerWattage} USB-C PD 3.0</td>
               </tr>
             </tbody>
           </table>
@@ -40,7 +40,7 @@ export default function Specifications({ laptop }: SpecificationsProps) {
         <div>
           <h3 className="text-base font-semibold mb-3 text-gray-800 dark:text-white">Màn hình và pin</h3>
           <table className="w-full">
-            <tbody>
+            <body>
               <tr className="border-b border-gray-100 dark:border-gray-700">
                 <td className="py-2 pr-2 text-gray-500 dark:text-gray-400">Màn hình</td>
                 <td className="py-2 font-medium text-gray-700 dark:text-gray-300">
@@ -59,11 +59,8 @@ export default function Specifications({ laptop }: SpecificationsProps) {
                 <td className="py-2 pr-2 text-gray-500 dark:text-gray-400">Thời lượng pin</td>
                 <td className="py-2 font-medium text-gray-700 dark:text-gray-300">{laptop.detailedSpecs?.battery?.capacity} Li-Polymer</td>
               </tr>
-              <tr>
-                <td className="py-2 pr-2 text-gray-500 dark:text-gray-400">Sạc</td>
-                <td className="py-2 font-medium text-gray-700 dark:text-gray-300">{laptop.detailedSpecs?.battery?.chargerWattage} USB-C PD 3.0</td>
-              </tr>
-            </tbody>
+
+            </body>
           </table>
         </div>
       </div>
