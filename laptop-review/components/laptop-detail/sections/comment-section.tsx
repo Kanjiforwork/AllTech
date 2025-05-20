@@ -5,6 +5,16 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { ThumbsUp } from "lucide-react"
 import { type Comment, getCommentsByLaptopId, addComment as addCommentToCollection } from "@/mock_data/comment-collection"
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription,
+  DialogFooter,
+  DialogTrigger
+} from "@/components/ui/dialog"
+import { LogIn } from "lucide-react"
 
 // Định nghĩa kiểu dữ liệu cho laptop
 interface Laptop {
@@ -34,6 +44,10 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
   // State để lưu trữ comments
   const [comments, setComments] = useState<Comment[]>([])
   const [newComment, setNewComment] = useState("")
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
+
+  // Kiểm tra xem người dùng đã đăng nhập chưa
+  const isLoggedIn = currentUser.id !== "guest"
 
   // Lấy comments từ collection khi component mount hoặc laptopId thay đổi
   useEffect(() => {
@@ -54,6 +68,11 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
 
   // Hàm thêm comment mới
   const handleAddComment = () => {
+    if (!isLoggedIn) {
+      setIsLoginDialogOpen(true)
+      return
+    }
+
     if (!newComment.trim()) return
 
     const commentData = {
@@ -75,6 +94,11 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
     }
   }
 
+  // Hàm mở dialog đăng nhập
+  const showLoginDialog = () => {
+    setIsLoginDialogOpen(true)
+  }
+
   // Hàm định dạng thời gian
   const formatTimestamp = (date: Date): string => {
     const now = new Date()
@@ -94,6 +118,13 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
     // Trong thực tế, bạn sẽ gọi API để cập nhật likes trong cơ sở dữ liệu
   }
 
+  // Hướng dẫn người dùng đến trang đăng nhập
+  const goToLogin = () => {
+    if (typeof window !== "undefined") {
+      window.location.href = "/login"
+    }
+  }
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-gray-700 p-6 mb-6">
       {/* Tiêu đề */}
@@ -105,16 +136,49 @@ export function CommentSection({ laptop, laptopId: propLaptopId, laptopName: pro
 
       {/* Ô nhập comment */}
       <div className="p-4">
-        <Textarea
-          placeholder={`Viết bình luận về ${displayName}...`}
-          className="bg-white dark:bg-gray-700 rounded-lg shadow dark:shadow-gray-800 p-4 sm:p-6 mb-8 dark:text-gray-100 dark:border-gray-600 dark:placeholder-gray-400"
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        <div className="mt-2 flex justify-end">
-          <Button onClick={handleAddComment}>Đăng</Button>
-        </div>
+        {isLoggedIn ? (
+          <>
+            <Textarea
+              placeholder={`Viết bình luận về ${displayName}...`}
+              className="bg-white dark:bg-gray-700 rounded-lg shadow dark:shadow-gray-800 p-4 sm:p-6 mb-8 dark:text-gray-100 dark:border-gray-600 dark:placeholder-gray-400"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+            <div className="mt-2 flex justify-end">
+              <Button onClick={handleAddComment}>Đăng</Button>
+            </div>
+          </>
+        ) : (
+          <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center">
+            <p className="text-gray-700 dark:text-gray-300 mb-4">
+              Bạn cần đăng nhập để có thể bình luận về sản phẩm này
+            </p>
+            <Button onClick={showLoginDialog} className="flex items-center gap-2">
+              <LogIn className="w-4 h-4" /> Đăng nhập để bình luận
+            </Button>
+          </div>
+        )}
       </div>
+
+      {/* Dialog yêu cầu đăng nhập */}
+      <Dialog open={isLoginDialogOpen} onOpenChange={setIsLoginDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Đăng nhập để bình luận</DialogTitle>
+            <DialogDescription>
+              Bạn cần đăng nhập hoặc đăng ký tài khoản để có thể bình luận về sản phẩm này.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center gap-2 mt-4">
+            <Button variant="default" onClick={goToLogin}>
+              Đăng nhập ngay
+            </Button>
+            <Button variant="outline" onClick={() => setIsLoginDialogOpen(false)}>
+              Để sau
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Danh sách comment */}
       <div className="p-4 space-y-4">
