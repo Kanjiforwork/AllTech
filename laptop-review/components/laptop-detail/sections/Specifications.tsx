@@ -40,7 +40,7 @@ export default function Specifications({ laptop }: SpecificationsProps) {
         <div>
           <h3 className="text-base font-semibold mb-3 text-gray-800 dark:text-white">Màn hình và pin</h3>
           <table className="w-full">
-            <body>
+            <tbody>
               <tr className="border-b border-gray-100 dark:border-gray-700">
                 <td className="py-2 pr-2 text-gray-500 dark:text-gray-400">Màn hình</td>
                 <td className="py-2 font-medium text-gray-700 dark:text-gray-300">
@@ -60,7 +60,7 @@ export default function Specifications({ laptop }: SpecificationsProps) {
                 <td className="py-2 font-medium text-gray-700 dark:text-gray-300">{laptop.detailedSpecs?.battery?.capacity} Li-Polymer</td>
               </tr>
 
-            </body>
+            </tbody>
           </table>
         </div>
       </div>
