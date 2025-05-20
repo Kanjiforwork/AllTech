@@ -110,35 +110,42 @@ export default function Home() {
     setFilteredData(newListData); // Cập nhật filteredData với danh sách đã sắp xếp
     setDataSort(newListData.slice(0, ITEMS_PER_HOMEPAGE)); // Hiển thị 9 item đầu tiên
   }
-   useEffect(() => {
-    // Skip if user is logged in or prompt already shown in this session
-    if (isLoggedIn || hasShownPromptRef.current) return;
+  useEffect(() => {
+  // Skip if user is logged in or prompt already shown in this session
+  if (isLoggedIn || hasShownPromptRef.current) return;
+  
+  const handleScroll = () => {
+    // Dừng đếm và hiển thị prompt khi đạt tối đa số lần cuộn (từ 0 đến 5 = 6 lần)
+    if (scrollCount >= maxScrollsAllowed) {
+      setShowLoginPrompt(true);
+      hasShownPromptRef.current = true;
+      return;
+    }
     
-    const handleScroll = () => {
-      // Throttle scroll events
-      if (scrollThrottleRef.current) return;
-      
-      scrollThrottleRef.current = true;
-      setTimeout(() => {
-        scrollThrottleRef.current = false;
-      }, 1000); // Don't count scrolls more than once per second
-      
-      setScrollCount(prev => {
-        const newCount = prev + 1;
-        
-        // Show login prompt after max scrolls
-        if (newCount >= maxScrollsAllowed && !hasShownPromptRef.current) {
-          setShowLoginPrompt(true);
-          hasShownPromptRef.current = true;
-        }
-        
-        return newCount;
-      });
-    };
+    // Throttle scroll events
+    if (scrollThrottleRef.current) return;
     
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isLoggedIn]);
+    scrollThrottleRef.current = true;
+    setTimeout(() => {
+      scrollThrottleRef.current = false;
+    }, 1000); // Don't count scrolls more than once per second
+    
+    setScrollCount(prev => {
+      const newCount = Math.min(prev + 1, maxScrollsAllowed); // Đảm bảo không vượt quá maxScrollsAllowed
+      
+      // Show login prompt after max scrolls
+      if (newCount >= maxScrollsAllowed && !hasShownPromptRef.current) {
+        setShowLoginPrompt(true);
+        hasShownPromptRef.current = true;
+      }
+      
+      return newCount;
+    });
+  };
+  
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, [isLoggedIn, scrollCount, maxScrollsAllowed]);
 
   // Reset when user logs in
   useEffect(() => {
@@ -233,36 +240,36 @@ export default function Home() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="w-full max-w-md p-6 mx-4 bg-white rounded-lg shadow-xl dark:bg-gray-800">
             <div className="text-center">
-              <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Continue Reading with LapInsight</h3>
+              <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Tiếp tục đọc với LapInsight</h3>
               
               {/* Progress bar showing scrolls used */}
-              <div className="w-full h-2 mb-4 bg-gray-200 rounded-full">
-                <div 
-                  className="h-2 bg-blue-500 rounded-full" 
-                  style={{ width: `${(scrollCount / maxScrollsAllowed) * 100}%` }}
-                />
-              </div>
+             <div className="w-full h-2 mb-4 bg-gray-200 rounded-full overflow-hidden">
+  <div 
+    className="h-2 bg-blue-500 rounded-full" 
+    style={{ 
+      width: `${Math.min((scrollCount / maxScrollsAllowed) * 100, 100)}%` 
+    }}
+  />
+</div>
               <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                You've used {scrollCount}/{maxScrollsAllowed} free scrolls
-              </p>
-              
-              <p className="mb-6 text-gray-700 dark:text-gray-300">
-                Create a free account to get unlimited access to laptop reviews, comparison tools, and expert recommendations.
+                Bạn đã xài {scrollCount}/{maxScrollsAllowed} lượt miễn phí
               </p>
               
               <div className="flex flex-col gap-3">
-                <Link href="/login" className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
-                  Sign In
-                </Link>
-                <Link href="/register" className="w-full px-4 py-2 text-blue-600 bg-white border border-blue-600 rounded-md hover:bg-blue-50">
-                  Create Account
-                </Link>
-                <button 
-                  onClick={handleCloseLoginPrompt} 
-                  className="w-full px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-                >
-                  Maybe Later
-                </button>
+  <Link href="/login" className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
+    Đăng nhập
+  </Link>
+  <Link href="/register" className="w-full px-4 py-2 text-blue-600 bg-white border border-blue-600 rounded-md hover:bg-blue-50">
+    Tạo tài khoản
+  </Link>
+  {/* Chỉ hiển thị nút "Để sau" khi chưa đạt đến giới hạn cuộn tối đa */}
+  {scrollCount < maxScrollsAllowed && (
+    <button 
+      onClick={handleCloseLoginPrompt} 
+      className="w-full px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+    >
+      Để sau
+    </button> )}
               </div>
             </div>
           </div>
