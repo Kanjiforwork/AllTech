@@ -115,11 +115,11 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
 
         {/* Performance Comparison */}
         <div className="mb-6">
-          <h4 className="font-medium mb-3 dark:text-white">Performance Comparison: Plugged vs. Unplugged</h4>
+          <h4 className="font-medium mb-3 dark:text-white">So sánh hiệu năng: Cắm sạc (AC Power) vs Không cắm sạc (Pin)</h4>
           
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h5 className="text-sm font-medium mb-2 dark:text-gray-300">Plugged In (AC Power)</h5>
+              <h5 className="text-sm font-medium mb-2 dark:text-gray-300">Cắm sạc (AC Power)</h5>
               <div className="flex items-center justify-between mb-2 text-sm">
                 <span className="dark:text-gray-300">GB6 Single</span>
                 <span className="font-bold dark:text-white">{laptop.detailedSpecs?.cpu?.benchmarks?.geekbench6Single || 2345}</span>
@@ -154,7 +154,7 @@ export default function DetailedAnalysis({ laptop }: DetailedAnalysisProps) {
             </div>
 
             <div>
-              <h5 className="text-sm font-medium mb-2 dark:text-gray-300">Unplugged (Battery)</h5>
+              <h5 className="text-sm font-medium mb-2 dark:text-gray-300">Không cắm sạc (Pin)</h5>
               <div className="flex items-center justify-between mb-2 text-sm">
                 <span className="dark:text-gray-300">GB6 Single</span>
                 <span className="font-bold dark:text-white">2123</span>
