@@ -69,10 +69,10 @@ export function AdminTools() {
         <Button
           variant="ghost"
           className="flex items-center gap-1 text-muted-foreground"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/admin")}
         >
           <ChevronLeft className="h-4 w-4" />
-          Quay lại trang chủ
+          Quay lại trang admin
         </Button>
       </div>
 

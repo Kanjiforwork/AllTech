@@ -39,20 +39,11 @@ export default function AdminLayout({
 
   const navItems = [
     {
-      title: "Trang Chủ Admin",
-      href: "/admin",
+      title: "Quản lí laptop",
+      href: "/manage-laptops",
       icon: <LayoutDashboard className="h-4 w-4 mr-2" />,
     },
-    {
-      title: "Thêm Laptop Mới",
-      href: "/admin/laptop-form",
-      icon: <Plus className="h-4 w-4 mr-2" />,
-    },
-    {
-      title: "Quản Lý Laptop",
-      href: "/admin/manage-laptops",
-      icon: <Laptop className="h-4 w-4 mr-2" />,
-    },
+
   ]
 
   return (
@@ -67,7 +58,7 @@ export default function AdminLayout({
                 className="flex items-center"
               >
                 <Laptop className="h-6 w-6 mr-2" />
-                <span className="font-medium">Admin</span>
+                <span className="font-medium">Trang Chủ</span>
               </Link>
             </div>
             <nav className="flex items-center space-x-4 lg:space-x-6 mx-6">
@@ -87,15 +78,7 @@ export default function AdminLayout({
                 </Link>
               ))}
             </nav>
-            <div className="ml-auto flex items-center space-x-4">
-              <Button 
-                variant="ghost" 
-                onClick={() => router.push("/")}
-                className="text-sm text-muted-foreground"
-              >
-                Về Trang Chính
-              </Button>
-            </div>
+
           </div>
         </div>
       )}

@@ -156,6 +156,29 @@ export default function AdminPage() {
 
             <Card>
               <CardHeader>
+                <CardTitle>Phân quyền</CardTitle>
+                <CardDescription>
+                  Phần quyền admin cho user
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                 Nhập id của user từ firestore và nhập Key để phân quyền
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  onClick={() => router.push("/admin-tools")} 
+                  className="w-full"
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Set Admin
+                </Button>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
                 <CardTitle>Quản Lý Laptop</CardTitle>
                 <CardDescription>
                   Xem, chỉnh sửa và xóa các laptop hiện có.
