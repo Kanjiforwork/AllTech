@@ -74,21 +74,21 @@ export default function RecommendedSection() {
       id: 1,
       name: "Dành cho học sinh/sinh viên",
       description: "Nhẹ, pin lâu, giá phải chăng",
-      image: "/placeholder.svg",
+      image: "https://i.postimg.cc/sgbB3bbZ/image.png",
       getLaptops: () => getFilteredLaptops("Dành cho học sinh/sinh viên")
     },
     {
       id: 2,
       name: "Dành cho Gaming",
       description: "Chip đồ họa mạnh mẽ, màn hình tần số quét cao, hệ thống làm mát tiên tiến",
-      image: "/placeholder.svg",
+      image: "https://i.postimg.cc/02s11nt2/image.png",
       getLaptops: () => getFilteredLaptops("Dành cho Gaming")
     },
     {
       id: 3,
       name: "Dành cho công việc",
       description: "Màn hình hiển thị màu sắc chính xác, CPU mạnh mẽ, hiệu suất ổn định",
-      image: "/placeholder.svg",
+      image: "https://i.postimg.cc/FK9KFmDz/image.png",
       getLaptops: () => getFilteredLaptops("Dành cho công việc")
     },
   ]
