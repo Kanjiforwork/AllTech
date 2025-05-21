@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { SearchIcon, Heart } from "lucide-react"
-import { laptopData } from "@/data/laptops";
+import { laptopService } from "@/services/firebaseServices"
+import { Laptop } from "@/types/laptop"
 
 import LatestNews from "@/components/latest-news"
 import ArticleHighlights from "@/components/article-highlights"
@@ -22,7 +23,7 @@ const ITEMS_PER_HOMEPAGE = 9; // Giới hạn số lượng laptop hiển thị
 
 export default function Home() {
   // State to track which laptop cards are visible
-  const [visibleCards, setVisibleCards] = useState<boolean[]>(() => Array(laptopData.slice(0, ITEMS_PER_HOMEPAGE).length).fill(false));
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
   // Ref for the laptop grid container
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null);
@@ -45,30 +46,53 @@ export default function Home() {
     features: [],
   })
 
+  // State để lưu trữ dữ liệu laptop từ Firestore
+  const [allLaptops, setAllLaptops] = useState<Laptop[]>([]);
   // filteredData lưu trữ toàn bộ danh sách laptop sau khi áp dụng filter
-  const [filteredData, setFilteredData] = useState(laptopData) 
+  const [filteredData, setFilteredData] = useState<Laptop[]>([]) 
   // dataSort chỉ lưu trữ 9 sản phẩm để hiển thị, lấy từ filteredData đã được sắp xếp/lọc
-  const [dataSort, setDataSort] = useState(() => laptopData.slice(0, ITEMS_PER_HOMEPAGE))
+  const [dataSort, setDataSort] = useState<Laptop[]>([])
+  const [loading, setLoading] = useState(true);
 
   const isLoggedIn = !!user;
-  // Animation for laptop cards using Intersection Observer
+  
+  // Fetch laptop data from Firestore
   useEffect(() => {
+    const fetchLaptops = async () => {
+      try {
+        const laptops = await laptopService.getAll();
+        setAllLaptops(laptops as Laptop[]);
+        setFilteredData(laptops as Laptop[]);
+        setDataSort((laptops as Laptop[]).slice(0, ITEMS_PER_HOMEPAGE));
+        setVisibleCards(Array((laptops as Laptop[]).slice(0, ITEMS_PER_HOMEPAGE).length).fill(false));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching laptops:", error);
+        setLoading(false);
+      }
+    };
+    
+    fetchLaptops();
+    
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-    // Chỉ animate những card sẽ hiển thị ban đầu (9 cái)
-    const initialLaptopsToAnimate = laptopData.slice(0, ITEMS_PER_HOMEPAGE);
+  }, []);
 
+  // Animation for laptop cards using Intersection Observer
+  useEffect(() => {
+    if (dataSort.length === 0) return;
+    
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           // Start staggered fade in of laptop cards when they enter viewport
-          initialLaptopsToAnimate.forEach((_, index) => { // Chỉ lặp qua 9 items đầu
+          dataSort.forEach((_, index) => {
             setTimeout(() => {
               setVisibleCards(prev => {
                 // Đảm bảo prev có đúng độ dài
-                const currentDisplayLength = initialLaptopsToAnimate.length;
+                const currentDisplayLength = dataSort.length;
                 const newState = prev.length === currentDisplayLength ? [...prev] : Array(currentDisplayLength).fill(false);
                 if (index < newState.length) {
                   newState[index] = true;
@@ -95,7 +119,7 @@ export default function Home() {
       observer.disconnect() // Clean up on unmount
     }
     
-  }, []) // Chạy một lần khi component mount
+  }, [dataSort]) // Chạy khi dataSort thay đổi
   
   const handleLogout = () => {
     // Xóa thông tin người dùng khỏi localStorage và cập nhật trạng thái
@@ -106,7 +130,7 @@ export default function Home() {
 
   // Xử lý sắp xếp theo giá
   // newListData là danh sách đã được lọc và sắp xếp đầy đủ
-  function handleSort(newListData: typeof laptopData) {
+  function handleSort(newListData: Laptop[]) {
     setFilteredData(newListData); // Cập nhật filteredData với danh sách đã sắp xếp
     setDataSort(newListData.slice(0, ITEMS_PER_HOMEPAGE)); // Hiển thị 9 item đầu tiên
   }
@@ -160,7 +184,9 @@ export default function Home() {
   };
   // Áp dụng bộ lọc
   useEffect(() => {
-    let results = [...laptopData]; // Bắt đầu với toàn bộ dữ liệu gốc
+    if (allLaptops.length === 0) return;
+    
+    let results = [...allLaptops]; // Bắt đầu với toàn bộ dữ liệu gốc
     
     // Áp dụng các bộ lọc
     // Filter by brand
@@ -179,7 +205,7 @@ export default function Home() {
     if (filters.cpuTypes.length > 0) {
       results = results.filter(laptop => {
         return filters.cpuTypes.some((cpuType: string) => 
-          laptop.specs.includes(cpuType)
+          laptop.specs.cpu.toLowerCase().includes(cpuType.toLowerCase())
         );
       });
     }
@@ -188,7 +214,7 @@ export default function Home() {
     if (filters.ramSizes.length > 0) {
       results = results.filter(laptop => {
         return filters.ramSizes.some((ramSize: string) => 
-          laptop.specs.includes(ramSize)
+          laptop.specs.ram.toLowerCase().includes(ramSize.toLowerCase())
         );
       });
     }
@@ -197,7 +223,7 @@ export default function Home() {
     if (filters.storageOptions.length > 0) {
       results = results.filter(laptop => {
         return filters.storageOptions.some((storageOption: string) => 
-          laptop.specs.includes(storageOption.replace(' SSD', ''))
+          laptop.specs.storage.toLowerCase().includes(storageOption.toLowerCase().replace(' ssd', ''))
         );
       });
     }
@@ -205,8 +231,12 @@ export default function Home() {
     // Filter by price range
     if (filters.priceRanges.length > 0) {
       results = results.filter(laptop => {
+        // Trích xuất giá từ chuỗi và chuyển đổi thành số
+        const price = parseInt(laptop.price?.replace(/[^0-9]/g, '') || '0');
+        
+        // Kiểm tra xem giá có nằm trong một trong các khoảng giá được chọn không
         return filters.priceRanges.some((range: { min: number; max: number }) => 
-          laptop.salePrice >= range.min && laptop.salePrice <= range.max
+          price >= range.min && price <= range.max
         );
       });
     }
@@ -214,9 +244,10 @@ export default function Home() {
     // Filter by display size
     if (filters.displaySizes.length > 0) {
       results = results.filter(laptop => {
-        // Kiểm tra kích thước màn hình dựa trên thông số specs
         return filters.displaySizes.some(size => {
-          return laptop.specs.toLowerCase().includes(size.toLowerCase().replace('"', ''));
+          const displayText = laptop.specs.display.toLowerCase();
+          const sizeValue = size.replace('"', '').toLowerCase();
+          return displayText.includes(sizeValue + '"') || displayText.includes(sizeValue + ' inch');
         });
       });
     }
@@ -225,7 +256,7 @@ export default function Home() {
     setFilteredData(results);
     // Set dataSort (chỉ 9 item đầu để hiển thị)
     setDataSort(results.slice(0, ITEMS_PER_HOMEPAGE));
-  }, [filters]);
+  }, [filters, allLaptops]);
   
   // Handle filter changes from FilterPanel
   const handleFilterChange = (newFilters: FilterState) => {
@@ -303,80 +334,97 @@ export default function Home() {
               ref={laptopGridRef} 
               className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 relative z-0"
             >
-              {dataSort.map((laptop, index) => (
-                <div 
-                  key={laptop.id} 
-                  className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out ${
-                    visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                  } hover:shadow-md hover:-translate-y-1 flex flex-col`}
-                >
-                  <div className="p-4 flex flex-col flex-grow">
-                    <Link href={laptop.detailLink}>
-                      <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md relative">
-                        <Image 
-                          src={laptop.image || "/placeholder.svg?height=600&width=600"} 
-                          alt={laptop.name || "Laptop image"}
-                          fill
-                          style={{objectFit: 'contain'}}
-                          className="p-2"
-                        />
-                      </div>
-                    </Link>
+              {loading ? (
+                <div className="col-span-3 flex justify-center items-center py-20">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-white"></div>
+                </div>
+              ) : dataSort.length === 0 ? (
+                <div className="col-span-3 text-center py-20">
+                  <p className="text-gray-600 dark:text-gray-300">Không tìm thấy laptop nào phù hợp với bộ lọc.</p>
+                </div>
+              ) : (
+                dataSort.map((laptop, index) => (
+                  <div 
+                    key={laptop.id} 
+                    className={`overflow-hidden bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm transition-all duration-500 ease-in-out ${
+                      visibleCards[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                    } hover:shadow-md hover:-translate-y-1 flex flex-col`}
+                  >
+                    <div className="p-4 flex flex-col flex-grow">
+                      <Link href={`/laptops/${laptop.id}`}>
+                        <div className="w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md relative">
+                          {laptop.image ? (
+                              <Image 
+                                  src={laptop.image} 
+                                  alt={laptop.name || "Laptop image"}
+                                  fill
+                                  style={{objectFit: 'contain'}}
+                                  className="p-2"
+                              />
+                          ) : (
+                              <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300 p-2 text-center">
+                                  {laptop.name}
+                              </div>
+                          )}
+                        </div>
+                      </Link>
 
-                    <div className="flex items-center mb-2">
-                      {Array.from({ length: 5 }).map((_, j) => (
-                        <svg key={j} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
-                      ))}
-                      <span className="ml-2 text-sm text-gray-600 dark:text-gray-300">{laptop.rating} ({laptop.reviews} reviews)</span>
-                    </div>
-                    
-                    <Link href={laptop.detailLink}>
-                      <h3 className="mb-1 text-lg font-semibold hover:text-blue-600 dark:text-white dark:hover:text-blue-400 line-clamp-2">{laptop.name}</h3>
-                    </Link>
-                    <p className="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">{laptop.specs}</p>
-
-                    {/* Phần hiển thị giá, tags và nút - được đẩy xuống dưới */}
-                    <div className="mt-auto">
-                      {/* Các tag - chiều cao cố định */}
-                      <div className="flex flex-wrap gap-x-2 gap-y-1 mb-2 h-12 items-start">
-                        {laptop.onSale && (
-                          <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                            Giảm giá
-                          </span>
-                        )}
-                        {laptop.greatDeal && (
-                          <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
-                            Được yêu thích nhất
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Giá */}
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold dark:text-white">${laptop.salePrice}</span>
-                        {laptop.originalPrice && (
-                          <span className="text-sm text-gray-500 dark:text-gray-400 line-through">${laptop.originalPrice}</span>
-                        )}
-                        {laptop.saveAmount && (
-                          <span className="text-sm font-medium text-green-600 dark:text-green-400">Save ${laptop.saveAmount}</span>
-                        )}
-                      </div>
-
-                      {/* Nút so sánh */}
-                      <div className="mt-2">
-                        <Link href={`/compare-select?current=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600 w-full">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      <div className="flex items-center mb-2">
+                        {Array.from({ length: 5 }).map((_, j) => (
+                          <svg key={j} className={`w-4 h-4 ${j < Math.floor(laptop.benchmarks?.overall || 0) ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`} fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          So sánh
-                        </Link>
+                        ))}
+                        <span className="ml-2 text-sm text-gray-600 dark:text-gray-300">
+                          {laptop.benchmarks?.overall ? laptop.benchmarks.overall.toFixed(1) : "N/A"}
+                        </span>
+                      </div>
+                      
+                      <Link href={`/laptops/${laptop.id}`}>
+                        <h3 className="mb-1 text-lg font-semibold hover:text-blue-600 dark:text-white dark:hover:text-blue-400 line-clamp-2">{laptop.name}</h3>
+                      </Link>
+                      <p className="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+                        {laptop.specs.cpu}, {laptop.specs.ram}, {laptop.specs.storage}
+                      </p>
+
+                      {/* Phần hiển thị giá, tags và nút - được đẩy xuống dưới */}
+                      <div className="mt-auto">
+                        {/* Các tag - chiều cao cố định */}
+                        <div className="flex flex-wrap gap-x-2 gap-y-1 mb-2 h-12 items-start">
+                          {laptop.price !== laptop.originalPrice && (
+                            <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
+                              Giảm giá
+                            </span>
+                          )}
+                          {(laptop.benchmarks?.value !== undefined && laptop.benchmarks.value > 8.5) && (
+                            <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
+                              Được yêu thích nhất
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Giá */}
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-xl font-bold dark:text-white">{laptop.price}</span>
+                          {laptop.originalPrice && laptop.price !== laptop.originalPrice && (
+                            <span className="text-sm text-gray-500 dark:text-gray-400 line-through">{laptop.originalPrice}</span>
+                          )}
+                        </div>
+
+                        {/* Nút so sánh */}
+                        <div className="mt-2">
+                          <Link href={`/compare-select?current=${laptop.id}`} className="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600 w-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                            So sánh
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
 
             {/* Nút Load More */}
