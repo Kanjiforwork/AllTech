@@ -415,8 +415,13 @@ export default function LaptopForm({ editMode = false, initialData = null, lapto
       if (editMode && laptopId) {
         // Update existing document
         const laptopRef = doc(db, "laptops", laptopId)
+        
+        // Khi cập nhật, không thay đổi ID của laptop
+        // Loại bỏ trường id khỏi dữ liệu cập nhật để tránh ghi đè ID
+        const { id, ...dataToUpdate } = laptopData;
+        
         await updateDoc(laptopRef, {
-          ...laptopData,
+          ...dataToUpdate,
           updatedAt: serverTimestamp(),
         })
       } else {

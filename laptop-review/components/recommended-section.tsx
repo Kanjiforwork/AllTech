@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { laptopService } from "@/services/firebaseServices"
+import { Laptop } from "@/types/laptop"
 
 export default function RecommendedSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -11,6 +13,61 @@ export default function RecommendedSection() {
   const [startX, setStartX] = useState(0)
   const [translateX, setTranslateX] = useState(0)
   const sliderRef = useRef<HTMLDivElement>(null)
+  const [allLaptops, setAllLaptops] = useState<Laptop[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Lấy dữ liệu laptop từ Firestore
+  useEffect(() => {
+    const fetchLaptops = async () => {
+      try {
+        const laptops = await laptopService.getAll();
+        setAllLaptops(laptops as Laptop[]);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching laptops:", error);
+        setLoading(false);
+      }
+    };
+    
+    fetchLaptops();
+  }, []);
+
+  // Lọc laptop theo danh mục
+  const getFilteredLaptops = (categoryName: string) => {
+    if (allLaptops.length === 0) return [];
+
+    switch(categoryName) {
+      case "Dành cho học sinh/sinh viên":
+        return allLaptops.filter(laptop => 
+          (parseInt(laptop.price?.replace(/[^0-9]/g, '') || '0') < 25000000) ||
+          laptop.name.toLowerCase().includes("ideapad") ||
+          laptop.name.toLowerCase().includes("air") ||
+          laptop.specs.cpu.toLowerCase().includes("i5")
+        ).slice(0, 3);
+      
+      case "Dành cho Gaming":
+        return allLaptops.filter(laptop => 
+          laptop.name.toLowerCase().includes("gaming") ||
+          laptop.name.toLowerCase().includes("rog") ||
+          laptop.name.toLowerCase().includes("nitro") ||
+          laptop.name.toLowerCase().includes("predator") ||
+          laptop.specs.gpu.toLowerCase().includes("rtx")
+        ).slice(0, 3);
+      
+      case "Dành cho công việc":
+        return allLaptops.filter(laptop => 
+          laptop.name.toLowerCase().includes("pro") ||
+          laptop.name.toLowerCase().includes("studio") ||
+          laptop.name.toLowerCase().includes("precision") ||
+          laptop.specs.cpu.toLowerCase().includes("i7") ||
+          laptop.specs.cpu.toLowerCase().includes("i9") ||
+          laptop.specs.cpu.toLowerCase().includes("m3 pro")
+        ).slice(0, 3);
+      
+      default:
+        return allLaptops.slice(0, 3);
+    }
+  };
 
   const categories = [
     {
@@ -18,78 +75,21 @@ export default function RecommendedSection() {
       name: "Dành cho học sinh/sinh viên",
       description: "Nhẹ, pin lâu, giá phải chăng",
       image: "/placeholder.svg",
-      laptops: [
-        {
-          id: "macbook-air-13-m3",
-          name: "MacBook Air M3",
-          image: "/placeholder.svg",
-          price: "25,000,000 VNĐ",
-        },
-        {
-          id: "dell-xps-15",
-          name: "Dell XPS 15",
-          image: "/placeholder.svg",
-          price: "15,000,000 VNĐ",
-        },
-        {
-          id: "lenovo-ideapad-5-pro-16",
-          name: "Lenovo Ideapad 5 Pro 16",
-          image: "/placeholder.svg",
-          price: "18,000,000 VNĐ",
-        },
-      ],
+      getLaptops: () => getFilteredLaptops("Dành cho học sinh/sinh viên")
     },
     {
       id: 2,
       name: "Dành cho Gaming",
       description: "Chip đồ họa mạnh mẽ, màn hình tần số quét cao, hệ thống làm mát tiên tiến",
       image: "/placeholder.svg",
-      laptops: [
-        {
-          id: "asus-rog-zephyrus-g14",
-          name: "Asus ROG Zephyrus G14",
-          image: "/placeholder.svg",
-          price: "30,000,000 VNĐ",
-        },
-        {
-          id: "acer-nitro-5",
-          name: "Acer Nitro 5",
-          image: "/placeholder.svg",
-          price: "25,000,000 VNĐ",
-        },
-        {
-          id: "acer-predator-helios-neo-16-ph316-54s",
-          name: "Acer Predator Helios Neo 16 PH316-54S",
-          image: "/placeholder.svg",
-          price: "50,000,000 VNĐ",
-        },
-      ],
+      getLaptops: () => getFilteredLaptops("Dành cho Gaming")
     },
     {
       id: 3,
       name: "Dành cho công việc",
       description: "Màn hình hiển thị màu sắc chính xác, CPU mạnh mẽ, hiệu suất ổn định",
       image: "/placeholder.svg",
-      laptops: [
-        {
-          id: "macbook-pro-14-m3-pro",
-          name: "MacBook Pro 14 M3 Pro",
-          image: "/placeholder.svg",
-          price: "45,000,000 VNĐ",
-        },
-        {
-          id: "microsoft-surface-laptop-studio",
-          name: "Microsoft Surface Laptop Studio",
-          image: "/placeholder.svg",
-          price: "28,990,000 VNĐ",
-        },
-        {
-          id: "acer-swift-3-oled-sf314-71-74x6",
-          name: "Acer Swift 3 OLED SF314-71-74X6",
-          image: "/placeholder.svg",
-          price: "21,990,000 VNĐ",
-        },
-      ],
+      getLaptops: () => getFilteredLaptops("Dành cho công việc")
     },
   ]
 
@@ -159,6 +159,14 @@ export default function RecommendedSection() {
     }
   }, [isDragging])
 
+  if (loading) {
+    return (
+      <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm p-6 flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-white"></div>
+      </div>
+    );
+  }
+
   return (
     <div 
       className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm p-6"
@@ -192,16 +200,22 @@ export default function RecommendedSection() {
                   <div className="md:w-2/3 flex flex-col">
                     <p className="mb-4 text-gray-600 dark:text-gray-300">{category.description}</p>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 mt-auto">
-                      {category.laptops.map((laptop) => (
+                      {category.getLaptops().map((laptop) => (
                         <Link key={laptop.id} href={`/laptops/${laptop.id}`} className="group flex">
                           <div className="flex flex-col w-full overflow-hidden transition-all duration-200 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg group-hover:shadow-md">
                             <div className="relative w-full h-40">
-                              <Image
-                                src={laptop.image || "/placeholder.svg"}
-                                alt={laptop.name}
-                                fill
-                                className="object-cover"
-                              />
+                              {laptop.image ? (
+                                <Image
+                                  src={laptop.image}
+                                  alt={laptop.name}
+                                  fill
+                                  className="object-contain p-2"
+                                />
+                              ) : (
+                                <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300 p-2 text-center">
+                                  {laptop.name}
+                                </div>
+                              )}
                             </div>
                             <div className="p-3 flex flex-col flex-grow">
                               <h4 className="text-sm font-medium dark:text-white line-clamp-2">{laptop.name}</h4>
