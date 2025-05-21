@@ -1,28 +1,51 @@
 "use client"
 
-import { useState , useEffect} from "react"
-import { BellIcon } from "lucide-react"
+import { useState, useEffect } from "react"
+import { BellIcon, LogIn } from "lucide-react"
 import { getFirestore, collection, addDoc, updateDoc, deleteDoc, getDocs } from "firebase/firestore"
 import { initializeApp } from "firebase/app"
 import {firebaseConfig} from "../lib/firebase"
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription,
+  DialogFooter
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
+// Định nghĩa kiểu dữ liệu cho notification
+interface Notification {
+  id: string
+  title: string
+  time: string
+  read: boolean
+}
 
 export default function NotificationBell() {
   const [showNotifications, setShowNotifications] = useState(false)
-  const [notifications, setNotifications] = useState([])
+  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
+    // Kiểm tra người dùng đã đăng nhập chưa
+    if (typeof window !== "undefined") {
+      const storedUserData = localStorage.getItem("user");
+      setUser(storedUserData ? JSON.parse(storedUserData) : null);
+    }
+
     const fetchNotifications = async () => {
       const queryNoti = await getDocs(collection(db, "notification"))
-      let dbNoti = []
+      let dbNoti: Notification[] = []
       queryNoti.forEach((noti) => {
-        const objNoti = {
+        const objNoti: Notification = {
           id: noti.id,
-          title: noti.data().title,  // Use .data() to access document fields
+          title: noti.data().title,
           time: noti.data().time,
           read: noti.data().read,
         }
@@ -37,10 +60,15 @@ export default function NotificationBell() {
   const unreadCount = notifications.filter((notification) => !notification.read).length
 
   const toggleNotifications = () => {
+    // Nếu chưa đăng nhập, hiển thị dialog yêu cầu đăng nhập
+    if (!user) {
+      setIsLoginDialogOpen(true)
+      return
+    }
     setShowNotifications(!showNotifications)
   }
 
-  const markAsRead = (id: number) => {
+  const markAsRead = (id: string) => {
     setNotifications(
       notifications.map((notification) =>
         notification.id === id ? { ...notification, read: true } : notification
@@ -52,6 +80,13 @@ export default function NotificationBell() {
     setNotifications(notifications.map((notification) => ({ ...notification, read: true })))
   }
 
+  // Hướng dẫn người dùng đến trang đăng nhập
+  const goToLogin = () => {
+    if (typeof window !== "undefined") {
+      window.location.href = "/login"
+    }
+  }
+
   return (
     <div className="relative">
       <button
@@ -59,14 +94,34 @@ export default function NotificationBell() {
         className="relative p-2 text-gray-700 dark:text-gray-300 transition-colors hover:text-gray-900 dark:hover:text-white"
       >
         <BellIcon className="w-5 h-5" />
-        {unreadCount > 0 && (
+        {unreadCount > 0 && user && (
           <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full pulse">
             {unreadCount}
           </span>
         )}
       </button>
 
-      {showNotifications && (
+      {/* Dialog yêu cầu đăng nhập */}
+      <Dialog open={isLoginDialogOpen} onOpenChange={setIsLoginDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Đăng nhập để xem thông báo</DialogTitle>
+            <DialogDescription>
+              Bạn cần đăng nhập hoặc đăng ký tài khoản để có thể xem thông báo.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center gap-2 mt-4">
+            <Button variant="default" onClick={goToLogin}>
+              <LogIn className="w-4 h-4 mr-2" /> Đăng nhập ngay
+            </Button>
+            <Button variant="outline" onClick={() => setIsLoginDialogOpen(false)}>
+              Để sau
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {showNotifications && user && (
         <div
           className="absolute right-0 z-20 w-80 mt-2 overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-lg animate-fade-in"
           style={{ animationDuration: '0.2s' }}

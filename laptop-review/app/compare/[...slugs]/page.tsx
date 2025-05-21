@@ -5,7 +5,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
-import { getLaptopById } from "@/mock_data/data"
+import { laptopService } from "@/services/firebaseServices"
 import Header from "@/components/common/header"
 import Footer from "@/components/common/footer"
 import RatingBar from "@/components/common/rating-bar"
@@ -30,6 +30,8 @@ interface ComparisonWeights {
 export default function ComparisonPage() {
   const params = useParams()
   const [laptops, setLaptops] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [weights, setWeights] = useState<ComparisonWeights>({
     performance: 1,
     gaming: 1,
@@ -40,26 +42,64 @@ export default function ComparisonPage() {
   })
 
   useEffect(() => {
-    if (params.slugs) {
-      // Lấy chuỗi cuối cùng từ mảng slugs và tách nó bằng '-vs-'
-      const compareString = params.slugs[params.slugs.length - 1]
-      const ids = compareString.split("-vs-")
-      
-      if (ids.length === 2) {
-        const laptopData = ids.map((id) => getLaptopById(id)).filter(Boolean)
-        if (laptopData.length === 2) {
-          setLaptops(laptopData)
+    const fetchLaptops = async () => {
+      try {
+        if (params.slugs) {
+          // Lấy chuỗi cuối cùng từ mảng slugs và tách nó bằng '-vs-'
+          const compareString = params.slugs[params.slugs.length - 1]
+          const ids = compareString.split("-vs-")
+          
+          if (ids.length === 2) {
+            // Sử dụng Promise.all để fetch cả hai laptop cùng lúc
+            const laptopPromises = ids.map(id => laptopService.getById(id));
+            const laptopData = await Promise.all(laptopPromises);
+            
+            // Lọc ra các laptop tồn tại (không null)
+            const validLaptops = laptopData.filter(laptop => laptop !== null);
+            
+            if (validLaptops.length === 2) {
+              setLaptops(validLaptops);
+            } else {
+              setError("Không thể tìm thấy một hoặc cả hai laptop để so sánh");
+            }
+          } else {
+            setError("URL không đúng định dạng");
+          }
         }
+      } catch (error) {
+        console.error("Lỗi khi tải dữ liệu laptop:", error);
+        setError("Đã xảy ra lỗi khi tải dữ liệu laptop");
+      } finally {
+        setLoading(false);
       }
-    }
-  }, [params])
+    };
+    
+    fetchLaptops();
+  }, [params]);
 
   const keyDifferences = useMemo(() => {
     if (laptops.length < 2) return { laptop1: [], laptop2: [] };
     return getKeyDifferences(laptops);
   }, [laptops]);
 
-  if (laptops.length < 2) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Header />
+        <main className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-96">
+            <div className="text-center">
+              <div className="w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-xl font-medium dark:text-white">Đang tải dữ liệu...</p>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || laptops.length < 2) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Header />
@@ -68,19 +108,13 @@ export default function ComparisonPage() {
             <h1 className="text-2xl font-bold mb-4 dark:text-white">Unable to Compare Laptops</h1>
             <p className="mb-4 dark:text-gray-300">Please make sure you're using the correct URL format:</p>
             <code className="block bg-gray-100 dark:bg-gray-800 p-2 rounded mb-4 dark:text-gray-300">/compare/laptop-id-1-vs-laptop-id-2</code>
-            <p className="mb-4 dark:text-gray-300">Available laptops for comparison:</p>
-            <ul className="space-y-2 mb-4 dark:text-gray-300">
-              <li>lenovo-ideapad-5-pro-16</li>
-              <li>asus-rog-zephyrus-g14</li>
-              <li>dell-xps-15</li>
-              <li>hp-spectre-x360</li>
-              <li>acer-nitro-5</li>
-            </ul>
+            {error && <p className="text-red-500 mb-4">{error}</p>}
             <Link href="/" className="text-blue-600 dark:text-blue-400 hover:underline mt-4 inline-block">
               Return to home
             </Link>
           </div>
         </main>
+        <Footer />
       </div>
     )
   }
@@ -153,11 +187,11 @@ export default function ComparisonPage() {
             items={laptops.map(laptop => ({
               id: laptop.id,
               name: laptop.name,
-              subtitle: laptop.detailedSpecs.cpu.name,
-              batteryCapacity: Number.parseInt(laptop.detailedSpecs.battery.capacity),
+              subtitle: laptop.detailedSpecs?.cpu?.name || '',
+              batteryCapacity: Number.parseInt(laptop.detailedSpecs?.battery?.capacity || '0'),
               batteryLife: {
-                hours: Math.floor(laptop.benchmarks.battery),
-                minutes: Math.round((laptop.benchmarks.battery % 1) * 60)
+                hours: Math.floor(laptop.benchmarks?.battery || 0),
+                minutes: Math.round(((laptop.benchmarks?.battery || 0) % 1) * 60)
               }
             }))}
           />
@@ -169,9 +203,9 @@ export default function ComparisonPage() {
             items={laptops.map(laptop => ({
               id: laptop.id,
               name: laptop.name,
-              subtitle: laptop.detailedSpecs.cpu.name,
-              cpuScore: laptop.detailedSpecs.cpu.benchmarks.geekbench6Multi,
-              gpuScore: laptop.detailedSpecs.gpu.benchmarks.wildlifeExtreme
+              subtitle: laptop.detailedSpecs?.cpu?.name || '',
+              cpuScore: laptop.detailedSpecs?.cpu?.benchmarks?.geekbench6Multi || 0,
+              gpuScore: laptop.detailedSpecs?.gpu?.benchmarks?.wildlifeExtreme || 0
             }))}
           />
         </div>
@@ -186,11 +220,11 @@ export default function ComparisonPage() {
           <div className="grid grid-cols-2 gap-8">
             {laptops.map((laptop, index) => (
               <div key={laptop.id} className="text-center">
-                <div className="text-2xl font-bold mb-2 dark:text-white">{laptop.price}</div>
+                <div className="text-2xl font-bold mb-2 dark:text-white">{laptop.price || 'Không có thông tin'}</div>
                 <div className="text-lg mb-4 dark:text-gray-300">
 
                 </div>
-                <RatingBar score={laptop.benchmarks.value} label="Đánh giá" />
+                <RatingBar score={laptop.benchmarks?.value || 0} label="Đánh giá" />
               </div>
             ))}
           </div>

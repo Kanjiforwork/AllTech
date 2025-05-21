@@ -4,8 +4,10 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { SearchIcon, Heart } from "lucide-react"
-import { laptopData } from "@/data/laptops"
 import { useSearchParams, useRouter } from "next/navigation"
+import { laptopService } from "@/services/firebaseServices"
+import { Laptop as FirestoreLaptop } from "@/types/laptop"
+import { Laptop } from "@/data/laptops"
 
 import FilterPanel, { FilterState } from "@/components/filter-panel"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
@@ -16,17 +18,47 @@ import QuickViewModal from "@/components/comparison/quick-view-modal"
 import Header from "@/components/common/header"
 import Footer from "@/components/common/footer"
 
+// Hàm chuyển đổi từ FirestoreLaptop sang Laptop cho UI
+const convertFirestoreLaptopToUIFormat = (laptop: FirestoreLaptop): Laptop => {
+  // Trích xuất giá từ chuỗi và xử lý nếu có
+  const price = laptop.price || '';
+  const salePrice = price ? parseInt(price.replace(/[^0-9]/g, "")) || 0 : 0;
+  const originalPrice = laptop.originalPrice || null;
+  
+  // Tạo chuỗi specs từ các thuộc tính
+  const specs = `${laptop.specs.cpu || ''}, ${laptop.specs.ram || ''}, ${laptop.specs.storage || ''}`;
+  
+  return {
+    id: laptop.id,
+    name: laptop.name,
+    specs: specs,
+    rating: 4.5, // Giá trị mặc định
+    reviews: 120, // Giá trị mặc định
+    salePrice: salePrice,
+    originalPrice: originalPrice,
+    saveAmount: originalPrice ? (parseInt(originalPrice.replace(/[^0-9]/g, "")) - salePrice).toString() : null,
+    onSale: !!originalPrice,
+    greatDeal: true,
+    image: laptop.image || "/placeholder.svg?height=600&width=600",
+    detailLink: `/laptops/${laptop.id}`,
+    purchaseLink: '',  // Thêm thuộc tính còn thiếu
+  };
+};
+
 export default function CompareSelectPage() {
   // State to track which laptop cards are visible
-  const [visibleCards, setVisibleCards] = useState<boolean[]>(Array(laptopData.length).fill(false))
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([])
   // Ref for the laptop grid container
   const laptopGridRef = useRef<HTMLDivElement>(null)
   const [user, setUser] = useState<{ email: string; username: string; avatar: string | null } | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [selectedLaptops, setSelectedLaptops] = useState<(number | string)[]>([])
-  const [dataSort, setDataSort] = useState(laptopData)
+  const [firestoreLaptops, setFirestoreLaptops] = useState<FirestoreLaptop[]>([])
+  const [laptopData, setLaptopData] = useState<Laptop[]>([])
+  const [dataSort, setDataSort] = useState<Laptop[]>([])
   const [quickViewLaptop, setQuickViewLaptop] = useState<number | string | null>(null)
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
   const searchParams = useSearchParams()
   
@@ -42,12 +74,40 @@ export default function CompareSelectPage() {
     features: [],
   })
 
-  // Animation for laptop cards using Intersection Observer
+  // Fetch laptop data from Firestore
   useEffect(() => {
+    const fetchLaptops = async () => {
+      try {
+        // Lấy dữ liệu từ Firestore
+        const laptops = await laptopService.getAll();
+        setFirestoreLaptops(laptops as FirestoreLaptop[]);
+        
+        // Chuyển đổi sang định dạng cho UI
+        const convertedLaptops = (laptops as FirestoreLaptop[]).map(convertFirestoreLaptopToUIFormat);
+        setLaptopData(convertedLaptops);
+        setDataSort(convertedLaptops);
+        
+        // Khởi tạo visibleCards với độ dài đúng
+        setVisibleCards(Array(laptops.length).fill(false));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching laptops:", error);
+        setLoading(false);
+      }
+    };
+    
+    fetchLaptops();
+    
     const storedUser = localStorage.getItem("user")
     if (storedUser) {
       setUser(JSON.parse(storedUser))
     }
+  }, []);
+
+  // Animation for laptop cards using Intersection Observer
+  useEffect(() => {
+    if (laptopData.length === 0) return;
+    
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -77,7 +137,7 @@ export default function CompareSelectPage() {
       observer.disconnect() // Clean up on unmount
     }
     
-  }, [])
+  }, [laptopData])
 
   // Đọc tham số current từ URL và thêm laptop đó vào danh sách đã chọn
   useEffect(() => {
@@ -93,12 +153,14 @@ export default function CompareSelectPage() {
     alert("Logged out successfully!")
   }
 
-  function handleSort(newListData: typeof laptopData) {
+  function handleSort(newListData: Laptop[]) {
     setDataSort(newListData)
   }
 
   // Áp dụng bộ lọc
   useEffect(() => {
+    if (laptopData.length === 0) return;
+    
     if (filters.brands.length === 0 && 
         filters.cpuTypes.length === 0 && 
         filters.ramSizes.length === 0 && 
@@ -111,56 +173,67 @@ export default function CompareSelectPage() {
       return;
     }
     
-    let results = [...laptopData];
-    
-    // Filter by brand
-    if (filters.brands.length > 0) {
-      results = results.filter(laptop => {
+    // Tìm dữ liệu Firestore tương ứng để lọc dựa trên các thuộc tính chi tiết
+    const results = laptopData.filter(uiLaptop => {
+      // Tìm laptop Firestore tương ứng
+      const firestoreLaptop = firestoreLaptops.find(l => l.id === uiLaptop.id);
+      if (!firestoreLaptop) return false;
+      
+      // Filter by brand
+      if (filters.brands.length > 0) {
         const laptopBrands = filters.brands.map((brand: string) => brand.toLowerCase());
-        const laptopBrand = laptop.name.split(' ')[0].toLowerCase();
-        return laptopBrands.includes(laptopBrand);
-      });
-    }
-    
-    // Filter by CPU
-    if (filters.cpuTypes.length > 0) {
-      results = results.filter(laptop => {
-        return filters.cpuTypes.some((cpuType: string) => 
-          laptop.specs.includes(cpuType)
-        );
-      });
-    }
-    
-    // Filter by RAM
-    if (filters.ramSizes.length > 0) {
-      results = results.filter(laptop => {
-        return filters.ramSizes.some((ramSize: string) => 
-          laptop.specs.includes(ramSize)
-        );
-      });
-    }
-    
-    // Filter by Storage
-    if (filters.storageOptions.length > 0) {
-      results = results.filter(laptop => {
-        return filters.storageOptions.some((storageOption: string) => 
-          laptop.specs.includes(storageOption.replace(' SSD', ''))
-        );
-      });
-    }
-    
-    // Filter by price range
-    if (filters.priceRanges.length > 0) {
-      results = results.filter(laptop => {
-        return filters.priceRanges.some((range: { min: number; max: number }) => 
-          laptop.salePrice >= range.min && laptop.salePrice <= range.max
-        );
-      });
-    }
+        const laptopName = uiLaptop.name.toLowerCase();
+        if (!laptopBrands.some(brand => laptopName.includes(brand))) {
+          return false;
+        }
+      }
+      
+      // Filter by CPU
+      if (filters.cpuTypes.length > 0) {
+        if (!filters.cpuTypes.some((cpuType: string) => 
+          firestoreLaptop.specs.cpu?.toLowerCase().includes(cpuType.toLowerCase())
+        )) {
+          return false;
+        }
+      }
+      
+      // Filter by RAM
+      if (filters.ramSizes.length > 0) {
+        if (!filters.ramSizes.some((ramSize: string) => 
+          firestoreLaptop.specs.ram?.toLowerCase().includes(ramSize.toLowerCase())
+        )) {
+          return false;
+        }
+      }
+      
+      // Filter by Storage
+      if (filters.storageOptions.length > 0) {
+        if (!filters.storageOptions.some((storageOption: string) => 
+          firestoreLaptop.specs.storage?.toLowerCase().includes(storageOption.toLowerCase().replace(' ssd', ''))
+        )) {
+          return false;
+        }
+      }
+      
+      // Filter by price range
+      if (filters.priceRanges.length > 0) {
+        // Trích xuất giá từ chuỗi và chuyển đổi thành số
+        const price = uiLaptop.salePrice || 0;
+        
+        // Kiểm tra xem giá có nằm trong một trong các khoảng giá được chọn không
+        if (!filters.priceRanges.some((range: { min: number; max: number }) => 
+          price >= range.min && price <= range.max
+        )) {
+          return false;
+        }
+      }
+      
+      return true;
+    });
     
     // Set filtered data
     setDataSort(results);
-  }, [filters]);
+  }, [filters, laptopData, firestoreLaptops]);
 
   // Handle filter changes
   const handleFilterChange = (newFilters: FilterState) => {
@@ -200,6 +273,17 @@ export default function CompareSelectPage() {
     ? laptopData.find(laptop => laptop.id === quickViewLaptop) || null
     : null
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-xl font-medium dark:text-white">Đang tải dữ liệu...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
@@ -221,7 +305,7 @@ export default function CompareSelectPage() {
             <div className="flex items-center justify-between mb-6">
               <BrowseLaptopsHeader 
                 laptopData={laptopData} 
-                handle={(newList: typeof laptopData) => handleSort(newList)}
+                handle={handleSort}
               />
               
               <div className="px-4 py-2 ml-4 text-sm font-medium bg-gray-100 dark:bg-gray-800 dark:text-white rounded-lg">
@@ -240,7 +324,7 @@ export default function CompareSelectPage() {
                   laptop={laptop}
                   isSelected={selectedLaptops.includes(laptop.id)}
                   onToggleSelect={toggleLaptopSelection}
-                  isSelectionDisabled={selectedLaptops.length >= 2}
+                  isSelectionDisabled={selectedLaptops.length >= 2 && !selectedLaptops.includes(laptop.id)}
                   onQuickView={handleQuickView}
                   isVisible={visibleCards[index]}
                 />
@@ -281,7 +365,7 @@ export default function CompareSelectPage() {
             onClose={closeQuickView}
             onAddToCompare={toggleLaptopSelection}
             isInCompareList={selectedLaptops.includes(currentQuickViewLaptop.id)}
-            isCompareDisabled={selectedLaptops.length >= 2}
+            isCompareDisabled={selectedLaptops.length >= 2 && !selectedLaptops.includes(currentQuickViewLaptop.id)}
           />
         )}
       </main>

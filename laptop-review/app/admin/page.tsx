@@ -1,35 +1,15 @@
 "use client"
-import BasicInformation from "./basic-information"
-import HardwareSpecifications from "./hardware-specifications"
-import AdditionalFeatures from "./additional-features"
-import BatteryLife from "./battery-life"
-import RatingsReviews from "./ratings-reviews"
-import ProsCons from "./pros-cons"
-import DetailedAnalysis from "./detailed-analysis"
-import LaptopLinkInput from "./linkShop"
-import Benchmark from "./benchmark"
-import { BenchmarkScores } from "./benchmark"
-import BatteryForm from "./batteryInfo"
-
-import { initializeApp } from "firebase/app"
-import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore"
-
-import type React from "react"
-
-import { useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, AlertCircle, Battery, Bluetooth, Webcam } from "lucide-react"
+import { useState, useEffect } from "react"
+import { initializeApp } from "firebase/app"
+import { getFirestore, collection, getDocs, getDoc, doc } from "firebase/firestore"
 import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { spec } from "node:test/reporters"
-import { connect } from "http2"
+import { ArrowRight, AlertCircle, Plus, List, Settings, PieChart, Pencil, BarChart } from "lucide-react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-
-interface ProsConsItem {
-  id: string
-  text: string
-}
-
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAFSVL94k5zXkrAy5oQKbO7rT6W5fPAk4M",
   authDomain: "laptop-review-all.firebaseapp.com",
@@ -38,466 +18,269 @@ const firebaseConfig = {
   messagingSenderId: "1044782876129",
   appId: "1:1044782876129:web:6e0891bf2753c5a3f63ea0",
 }
-export default function LaptopForm() {
+
+// Kiểu dữ liệu cho laptop mới nhất
+interface RecentLaptop {
+  id: string
+  name: string
+  createdAt: {
+    seconds: number
+    nanoseconds: number
+  } | null
+}
+
+// Kiểu dữ liệu cho thống kê
+interface StatsData {
+  totalLaptops: number
+  recentlyAdded: RecentLaptop[]
+}
+
+export default function AdminPage() {
   const router = useRouter()
-
-  // Define all form fields in a single state object
-  const [formData, setFormData] = useState({
-    // Basic Information
-    laptopName: "",
-    brand: "",
-    operatingSystem: "",
-    weight: "",
-    dimensions: "",
-    price:"",
-    originalPrice:"", 
-
-    // Hardware Specifications
-    cpu: "",
-    gpu: "",
-    ram: "",
-    storage: "",
-    graphicsCard: "",
-    ports: "",
-    display: "",
-    colorGamut: "",
-    battery: "",
-    charging: "",
-
-    // Additional Features
-    webcam: "",
-    wifiBluetooth: "",
-    keyboard: "",
-    speakersMicrophone: "",
-
-    // Battery Life
-    videoPlayback: "",
-    casualUse: "",
-    extremeUse: "",
-
-    // Detailed Analysis
-    performanceSummary: "",
-    geekBenchV6Single: "",
-    geekBenchV6Multi: "",
-    cineBenchR23Single: "",
-    cineBenchR23Multi: "",
-
-    _3DMarkTimeSpy: "",
-    _3DMarkWildlifeExtrme: "",
-    geekBenchCompute: "",
-
-    pluggedInG6Single: "",
-    pluggedInG6Multi: "",
-    pluggedInCinebenchR23Single: "",
-    pluggedInCinebenchR23Multi: "",
-
-    unpluggedG6Single: "",
-    unpluggedG6Multi: "",
-    unpluggedCinebenchR23Single: "",
-    unpluggedCinebenchR23Multi: "",
-
-    laptopLinkInput: "",
+  const [stats, setStats] = useState<StatsData>({
+    totalLaptops: 0,
+    recentlyAdded: []
   })
+  const [loading, setLoading] = useState(true)
 
-  const [ratingsData, setRatingsData] = useState({
-    ratings: {
-      designWeight: 5,
-      monitor: 5,
-      keyboard: 5,
-      touchPad: 5,
-      speaker: 5,
-      webcam: 5,
-      ports: 5,
-    },
-    descriptions: {
-      designWeight: "",
-      monitor: "",
-      keyboard: "",
-      touchPad: "",
-      speaker: "",
-      webcam: "",
-      ports: "",
-    },
-    images: {
-      designWeight: null as File | null,
-      monitor: null as File | null,
-      keyboard: null as File | null,
-      touchPad: null as File | null,
-      speaker: null as File | null,
-      webcam: null as File | null,
-      ports: null as File | null,
-    },
-  })
-
-  const [prosConsData, setProsConsData] = useState({
-    pros: [{ id: "pro-1", text: "" }] as ProsConsItem[],
-    cons: [{ id: "con-1", text: "" }] as ProsConsItem[],
-  })
-
-  // Track validation errors for each field
-  const [fieldErrors, setFieldErrors] = useState<Record<string, boolean>>({})
-  const [formErrors, setFormErrors] = useState<string[]>([])
-  const [showValidation, setShowValidation] = useState(false)
-
-  // Required fields that must be filled
-  const requiredFields = [
-    { name: "laptopName", label: "Laptop Name" },
-    { name: "brand", label: "Brand" },
-    { name: "operatingSystem", label: "Operating System" },
-    { name: "weight", label: "Weight" },
-    { name: "dimensions", label: "dimensions" },
-    { name: "price", label: "Price" },
-    { name: "originalPrice", label: "Original Price" },
-
-    { name: "cpu", label: "CPU / Processor" },
-    { name: "gpu", label: "GPU" },
-    { name: "ram", label: "RAM" },
-    { name: "storage", label: "Storage" },
-    { name: "display", label: "Display" },
-    { name: "graphicsCard", label: "Graphics Card" },
-    { name: "ports", label: "Ports" },
-    { name: "colorGamut", label: "Color Gamut" },
-    { name: "battery", label: "Battery" },
-    { name: "charging", label: "Charging" },
-
-    { name: "webcam", label: "Webcam" },
-    { name: "wifiBluetooth", label: "WiFi / Bluetooth" },
-    { name: "keyboard", label: "Keyboard" },
-    { name: "speakersMicrophone", label: "Speakers / Microphone" },
-
-    { name: "videoPlayback", label: "Video Playback" },
-    { name: "casualUse", label: "Casual Use" },
-    { name: "extremeUse", label: "Extreme Use" },
-
-    { name: "geekBenchV6Single", label: "GeekBench V6 Single" },
-    { name: "geekBenchV6Multi", label: "GeekBench V6 Multi" },
-    { name: "cineBenchR23Single", label: "CineBench R23 Single" },
-    { name: "cineBenchR23Multi", label: "CineBench R23 Multi" },
-
-    { name: "_3DMarkTimeSpy", label: "3DMark Time Spy" },
-    { name: "_3DMarkWildlifeExtrme", label: "3DMark Wildlife Extrme" },
-    { name: "geekBenchCompute", label: "GeekBench Compute" },
-
-    { name: "pluggedInG6Single", label: "Plugged In G6 Single" },
-    { name: "pluggedInG6Multi", label: "Plugged In G6 Multi" },
-    { name: "pluggedInCinebenchR23Single", Label: "Plugged In Cinebench R23 Single" },
-    { name: "pluggedInCinebenchR23Multi", label: "Plugged In Cinebench R23 Multi" },
-
-    { name: "unpluggedCinebenchR23Single", label: "Unplugged In Cinebench R23 Single" },
-    { name: "unpluggedG6Single", label: "Unplugged G6 Single" },
-    { name: "unpluggedG6Multi", label: "Unplugged Cinebench R23 Single" },
-    { name: "unpluggedCinebenchR23Multi", label: "Unplugged Cinebench R23 Multi" },
-
-    { name: "laptopLinkInput", label: "Laptop Link" },
-
-    // { name: "designWeight", label: "Design and Weight" },
-    // { name: "monitor", label: "Monitor" },
-    // { name: "keyboard", label: "Keyboard" },
-    // { name: "touchPad", label: "Touchpad" },
-    // { name: "speaker", label: "Speaker" },
-    // { name: "webcam", label: "Webcam" },
-    // { name: "ports", label: "Ports" },
-  ]
-
-  const validateForm = () => {
-    const errors: string[] = []
-    const newFieldErrors: Record<string, boolean> = {}
-
-    // Check all required fields
-    requiredFields.forEach((field) => {
-      if (!formData[field.name as keyof typeof formData]) {
-        errors.push(`${field.label} is required`)
-        newFieldErrors[field.name] = true
-      }
-    })
-
-    // Make sure we have ratings data
-    if (Object.values(ratingsData.ratings).some((rating) => rating === 0)) {
-      errors.push("All ratings must be provided")
-    }
-
-    // Check if at least one pro and one con is provided
-    if (prosConsData.pros.length === 0 || prosConsData.pros.every((pro) => !pro.text.trim())) {
-      errors.push("At least one pro must be provided")
-    }
-
-    if (prosConsData.cons.length === 0 || prosConsData.cons.every((con) => !con.text.trim())) {
-      errors.push("At least one con must be provided")
-    }
-
-    setFieldErrors(newFieldErrors)
-    setFormErrors(errors)
-    return errors.length === 0
-  }
-
-  const handleRatingsChange = useCallback((ratings: any, descriptions: any, images: any) => {
-    setRatingsData({
-      ratings,
-      descriptions,
-      images,
-    })
-  }, [])
-
-  // Handle pros and cons data
-  const handleProsConsChange = useCallback((pros: ProsConsItem[], cons: ProsConsItem[]) => {
-    setProsConsData({
-      pros,
-      cons,
-    })
-  }, [])
-
+  // Initialize Firebase
   const app = initializeApp(firebaseConfig)
   const db = getFirestore(app)
 
-  //----------------------------------------------------------------------------------------------------
-  async function saveReview() {
-    try {
-      const docRef = await addDoc(collection(db, "laptops"), {
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        setLoading(true)
+        // Lấy tổng số laptop
+        const laptopsCollection = collection(db, "laptops")
+        const laptopSnapshot = await getDocs(laptopsCollection)
         
-        name : formData.laptopName,
-        price : formData.price,
-        originalPrice : formData.originalPrice,
-
-        specs: {
-          cpu: formData.cpu,
-          gpu: formData.gpu,
-          ram: formData.ram,
-          display : formData.display,
-          storage: formData.storage,
-          battery: formData.battery,
-        },
-
-        detailedSpecs: {
-          battery:{
-            capacity: formData.battery,
-            charging: formData.charging,
-          },
-          connectivity: {
-            Bluetooth: formData.wifiBluetooth,
-          },
-          Webcam: formData.webcam,
-          wifi: formData.wifiBluetooth,
-        },
+        // Lấy 5 laptop mới nhất được thêm vào
+        const laptopList: RecentLaptop[] = laptopSnapshot.docs
+          .map(doc => ({
+            id: doc.id,
+            name: doc.data().name || "Không có tên",
+            createdAt: doc.data().createdAt || null
+          }))
+          .sort((a, b) => {
+            if (a.createdAt && b.createdAt) {
+              return b.createdAt.seconds - a.createdAt.seconds
+            }
+            return 0
+          })
+          .slice(0, 5)
         
-
-        Benchmarks:{
-          cinebenchR23Single: formData.cineBenchR23Single,
-          cinebenchR23Multi: formData.cineBenchR23Multi,
-          geekBenchV6Single: formData.geekBenchV6Single,
-          geekBenchV6Multi: formData.geekBenchV6Multi,
-          
-        },
-
-        descriptions:{
-
-          design: ratingsData.descriptions.designWeight,
-          display : ratingsData.descriptions.monitor,
-          keyboard : ratingsData.descriptions.keyboard,  
-          ports : ratingsData.descriptions.ports,
-          speaker : ratingsData.descriptions.speaker,
-          trạckpad : ratingsData.descriptions.touchPad,
-          webcam : ratingsData.descriptions.webcam,
-
-        },
-        // Pros and cons
-        pros: prosConsData.pros.map((pro) => pro.text).filter((text) => text.trim() !== ""),
-        cons: prosConsData.cons.map((con) => con.text).filter((text) => text.trim() !== ""),
-
-        // Link
-        purchaseLink: formData.laptopLinkInput,
-
-        // Metadata
-        createdAt: serverTimestamp(),
-      })
-     
-      return true
-    } catch (e) {
-    
-      alert("Có lỗi xảy ra")
-      return false
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setShowValidation(true)
-
-    if (validateForm()) {
-    const success = await saveReview() // chờ lưu xong
-    if (success) {
-      alert("Laptop information saved successfully!")
-    }
-  } else {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-    console.log(ratingsData)
-  }
-  }
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
-
-    // Clear error for this field as soon as user starts typing
-    if (fieldErrors[field]) {
-      setFieldErrors((prev) => ({
-        ...prev,
-        [field]: false,
-      }))
-
-      // Also update the form errors list
-      if (showValidation) {
-        const fieldLabel = requiredFields.find((f) => f.name === field)?.label || field
-        setFormErrors((prev) => prev.filter((error) => !error.includes(fieldLabel)))
+        setStats({
+          totalLaptops: laptopSnapshot.size,
+          recentlyAdded: laptopList
+        })
+        
+        setLoading(false)
+      } catch (error) {
+        console.error("Lỗi khi tải thống kê:", error)
+        setLoading(false)
       }
     }
-  }
 
-  const handleInputFocus = (field: string) => {
-    // Clear error for this field when user focuses on it
-    if (fieldErrors[field]) {
-      setFieldErrors((prev) => ({
-        ...prev,
-        [field]: false,
-      }))
-
-      // Also update the form errors list
-      if (showValidation) {
-        const fieldLabel = requiredFields.find((f) => f.name === field)?.label || field
-        setFormErrors((prev) => prev.filter((error) => !error.includes(fieldLabel)))
-      }
-    }
-  }
-
-  const handleBackToDashboard = () => {
-    // In a real application, this would navigate back to the dashboard
-    router.push("/")
-  }
-
-  //benchmark scores
-  const [scores, setScores] = useState<BenchmarkScores>({
-      battery: 7,
-      build: 6.5,
-      content: 5.5,
-      display: 6.5,
-      gaming: 4,
-      overall: 6.5,
-      productivity: 6.5,
-      value: 7,
-    })
-  
-    const handleSliderChange = (name: keyof BenchmarkScores, value: number[]) => {
-      setScores((prev) => ({
-        ...prev,
-        [name]: value[0],
-      }))
-    }
+    fetchStats()
+  }, [db])
 
   return (
-    <div className="container mx-auto py-6">
-      <div className="flex items-center justify-between mb-6">
-        <Button
-          variant="ghost"
-          className="flex items-center gap-1 text-muted-foreground"
-          onClick={handleBackToDashboard}
+    <div className="container mx-auto py-10">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl font-bold">Trang Quản Trị</h1>
+          <p className="text-muted-foreground">Quản lý và cập nhật thông tin laptop</p>
+        </div>
+        <Button 
+          onClick={() => router.push("/admin/laptop-form")} 
+          className="md:w-auto w-full"
         >
-          <ChevronLeft className="h-4 w-4" />
-          Back to dashboard
+          <Plus className="mr-2 h-4 w-4" />
+          Thêm Laptop Mới
         </Button>
-        <h1 className="text-2xl font-bold">Add New Laptop</h1>
-        <Button onClick={handleSubmit}>Save Laptop</Button>
+      </div>
+      
+      <Alert variant="destructive" className="mb-6">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Chú ý</AlertTitle>
+        <AlertDescription>
+          Form cũ hiện đang gặp lỗi. Vui lòng sử dụng form mới để thêm laptop.
+        </AlertDescription>
+      </Alert>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Tổng Số Laptop</CardTitle>
+            <PieChart className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{loading ? "..." : stats.totalLaptops}</div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Tổng số laptop trong cơ sở dữ liệu
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
-      {showValidation && formErrors.length > 0 && (
-        <Alert variant="destructive" className="mb-6">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>
-            <div className="font-medium">Please fix the following errors:</div>
-            <ul className="list-disc pl-5 mt-2">
-              {formErrors.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </AlertDescription>
-        </Alert>
-      )}
+      <Tabs defaultValue="management" className="mb-8">
+        <TabsList>
+          <TabsTrigger value="management">Quản Lý Dữ Liệu</TabsTrigger>
+          <TabsTrigger value="recent">Laptop Mới Nhất</TabsTrigger>
+        </TabsList>
+        <TabsContent value="management" className="mt-6">
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Form Mới</CardTitle>
+                <CardDescription>
+                  Sử dụng form được thiết kế lại để thêm laptop mới.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Form mới được tổ chức tốt hơn, dễ sử dụng hơn và đảm bảo dữ liệu được lưu trữ chính xác.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  onClick={() => router.push("/admin/laptop-form")} 
+                  className="w-full"
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Thêm Laptop Mới
+                </Button>
+              </CardFooter>
+            </Card>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <div className="grid md:grid-cols-2 gap-8">
-          <BasicInformation
-            formData={formData}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            fieldErrors={fieldErrors}
-            showValidation={showValidation}
-          />
-          <HardwareSpecifications
-            formData={formData}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            fieldErrors={fieldErrors}
-            showValidation={showValidation}
-          />
-        </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Phân quyền</CardTitle>
+                <CardDescription>
+                  Phần quyền admin cho user
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                 Nhập id của user từ firestore và nhập Key để phân quyền
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  onClick={() => router.push("/admin-tools")} 
+                  className="w-full"
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Set Admin
+                </Button>
+              </CardFooter>
+            </Card>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <AdditionalFeatures
-            formData={formData}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            fieldErrors={fieldErrors}
-            showValidation={showValidation}
-          />
-          <BatteryLife
-            formData={formData}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            fieldErrors={fieldErrors}
-            showValidation={showValidation}
-          />
-        </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Quản Lý Laptop</CardTitle>
+                <CardDescription>
+                  Xem, chỉnh sửa và xóa các laptop hiện có.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Quản lý thông tin các laptop đã lưu trong hệ thống. Bạn có thể chỉnh sửa thông tin hoặc xóa laptop.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  onClick={() => router.push("/admin/manage-laptops")} 
+                  className="w-full"
+                  variant="secondary"
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  Quản Lý Laptop
+                </Button>
+              </CardFooter>
+            </Card>
 
-        <RatingsReviews onChange={handleRatingsChange} />
-
-        <ProsCons onChange={handleProsConsChange} />
-
-        <DetailedAnalysis
-          formData={formData}
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          fieldErrors={fieldErrors}
-          showValidation={showValidation}
-        />
-        {/* <Benchmark
-        scores={scores}
-        handleSliderChange={handleSliderChange}
-        ></Benchmark> */}
-
-        {/* <BatteryForm></BatteryForm> */}
-        <LaptopLinkInput
-          formData={formData}
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          fieldErrors={fieldErrors}
-          showValidation={showValidation}
-        ></LaptopLinkInput>
-
-        {showValidation && formErrors.length > 0 && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
-              There are {formErrors.length} issues with your submission. Please check the form and try again.
-            </AlertDescription>
-          </Alert>
-        )}
-
-        <div className="flex justify-end">
-          <Button type="submit" size="lg">
-            Save Laptop Information
-          </Button>
-        </div>
-      </form>
+            <Card>
+              <CardHeader>
+                <CardTitle>Form Cũ</CardTitle>
+                <CardDescription>
+                  Sử dụng form cũ để thêm laptop (không khuyến khích).
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Form cũ hiện đang gặp một số vấn đề về lưu trữ dữ liệu. Chúng tôi khuyến khích sử dụng form mới.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  onClick={() => router.push("/admin/old-form")} 
+                  variant="outline" 
+                  className="w-full"
+                >
+                  Sử dụng Form Cũ
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="recent">
+          {loading ? (
+            <div className="text-center py-8 text-muted-foreground">
+              Đang tải dữ liệu...
+            </div>
+          ) : stats.recentlyAdded.length > 0 ? (
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium">5 Laptop Mới Nhất</h3>
+              <div className="border rounded-md">
+                <div className="grid grid-cols-1 divide-y">
+                  {stats.recentlyAdded.map((laptop) => (
+                    <div key={laptop.id} className="flex items-center justify-between p-4">
+                      <div>
+                        <h4 className="font-medium">{laptop.name}</h4>
+                        <p className="text-sm text-muted-foreground">ID: {laptop.id}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => router.push(`/admin/edit-laptop/${laptop.id}`)}
+                        >
+                          <Pencil className="h-4 w-4 mr-1" /> Sửa
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => router.push(`/laptops/${laptop.id}`)}
+                        >
+                          Xem
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <Button 
+                  variant="ghost" 
+                  className="flex items-center text-muted-foreground"
+                  onClick={() => router.push("/admin/manage-laptops")}
+                >
+                  Xem tất cả laptop
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              Chưa có laptop nào trong hệ thống.
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
