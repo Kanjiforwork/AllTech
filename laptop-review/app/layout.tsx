@@ -7,27 +7,11 @@ import InitialLoadingScreen from "@/components/initial-loading-screen"
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/context/theme-provider"
 import "./globals.css"
-import Head from 'next/head'
+
 
 const inter = Inter({ subsets: ["latin"] })
 
-function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <Head>
-        {/* Favicon cơ bản */}
-        <link rel="icon" href="/favicon.ico" />
-        
-        {/* Cho các thiết bị Apple */}
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
-        {/* Favicon SVG chất lượng cao */}
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-      </Head>
-      <Component {...pageProps} />
-    </>
-  )
-}
+
 
 export default function RootLayout({
   children,
