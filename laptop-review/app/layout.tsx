@@ -8,7 +8,10 @@ import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/context/theme-provider"
 import "./globals.css"
 
+
 const inter = Inter({ subsets: ["latin"] })
+
+
 
 export default function RootLayout({
   children,

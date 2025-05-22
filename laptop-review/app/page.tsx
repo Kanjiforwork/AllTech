@@ -18,6 +18,7 @@ import NotificationBell from "@/components/notification-bell"
 import BrowseLaptopsHeader from "@/components/browse-laptops-header"
 import Header from "@/components/common/header"
 import Footer from "@/components/common/footer"
+import Head from 'next/head'
 
 const ITEMS_PER_HOMEPAGE = 9; // Giới hạn số lượng laptop hiển thị
 
@@ -33,6 +34,8 @@ export default function Home() {
   const maxScrollsAllowed = 5; // Maximum scrolls before login prompt
   const scrollThrottleRef = useRef(false);
   const hasShownPromptRef = useRef(false);
+  
+
   
   // State cho bộ lọc
   const [filters, setFilters] = useState<FilterState>({
@@ -264,9 +267,20 @@ export default function Home() {
   };
 
   return (
+    
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <Header />
+      
+          {/* Favicon cơ bản */}
+          <link rel="icon" href="/favicon.ico" />
+          
+          {/* Cho các thiết bị Apple */}
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          
+          {/* Favicon SVG chất lượng cao */}
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        
  {showLoginPrompt && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="w-full max-w-md p-6 mx-4 bg-white rounded-lg shadow-xl dark:bg-gray-800">
