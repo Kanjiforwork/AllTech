@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import { Laptop } from '@/data/laptops'
+import Image from 'next/image'
 
 interface QuickViewModalProps {
   laptop: Laptop | null
@@ -65,13 +66,24 @@ export default function QuickViewModal({
             <X size={20} />
           </button>
         </div>
-        
-        {/* Modal content */}
+          {/* Modal content */}
         <div className="p-6 overflow-y-auto max-h-[calc(85vh-120px)]">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Left column - Image */}
-            <div className="flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg h-80">
-              <div className="text-gray-500 dark:text-gray-300">[Laptop Image]</div>
+            <div className="relative flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg h-80">
+              {laptop.image ? (
+                <Image 
+                  src={laptop.image} 
+                  alt={laptop.name || "Laptop image"}
+                  fill
+                  style={{objectFit: 'contain'}}
+                  className="p-4"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300">
+                  {laptop.name}
+                </div>
+              )}
             </div>
             
             {/* Right column - Details */}
@@ -89,25 +101,22 @@ export default function QuickViewModal({
               {/* Price and tags */}
               <div>
                 <div className="flex gap-2 mb-2">
-                  {laptop.onSale && (
-                    <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                      On Sale
+                  {laptop.onSale && (                    <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
+                      Giảm giá
                     </span>
                   )}
-                  {laptop.greatDeal && (
-                    <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
-                      Great Deal
+                  {laptop.greatDeal && (                    <span className="px-2 py-1 text-xs font-medium text-white bg-blue-800 rounded-md">
+                      Được yêu thích nhất
                     </span>
                   )}
                 </div>
-                
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold dark:text-white">${laptop.salePrice}</span>
+                  <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-bold dark:text-white">{(Number(laptop.salePrice)).toLocaleString()} ₫</span>
                   {laptop.originalPrice && (
-                    <span className="text-gray-500 dark:text-gray-400 line-through">${laptop.originalPrice}</span>
+                    <span className="text-gray-500 dark:text-gray-400 line-through">{Number(laptop.originalPrice.replace(/[^0-9]/g, "")).toLocaleString()} </span>
                   )}
                   {laptop.saveAmount && (
-                    <span className="text-sm font-medium text-green-600 dark:text-green-400">Save ${laptop.saveAmount}</span>
+                    <span className="text-sm font-medium text-green-600 dark:text-green-400">Tiết kiệm {Number(laptop.saveAmount).toLocaleString()} </span>
                   )}
                 </div>
               </div>
@@ -151,7 +160,7 @@ export default function QuickViewModal({
             onClick={onClose}
             className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
           >
-            Close
+            Đóng
           </button>
           <button
             onClick={() => onAddToCompare(laptop.id)}
@@ -164,7 +173,7 @@ export default function QuickViewModal({
                 : 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800'
             }`}
           >
-            {isInCompareList ? 'Remove from Compare' : 'Add to Compare'}
+            {isInCompareList ? 'Remove from Compare' : 'Thêm vào so sánh'}
           </button>
         </div>
       </div>

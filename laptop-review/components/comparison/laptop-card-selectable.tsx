@@ -104,16 +104,14 @@ export default function LaptopCardSelectable({
                 Được yêu thích nhất
               </span>
             )}
-          </div>
-
-          {/* Price display */}
+          </div>          {/* Price display */}
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold dark:text-white">${laptop.salePrice}</span>
+            <span className="text-xl font-bold dark:text-white">{(Number(laptop.salePrice)).toLocaleString()} </span>
             {laptop.originalPrice && (
-              <span className="text-sm text-gray-500 dark:text-gray-400 line-through">${laptop.originalPrice}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400 line-through">{Number(laptop.originalPrice.replace(/[^0-9]/g, "")).toLocaleString()} </span>
             )}
             {laptop.saveAmount && (
-              <span className="text-sm font-medium text-green-600 dark:text-green-400">Save ${laptop.saveAmount}</span>
+              <span className="text-sm font-medium text-green-600 dark:text-green-400">Tiết kiệm {Number(laptop.saveAmount).toLocaleString()} </span>
             )}
           </div>
         </div>
