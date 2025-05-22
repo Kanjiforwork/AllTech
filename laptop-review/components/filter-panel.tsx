@@ -20,7 +20,7 @@ import { Laptop as LaptopType } from "@/types/laptop"
 const priceRanges = [
   { min: 0, max: 10000000, label: "Dưới 10 triệu" },
   { min: 10000000, max: 20000000, label: "10 - 20 triệu" },
-  { min: 20000000, max: 30000000, label: "$20 - 30 triệu" },
+  { min: 20000000, max: 30000000, label: "20 - 30 triệu" },
   { min: 30000000, max: 40000000, label: "30 - 40 triệu" },
   { min: 40000000, max: Infinity, label: "Trên 40 triệu" },
 ]
