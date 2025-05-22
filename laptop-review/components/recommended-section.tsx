@@ -50,8 +50,7 @@ export default function RecommendedSection() {
           laptop.name.toLowerCase().includes("gaming") ||
           laptop.name.toLowerCase().includes("rog") ||
           laptop.name.toLowerCase().includes("nitro") ||
-          laptop.name.toLowerCase().includes("predator") ||
-          laptop.specs.gpu.toLowerCase().includes("rtx")
+          laptop.name.toLowerCase().includes("predator")
         ).slice(0, 3);
       
       case "Dành cho công việc":

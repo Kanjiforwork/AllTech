@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Laptop } from '@/data/laptops'
 import { Eye } from 'lucide-react'
+import Image from 'next/image'
 
 interface LaptopCardSelectableProps {
   laptop: Laptop
@@ -61,13 +62,21 @@ export default function LaptopCardSelectable({
             Xem nhanh
           </button>
         </div>
-      )}
-
-      <div className="p-4">
+      )}      <div className="p-4">
         <div className="relative w-full h-40 mb-4 overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-md">
-          <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300">
-            {laptop.name}
-          </div>
+          {laptop.image ? (
+            <Image 
+              src={laptop.image} 
+              alt={laptop.name || "Laptop image"}
+              fill
+              style={{objectFit: 'contain'}}
+              className="p-2"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-300">
+              {laptop.name}
+            </div>
+          )}
         </div>
 
         <div className="flex items-center mb-2">

@@ -128,7 +128,7 @@ export default function LoginPage() {
               className="w-16 h-16"
             />
           </div>
-          <h1 className="mb-6 text-3xl font-bold text-center text-gray-800 dark:text-white">Login</h1>
+          <h1 className="mb-6 text-3xl font-bold text-center text-gray-800 dark:text-white">Đăng nhập</h1>
           <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -145,7 +145,7 @@ export default function LoginPage() {
             </div>
             <div className="mb-4">
               <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                Password
+                Mật khẩu
               </label>
               <input
                 type="password"
@@ -160,7 +160,7 @@ export default function LoginPage() {
               type="submit"
               className="w-full px-4 py-2 mb-4 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition duration-300 dark:bg-gray-700 dark:hover:bg-gray-600"
             >
-              Login
+              Đăng nhập
             </button>
           </form>
           <button
@@ -172,20 +172,20 @@ export default function LoginPage() {
               alt="Google Icon"
               className="w-5 h-5 mr-2"
             />
-            Sign in with Google
+            Đăng nhập bằng google
           </button>
           <p className="text-sm text-center">
             <button
               onClick={handleForgotPassword}
               className="text-black hover:underline dark:text-gray-300"
             >
-              Forgot your password?
+              Quên mật khẩu?
             </button>
           </p>
           <p className="mt-4 text-sm text-center dark:text-gray-300">
-            Don't have an account?{" "}
+            Không có tài khoản?{" "}
             <a href="/register" className="text-black hover:underline dark:text-gray-100">
-              Register here
+              Tạo tại khoản ngay
             </a>
           </p>
         </div>
